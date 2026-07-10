@@ -1,0 +1,242 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Find a Doctor | MediCore
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'doctors/css/doctor_list.css' %}?v=2"
+>
+{% endblock %}
+
+{% block content %}
+
+<section class="doctors-page">
+
+    <div class="doctors-container">
+
+        <!-- PAGE HEADER -->
+        <div class="page-header">
+            <span class="page-label">OUR SPECIALISTS</span>
+
+            <h1>Find the Right Doctor</h1>
+
+            <p>
+                Browse our experienced medical specialists and
+                choose the right doctor for your healthcare needs.
+            </p>
+        </div>
+
+
+        <!-- FILTER SECTION -->
+        <form method="GET" class="filter-card">
+
+            <div class="filter-content">
+
+                <div class="filter-field">
+                    <label for="department">
+                        Filter by Department
+                    </label>
+
+                    <select
+                        name="department"
+                        id="department"
+                    >
+                        <option value="">
+                            All Departments
+                        </option>
+
+                        {% for department in departments %}
+
+                            <option
+                                value="{{ department.id }}"
+
+                                {% if selected_department == department.id|stringformat:"s" %}
+                                    selected
+                                {% endif %}
+                            >
+                                {{ department.name }}
+                            </option>
+
+                        {% endfor %}
+                    </select>
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="filter-button"
+                >
+                    Search Doctors
+                </button>
+
+
+                {% if selected_department %}
+                    <a
+                        href="{% url 'doctors:list' %}"
+                        class="clear-filter"
+                    >
+                        Clear
+                    </a>
+                {% endif %}
+
+            </div>
+
+        </form>
+
+
+        <!-- RESULT INFO -->
+        <div class="results-header">
+
+            <div>
+                <h2>Available Doctors</h2>
+
+                <p>
+                    {{ doctors|length }}
+                    doctor{{ doctors|length|pluralize }}
+                    found
+                </p>
+            </div>
+
+        </div>
+
+
+        <!-- DOCTOR CARDS -->
+        {% if doctors %}
+
+            <div class="doctor-grid">
+
+                {% for doctor in doctors %}
+
+                    <article class="doctor-card">
+
+                        <!-- TOP SECTION -->
+                        <div class="doctor-card-top">
+
+                            <div class="doctor-avatar">
+
+                                {{ doctor.user.first_name|first }}
+                                {{ doctor.user.last_name|first }}
+
+                            </div>
+
+                            <div class="status-badge">
+                                <span></span>
+                                Available
+                            </div>
+
+                        </div>
+
+
+                        <!-- DOCTOR INFORMATION -->
+                        <div class="doctor-info">
+
+                            <span class="department-badge">
+                                {{ doctor.department.name }}
+                            </span>
+
+                            <h3>
+                                Dr. {{ doctor.user.get_full_name }}
+                            </h3>
+
+                            <p class="specialization">
+                                {{ doctor.specialization }}
+                            </p>
+
+                            <p class="qualification">
+                                {{ doctor.qualification }}
+                            </p>
+
+                        </div>
+
+
+                        <!-- DOCTOR STATS -->
+                        <div class="doctor-stats">
+
+                            <div class="doctor-stat">
+                                <strong>
+                                    {{ doctor.experience_years }}+
+                                </strong>
+
+                                <span>Years Experience</span>
+                            </div>
+
+
+                            <div class="stat-divider"></div>
+
+
+                            <div class="doctor-stat">
+                                <strong>
+                                    ₹{{ doctor.consultation_fee }}
+                                </strong>
+
+                                <span>Consultation Fee</span>
+                            </div>
+
+                        </div>
+
+
+                        <!-- BIO -->
+                        {% if doctor.bio %}
+
+                            <p class="doctor-bio">
+                                {{ doctor.bio|truncatewords:18 }}
+                            </p>
+
+                        {% endif %}
+
+
+                        <!-- ACTION BUTTONS -->
+                        <div class="doctor-actions">
+
+                            <a
+                                href="#"
+                                class="profile-button"
+                            >
+                                View Profile
+                            </a>
+
+                           <a
+    href="{% url 'appointments:book' doctor.id %}"
+    class="book-button"
+>
+    Book Appointment
+</a>
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-doctors">
+
+                <div class="empty-icon">🩺</div>
+
+                <h3>No doctors found</h3>
+
+                <p>
+                    No available doctors match the selected
+                    department.
+                </p>
+
+                <a href="{% url 'doctors:list' %}">
+                    View All Doctors
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

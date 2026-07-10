@@ -1,0 +1,464 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title %}
+Lab Report | MediCore
+{% endblock %}
+
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'dashboard/css/doctor_lab_report.css' %}?v=1"
+>
+{% endblock %}
+
+
+{% block content %}
+
+<main class="lab-report-page">
+
+    <div class="lab-report-wrapper">
+
+
+        <!-- PAGE HEADER -->
+
+        <header class="report-page-header">
+
+            <div>
+
+                <span class="page-label">
+                    DIAGNOSTIC REPORTS
+                </span>
+
+                <h1>
+                    Laboratory Report
+                </h1>
+
+                <p>
+                    Review laboratory results submitted
+                    for this patient.
+                </p>
+
+            </div>
+
+
+            <a
+                href="{% url 'dashboard:doctor' %}"
+                class="back-dashboard-btn"
+            >
+                ← Back to Dashboard
+            </a>
+
+        </header>
+
+
+        <!-- PATIENT INFORMATION -->
+
+        <section class="patient-summary-card">
+
+            <div class="patient-main-info">
+
+                <div class="patient-avatar">
+
+                    {{ patient.first_name|first|default:"P"|upper }}
+
+                </div>
+
+
+                <div>
+
+                    <span class="patient-label">
+                        PATIENT
+                    </span>
+
+                    <h2>
+                        {{ patient.get_full_name|default:patient.email }}
+                    </h2>
+
+                    <p>
+                        {{ patient.email }}
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="patient-meta-grid">
+
+                <div class="patient-meta-item">
+
+                    <span>
+                        PATIENT ID
+                    </span>
+
+                    <strong>
+                        {{ patient.patient_profile.patient_id|default:"—" }}
+                    </strong>
+
+                </div>
+
+
+                <div class="patient-meta-item">
+
+                    <span>
+                        APPOINTMENT ID
+                    </span>
+
+                    <strong>
+                        #{{ appointment.id }}
+                    </strong>
+
+                </div>
+
+
+                <div class="patient-meta-item">
+
+                    <span>
+                        APPOINTMENT DATE
+                    </span>
+
+                    <strong>
+                        {{ appointment.appointment_date|date:"d M Y"|default:"—" }}
+                    </strong>
+
+                </div>
+
+
+                <div class="patient-meta-item">
+
+                    <span>
+                        ORDERED BY
+                    </span>
+
+                    <strong>
+                        Dr. {{ appointment.doctor.user.get_full_name }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- REPORT SECTION -->
+
+        <section class="reports-section">
+
+            <div class="reports-section-header">
+
+                <div>
+
+                    <span>
+                        COMPLETED TESTS
+                    </span>
+
+                    <h2>
+                        Test Results
+                    </h2>
+
+                </div>
+
+
+                <strong class="report-count">
+
+                    {{ reports|length }}
+
+                    Report{{ reports|length|pluralize }}
+
+                </strong>
+
+            </div>
+
+
+            {% if reports %}
+
+                <div class="reports-list">
+
+
+                    {% for test in reports %}
+
+                        <article class="report-card">
+
+                            <!-- REPORT HEADER -->
+
+                            <div class="report-card-header">
+
+                                <div class="test-heading">
+
+                                    <div class="test-icon">
+
+                                        {% if test.test_type == "BLOOD" %}
+
+                                            🩸
+
+                                        {% elif test.test_type == "XRAY" %}
+
+                                            🩻
+
+                                        {% elif test.test_type == "MRI" %}
+
+                                            🧠
+
+                                        {% elif test.test_type == "ECG" %}
+
+                                            ❤️
+
+                                        {% else %}
+
+                                            🧪
+
+                                        {% endif %}
+
+                                    </div>
+
+                                
+
+                                    <div>
+
+                                        
+
+                                        <span>
+                                            LABORATORY TEST
+                                        </span>
+
+                                        <h3>
+                                            {{ test.test_name }}
+                                        </h3>
+
+                                    </div>
+
+                                </div>
+
+
+                                <span class="
+                                    result-status-badge
+                                    result-{{ test.lab_result.result_status|lower }}
+                                ">
+
+                                    {{ test.lab_result.get_result_status_display }}
+
+                                </span>
+
+                            </div>
+
+
+                            <!-- RESULT VALUE -->
+
+                            <div class="primary-result">
+
+                                <span>
+                                    RESULT VALUE
+                                </span>
+
+
+                                <div class="result-value-row">
+
+                                    <strong>
+                                        {{ test.lab_result.result_value|default:"Not specified" }}
+                                    </strong>
+
+
+                                    {% if test.lab_result.unit %}
+
+                                        <small>
+                                            {{ test.lab_result.unit }}
+                                        </small>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- REPORT DETAILS -->
+
+                            <div class="report-details-grid">
+
+
+                                <div class="report-detail-item">
+
+                                    <span>
+                                        REFERENCE RANGE
+                                    </span>
+
+                                    <strong>
+                                        {{ test.lab_result.reference_range|default:"Not specified" }}
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="report-detail-item">
+
+                                    <span>
+                                        TEST STATUS
+                                    </span>
+
+                                    <strong>
+                                        {{ test.get_status_display }}
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="report-detail-item">
+
+                                    <span>
+                                        TESTED BY
+                                    </span>
+
+                                    <strong>
+
+                                        {% if test.lab_result.tested_by %}
+
+                                            {{ test.lab_result.tested_by.get_full_name|default:test.lab_result.tested_by.email }}
+
+                                        {% else %}
+
+                                            Laboratory Staff
+
+                                        {% endif %}
+
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="report-detail-item">
+
+                                    <span>
+                                        REPORT DATE
+                                    </span>
+
+                                    <strong>
+                                        {{ test.updated_at|date:"d M Y, h:i A" }}
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- FINDINGS -->
+
+                            <div class="report-text-block">
+
+                                <span>
+                                    FINDINGS
+                                </span>
+
+                                <p>
+                                    {{ test.lab_result.findings }}
+                                </p>
+
+                            </div>
+
+
+                            {% if test.lab_result.description %}
+
+                                <div class="report-text-block">
+
+                                    <span>
+                                        DESCRIPTION
+                                    </span>
+
+                                    <p>
+                                        {{ test.lab_result.description }}
+                                    </p>
+
+                                </div>
+
+                            {% endif %}
+
+
+                            {% if test.lab_result.remarks %}
+
+                                <div class="report-text-block remarks-block">
+
+                                    <span>
+                                        LABORATORY REMARKS
+                                    </span>
+
+                                    <p>
+                                        {{ test.lab_result.remarks }}
+                                    </p>
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- REPORT FOOTER -->
+
+                            <div class="report-card-footer">
+
+                                <div>
+
+                                    <span>
+                                        REPORT STATUS
+                                    </span>
+
+                                    <strong>
+                                        Ready for Doctor Review
+                                    </strong>
+
+                                </div>
+
+                                                                                                                              <a
+    href="{% url 'dashboard:lab_report_pdf' test.id %}"
+    class="download-pdf-btn"
+    target="_blank"
+>
+    📄 View PDF Report
+</a>
+
+
+                                <span class="verified-badge">
+                                    ✓ Laboratory Verified
+                                </span>
+
+                            </div>
+
+
+                        </article>
+
+                    {% endfor %}
+
+
+                </div>
+
+
+            {% else %}
+
+                <div class="empty-reports">
+
+                    <div class="empty-report-icon">
+                        🧪
+                    </div>
+
+                    <h3>
+                        No reports available
+                    </h3>
+
+                    <p>
+                        Laboratory reports will appear here
+                        after the tests are completed.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+
+    </div>
+
+</main>
+
+{% endblock %}

@@ -1,0 +1,523 @@
+{% extends "base.html" %} {% load static %} {% block title %} Doctor Dashboard |
+MediCore {% endblock %} {% block extra_css %}
+<link
+  rel="stylesheet"
+  href="{% static 'dashboard/css/doctor_dashboard.css' %}?v=12"
+/>
+{% endblock %} {% block content %}
+
+<section class="doctor-dashboard-page">
+  <div class="doctor-dashboard-wrapper">
+    <!-- =====================================
+             WELCOME HEADER
+        ====================================== -->
+
+    <header class="doctor-dashboard-header">
+      <div class="doctor-welcome">
+        <span class="dashboard-label"> DOCTOR DASHBOARD </span>
+
+        <h1>Welcome back, Dr. {{ request.user.first_name }}</h1>
+
+        <p>
+          Manage your appointments, patients and consultation schedule from one
+          place.
+        </p>
+      </div>
+
+      <div class="doctor-id-card">
+        <span>Doctor ID</span>
+
+        <strong> {{ doctor.doctor_id }} </strong>
+      </div>
+    </header>
+
+    <!-- =====================================
+             DJANGO MESSAGES
+        ====================================== -->
+
+    {% if messages %}
+
+    <div class="dashboard-messages">
+      {% for message in messages %}
+
+      <div class="dashboard-message {{ message.tags }}">{{ message }}</div>
+
+      {% endfor %}
+    </div>
+
+    {% endif %}
+
+    <!-- =====================================
+             DOCTOR PROFILE SUMMARY
+        ====================================== -->
+
+    <section class="doctor-profile-summary">
+      <div class="doctor-avatar">
+        {{ doctor.user.first_name|first }} {{ doctor.user.last_name|first }}
+      </div>
+
+      <div class="doctor-profile-info">
+        <span class="department-badge"> {{ doctor.department.name }} </span>
+
+        <h2>Dr. {{ doctor.user.get_full_name }}</h2>
+
+        <p>{{ doctor.specialization }}</p>
+      </div>
+
+      <div class="doctor-profile-meta">
+        <div class="profile-meta-item">
+          <span>Experience</span>
+
+          <strong> {{ doctor.experience_years }}+ Years </strong>
+        </div>
+
+        <div class="profile-meta-item">
+          <span>Consultation Fee</span>
+
+          <strong> ₹{{ doctor.consultation_fee }} </strong>
+        </div>
+
+        <div class="profile-meta-item">
+          <span>Status</span>
+
+          <strong class="doctor-available">
+            ● {{ doctor.get_status_display }}
+          </strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================
+             STAT CARDS
+        ====================================== -->
+
+    <section class="doctor-stats-grid">
+      <!-- PENDING -->
+
+      <div class="doctor-stat-card">
+        <div class="stat-icon pending-icon">⏳</div>
+
+        <div class="stat-content">
+          <span> Pending Appointments </span>
+
+          <strong> {{ pending_count }} </strong>
+        </div>
+      </div>
+
+      <!-- CONFIRMED -->
+
+      <div class="doctor-stat-card">
+        <div class="stat-icon confirmed-icon">✓</div>
+
+        <div class="stat-content">
+          <span> Confirmed </span>
+
+          <strong> {{ confirmed_count }} </strong>
+        </div>
+      </div>
+
+      <!-- COMPLETED -->
+
+      <div class="doctor-stat-card">
+        <div class="stat-icon completed-icon">🩺</div>
+
+        <div class="stat-content">
+          <span> Completed </span>
+
+          <strong> {{ completed_count }} </strong>
+        </div>
+      </div>
+
+      <!-- TOTAL -->
+
+      <div class="doctor-stat-card">
+        <div class="stat-icon total-icon">📅</div>
+
+        <div class="stat-content">
+          <span> Total Appointments </span>
+
+          <strong> {{ appointments|length }} </strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================
+             MAIN DASHBOARD LAYOUT
+        ====================================== -->
+
+    <div class="doctor-dashboard-grid">
+      <!-- =================================
+                 LEFT: APPOINTMENTS
+            ================================== -->
+
+      <main class="doctor-dashboard-main">
+        <section class="dashboard-card appointments-card">
+          <!-- SECTION HEADER -->
+
+          <div class="card-header">
+            <div>
+              <h2>My Appointments</h2>
+              <div class="appointment-filters">
+                <a
+                  href="?filter=today"
+                  class="filter-btn {% if selected_filter == 'today' %}active{% endif %}"
+                >
+                  Today
+                  <span>{{ today_count }}</span>
+                </a>
+
+                <a
+                  href="?filter=upcoming"
+                  class="filter-btn {% if selected_filter == 'upcoming' %}active{% endif %}"
+                >
+                  Upcoming
+                  <span>{{ upcoming_count }}</span>
+                </a>
+
+                <a
+                  href="?filter=all"
+                  class="filter-btn {% if selected_filter == 'all' %}active{% endif %}"
+                >
+                  All
+                  <span>{{ all_count }}</span>
+                </a>
+              </div>
+
+              <p>Review and manage patient appointments</p>
+            </div>
+
+            <span class="appointment-count">
+             {{ appointments|length }} appointment{{ appointments|length|pluralize }}
+            </span>
+          </div>
+
+          <!-- =====================================
+                         APPOINTMENT LIST
+                    ====================================== -->
+
+          {% if appointments %}
+
+          <div class="doctor-appointment-list">
+            {% for appointment in appointments %}
+
+            <article class="doctor-appointment-card">
+              <!-- DATE -->
+
+              <div class="appointment-date-box">
+                <span> {{ appointment.appointment_date|date:"M" }} </span>
+
+                <strong> {{ appointment.appointment_date|date:"d" }} </strong>
+
+                <small> {{ appointment.appointment_date|date:"Y" }} </small>
+              </div>
+
+              <!-- =====================================
+                                         PATIENT INFORMATION
+                                    ====================================== -->
+
+              <div class="patient-info">
+                <div class="patient-heading">
+                  <div class="patient-avatar">
+                    {{ appointment.patient.first_name|first|upper }}{{ appointment.patient.last_name|first|upper }}
+                  </div>
+
+                  <div>
+                    <span class="patient-label"> PATIENT </span>
+
+                    <h3>{{ appointment.patient.get_full_name }}</h3>
+                  </div>
+                </div>
+
+                <!-- DATE AND TIME -->
+
+                <div class="appointment-details">
+                  <span>
+                    🕒 {{ appointment.appointment_time|time:"g:i A" }}
+                  </span>
+
+                  <span> 📅 {{ appointment.appointment_date|date:"l" }} </span>
+                </div>
+
+                <!-- REASON -->
+
+                <div class="appointment-reason">
+                  <span> Reason for Visit </span>
+
+                  <p>{{ appointment.reason }}</p>
+                </div>
+              </div>
+
+              <!-- =====================================
+                                         STATUS AND ACTIONS
+                                    ====================================== -->
+
+              <div class="doctor-appointment-actions">
+                <!-- CURRENT STATUS -->
+
+                <div class="appointment-status-row">
+                  {% if appointment.has_pending_tests %}
+
+                  <span class="appointment-status status-awaiting-tests">
+                    AWAITING TESTS
+                  </span>
+
+                  {% elif appointment.has_report_ready %}
+
+                  <span class="appointment-status status-report-ready">
+                    REPORT READY
+                  </span>
+
+                  {% else %}
+
+                  <span
+                    class="
+            appointment-status
+            status-{{ appointment.status|lower }}
+        "
+                  >
+                    {{ appointment.get_status_display }}
+                  </span>
+
+                  {% endif %} {% if appointment.has_prescription %}
+
+                  <a
+                    href="{% url 'appointments:detail' appointment.id %}#prescriptionSection"
+                    class="view-prescription-btn"
+                  >
+                    View Prescription
+                  </a>
+
+                  {% endif %}
+                </div>
+
+                {% if appointment.has_report_ready %}
+
+                <a
+                  href="{% url 'dashboard:doctor_lab_report' appointment.id %}"
+                  class="view-report-btn"
+                >
+                  View Report
+                </a>
+
+                {% endif %}
+
+                <a
+                  href="{% url 'appointments:detail' appointment.id %}"
+                  class="view-details-btn"
+                >
+                  View Details
+                </a>
+
+                <!-- =================================
+                                             PENDING APPOINTMENT
+                                        ================================== -->
+
+                {% if appointment.status == "PENDING" %}
+
+                <div class="action-buttons">
+                  <!-- CONFIRM BUTTON -->
+
+                  <form
+                    method="POST"
+                    action="{% url 'appointments:update_status' appointment.id 'confirm' %}"
+                  >
+                    {% csrf_token %}
+
+                    <button type="submit" class="confirm-btn">Confirm</button>
+                  </form>
+
+                  <!-- CANCEL BUTTON -->
+
+                  <form
+                    method="POST"
+                    action="{% url 'appointments:update_status' appointment.id 'cancel' %}"
+                    onsubmit="
+                      return confirm(
+                        'Are you sure you want to cancel this appointment?',
+                      );
+                    "
+                  >
+                    {% csrf_token %}
+
+                    <button type="submit" class="reject-btn">Cancel</button>
+                  </form>
+                </div>
+
+                <!-- =================================
+                                             CONFIRMED APPOINTMENT
+                                        ================================== -->
+
+                {% elif appointment.status == "CONFIRMED" %}
+
+                <!-- COMPLETE BUTTON -->
+
+                <form
+                  method="POST"
+                  action="{% url 'appointments:update_status' appointment.id 'complete' %}"
+                  onsubmit="
+                    return confirm('Mark this appointment as completed?');
+                  "
+                >
+                  {% csrf_token %}
+
+                  <button type="submit" class="complete-btn">
+                    Mark Completed
+                  </button>
+                </form>
+
+                <!-- CANCEL CONFIRMED APPOINTMENT -->
+
+                <form
+                  method="POST"
+                  action="{% url 'appointments:update_status' appointment.id 'cancel' %}"
+                  onsubmit="
+                    return confirm(
+                      'Are you sure you want to cancel this confirmed appointment?',
+                    );
+                  "
+                >
+                  {% csrf_token %}
+
+                  <button type="submit" class="reject-btn">Cancel</button>
+                </form>
+
+                <!-- =================================
+                                             COMPLETED APPOINTMENT
+                                        ================================== -->
+
+                {% elif appointment.status == "COMPLETED" %}
+
+                <!-- =================================
+                                             CANCELLED APPOINTMENT
+                                        ================================== -->
+
+                {% elif appointment.status == "CANCELLED" %} {% endif %}
+              </div>
+            </article>
+
+            {% endfor %}
+          </div>
+
+          {% else %}
+
+          <!-- EMPTY STATE -->
+
+          <div class="doctor-empty-state">
+            <div class="empty-icon">📅</div>
+
+            <h3>No appointments yet</h3>
+
+            <p>
+              Patient appointments will appear here when they book a
+              consultation with you.
+            </p>
+          </div>
+
+          {% endif %}
+        </section>
+      </main>
+
+      <!-- =================================
+                 RIGHT SIDEBAR
+            ================================== -->
+
+      <aside class="doctor-dashboard-sidebar">
+        <!-- =====================================
+                     QUICK ACTIONS
+                ====================================== -->
+
+        <section class="dashboard-card">
+          <div class="card-header">
+            <div>
+              <h2>Quick Actions</h2>
+
+              <p>Manage your practice</p>
+            </div>
+          </div>
+
+          <!-- SCHEDULE -->
+
+          <a href="{% url 'doctors:schedule' %}" class="quick-action-item">
+            <span class="quick-action-icon"> 📅 </span>
+
+            <div>
+              <strong> My Schedule </strong>
+
+              <small> View availability </small>
+            </div>
+
+            <span class="action-arrow"> → </span>
+          </a>
+
+          <!-- PATIENTS -->
+
+          <a href="#" class="quick-action-item">
+            <span class="quick-action-icon"> 👥 </span>
+
+            <div>
+              <strong> My Patients </strong>
+
+              <small> View patient records </small>
+            </div>
+
+            <span class="action-arrow"> → </span>
+          </a>
+
+          <!-- PRESCRIPTIONS -->
+
+          <a href="#" class="quick-action-item">
+            <span class="quick-action-icon"> 📝 </span>
+
+            <div>
+              <strong> Prescriptions </strong>
+
+              <small> Manage prescriptions </small>
+            </div>
+
+            <span class="action-arrow"> → </span>
+          </a>
+        </section>
+
+        <!-- =====================================
+                     PROFESSIONAL INFORMATION
+                ====================================== -->
+
+        <section class="dashboard-card doctor-info-card">
+          <div class="card-header">
+            <div>
+              <h2>Professional Information</h2>
+
+              <p>Your medical profile</p>
+            </div>
+          </div>
+
+          <div class="info-row">
+            <span> Department </span>
+
+            <strong> {{ doctor.department.name }} </strong>
+          </div>
+
+          <div class="info-row">
+            <span> Specialization </span>
+
+            <strong> {{ doctor.specialization }} </strong>
+          </div>
+
+          <div class="info-row">
+            <span> Qualification </span>
+
+            <strong> {{ doctor.qualification }} </strong>
+          </div>
+
+          <div class="info-row">
+            <span> License Number </span>
+
+            <strong> {{ doctor.license_number }} </strong>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

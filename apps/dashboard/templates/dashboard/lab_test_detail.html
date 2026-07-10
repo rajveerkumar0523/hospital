@@ -1,0 +1,594 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+{{ test.test_name }} | MediCore Laboratory
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'dashboard/css/lab_test_detail.css' %}?v=1"
+>
+{% endblock %}
+
+
+{% block content %}
+
+<!-- <nav class="lab-detail-navbar">
+
+    <a
+        href="{% url 'dashboard:lab_technician' %}"
+        class="lab-detail-brand"
+    >
+        <span class="lab-detail-brand-icon">+</span>
+        <span>MediCore</span>
+    </a>
+
+    <a
+        href="{% url 'dashboard:lab_technician' %}"
+        class="back-dashboard-btn"
+    >
+        ← Back to Lab Queue
+    </a>
+
+</nav> -->
+
+
+<main class="lab-detail-page">
+
+    <div class="lab-detail-wrapper">
+
+
+        <!-- PAGE HEADER -->
+
+        <header class="lab-detail-header">
+
+            <div>
+
+                <span class="page-label">
+                    LABORATORY TEST
+                </span>
+
+                <h1>
+                    {{ test.test_name }}
+                </h1>
+
+                <p>
+                    Review patient details and enter the laboratory result.
+                </p>
+
+            </div>
+
+
+            <span class="
+                test-status-badge
+                status-{{ test.status|lower }}
+            ">
+                {{ test.get_status_display }}
+            </span>
+
+        </header>
+
+
+        <!-- PATIENT INFORMATION -->
+
+        <section class="detail-card">
+
+            <div class="section-heading">
+
+                <span class="section-icon">
+                    👤
+                </span>
+
+                <div>
+                    <span class="section-label">
+                        PATIENT INFORMATION
+                    </span>
+
+                    <h2>
+                        Patient Details
+                    </h2>
+                </div>
+
+            </div>
+
+
+            <div class="patient-information-grid">
+
+                <div class="information-item">
+
+                    <span>Patient ID</span>
+
+                    <strong>
+                        {{ test.appointment.patient.patient_profile.patient_id }}
+                    </strong>
+
+                </div>
+
+
+                <div class="information-item">
+
+                    <span>Patient Name</span>
+
+                    <strong>
+                        {{ test.appointment.patient.get_full_name }}
+                    </strong>
+
+                </div>
+
+
+                <div class="information-item">
+
+                    <span>Email</span>
+
+                    <strong>
+                        {{ test.appointment.patient.email }}
+                    </strong>
+
+                </div>
+
+
+                <div class="information-item">
+
+                    <span>Phone</span>
+
+                    <strong>
+                        {{ test.appointment.patient.phone|default:"Not provided" }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- TEST INFORMATION -->
+
+        <section class="detail-card">
+
+            <div class="section-heading">
+
+                <span class="section-icon test-icon">
+                    🧪
+                </span>
+
+                <div>
+                    <span class="section-label">
+                        TEST INFORMATION
+                    </span>
+
+                    <h2>
+                        Ordered Test
+                        <div class="information-item">
+    <span>Test ID</span>
+
+    <strong>
+        {{ test.test_id }}
+    </strong>
+</div>
+                    </h2>
+                </div>
+
+            </div>
+
+
+            <div class="test-information-grid">
+
+                <div class="information-item">
+
+                    <span>Test Name</span>
+
+                    <strong>
+                        {{ test.test_name }}
+                    </strong>
+
+                </div>
+
+
+                <div class="information-item">
+
+                    <span>Test Type</span>
+
+                    <strong>
+                        {{ test.get_test_type_display }}
+                    </strong>
+
+                </div>
+
+
+                <div class="information-item">
+
+                    <span>Ordered By</span>
+
+                    <strong>
+                        Dr. {{ test.appointment.doctor.user.get_full_name }}
+                    </strong>
+
+                </div>
+
+
+                <div class="information-item">
+
+                    <span>Department</span>
+
+                    <strong>
+                        {{ test.appointment.doctor.department.name }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            {% if test.instructions %}
+
+                <div class="test-instructions">
+
+                    <span>
+                        DOCTOR'S INSTRUCTIONS
+                    </span>
+
+                    <p>
+                        {{ test.instructions }}
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+
+        <!-- RESULT ENTRY -->
+
+    <!-- RESULT / RESULT ENTRY -->
+
+{% if test.status == "REPORT_READY" or test.status == "REVIEWED" %}
+
+    <section class="detail-card saved-result-card">
+
+        <div class="section-heading">
+
+            <span class="section-icon result-icon">
+                📋
+            </span>
+
+            <div>
+                <span class="section-label">
+                    LABORATORY REPORT
+                </span>
+
+                <h2>Saved Test Result</h2>
+
+                <p>
+                    This laboratory test has been completed.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="report-status-row">
+
+            <div>
+                <span class="report-field-label">
+                    RESULT STATUS
+                </span>
+
+                <strong class="
+                    result-status-large
+                    result-{{ test.lab_result.result_status|lower }}
+                ">
+                    {{ test.lab_result.get_result_status_display }}
+                </strong>
+            </div>
+
+            <div>
+                <span class="report-field-label">
+                    COMPLETED AT
+                </span>
+
+                <strong>
+                    {{ test.lab_result.completed_at|date:"d M Y, h:i A" }}
+                </strong>
+            </div>
+
+        </div>
+
+
+        <div class="report-values-grid">
+
+            <div class="report-value-box">
+                <span>Result Value</span>
+
+                <strong>
+                    {{ test.lab_result.result_value|default:"—" }}
+                </strong>
+            </div>
+
+
+            <div class="report-value-box">
+                <span>Unit</span>
+
+                <strong>
+                    {{ test.lab_result.unit|default:"—" }}
+                </strong>
+            </div>
+
+
+            <div class="report-value-box">
+                <span>Reference Range</span>
+
+                <strong>
+                    {{ test.lab_result.reference_range|default:"—" }}
+                </strong>
+            </div>
+
+
+            <div class="report-value-box">
+                <span>Tested By</span>
+
+                <strong>
+                    {{ test.lab_result.tested_by.get_full_name|default:"Lab Technician" }}
+                </strong>
+            </div>
+
+        </div>
+
+
+        <div class="report-text-section">
+            <span>FINDINGS</span>
+
+            <p>
+                {{ test.lab_result.findings }}
+            </p>
+        </div>
+
+
+        {% if test.lab_result.description %}
+
+            <div class="report-text-section">
+                <span>DESCRIPTION / INTERPRETATION</span>
+
+                <p>
+                    {{ test.lab_result.description }}
+                </p>
+            </div>
+
+        {% endif %}
+
+
+        {% if test.lab_result.remarks %}
+
+            <div class="report-text-section">
+                <span>LAB TECHNICIAN REMARKS</span>
+
+                <p>
+                    {{ test.lab_result.remarks }}
+                </p>
+            </div>
+
+        {% endif %}
+
+
+        <div class="saved-result-actions">
+
+    <a
+        href="{% url 'dashboard:lab_technician' %}"
+        class="back-result-btn"
+    >
+        ← Back to Tested List
+    </a>
+
+    {% if not test.lab_result.whatsapp_sent %}
+        <form
+            method="POST"
+            action="{% url 'dashboard:send_lab_report_whatsapp' test.id %}"
+        >
+            {% csrf_token %}
+
+            <button
+                type="submit"
+                class="whatsapp-report-btn"
+            >
+                Send Report on WhatsApp
+            </button>
+        </form>
+    {% else %}
+        <span class="whatsapp-sent-badge">
+            ✓ Sent on WhatsApp
+        </span>
+    {% endif %}
+
+</div>
+
+    </section>
+
+
+{% else %}
+
+    <section class="detail-card result-entry-card">
+
+        <div class="section-heading">
+
+            <span class="section-icon">
+                🧪
+            </span>
+
+            <div>
+                <span class="section-label">
+                    LABORATORY RESULT
+                </span>
+
+                <h2>Enter Test Result</h2>
+
+                <p>
+                    Record the laboratory findings for this test.
+                </p>
+            </div>
+
+        </div>
+
+
+        <form method="POST" class="result-entry-form">
+
+            {% csrf_token %}
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label for="result_status">
+                        Result Status *
+                    </label>
+
+                    <select
+                        id="result_status"
+                        name="result_status"
+                        required
+                    >
+                        <option value="">
+                            Select result status
+                        </option>
+
+                        <option value="NORMAL">
+                            Normal
+                        </option>
+
+                        <option value="ABNORMAL">
+                            Abnormal
+                        </option>
+
+                        <option value="POSITIVE">
+                            Positive
+                        </option>
+
+                        <option value="NEGATIVE">
+                            Negative
+                        </option>
+
+                        <option value="INCONCLUSIVE">
+                            Inconclusive
+                        </option>
+                    </select>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="result_value">
+                        Result Value
+                    </label>
+
+                    <input
+                        type="text"
+                        id="result_value"
+                        name="result_value"
+                        placeholder="Example: 12.7"
+                    >
+                </div>
+
+
+                <div class="form-group">
+                    <label for="unit">
+                        Unit
+                    </label>
+
+                    <input
+                        type="text"
+                        id="unit"
+                        name="unit"
+                        placeholder="Example: g/dL"
+                    >
+                </div>
+
+
+                <div class="form-group">
+                    <label for="reference_range">
+                        Reference Range
+                    </label>
+
+                    <input
+                        type="text"
+                        id="reference_range"
+                        name="reference_range"
+                        placeholder="Example: 12 - 16"
+                    >
+                </div>
+
+            </div>
+
+
+            <div class="form-group full-width">
+                <label for="findings">
+                    Findings *
+                </label>
+
+                <textarea
+                    id="findings"
+                    name="findings"
+                    rows="5"
+                    placeholder="Enter detailed laboratory findings..."
+                    required
+                ></textarea>
+            </div>
+
+
+            <div class="form-group full-width">
+                <label for="description">
+                    Description / Interpretation
+                </label>
+
+                <textarea
+                    id="description"
+                    name="description"
+                    rows="4"
+                    placeholder="Enter result interpretation..."
+                ></textarea>
+            </div>
+
+
+            <div class="form-group full-width">
+                <label for="remarks">
+                    Lab Technician Remarks
+                </label>
+
+                <textarea
+                    id="remarks"
+                    name="remarks"
+                    rows="3"
+                    placeholder="Enter additional remarks..."
+                ></textarea>
+            </div>
+
+
+            <div class="result-form-actions">
+
+                <a
+                    href="{% url 'dashboard:lab_technician' %}"
+                    class="cancel-result-btn"
+                >
+                    Cancel
+                </a>
+
+                <button
+                    type="submit"
+                    class="save-result-btn"
+                >
+                    Save Test Result
+                </button>
+
+            </div>
+
+        </form>
+    
+
+    </section>
+
+{% endif %}
+
+    </div>
+
+</main>
+
+{% endblock %}

@@ -1,0 +1,248 @@
+/* =========================================
+   MEDICORE PUBLIC FOOTER
+========================================= */
+
+.site-footer {
+    margin-top: 80px;
+    background: #ffffff;
+    border-top: 1px solid #edf0f3;
+    color: #3f4852;
+}
+
+
+/* =========================================
+   MAIN FOOTER GRID
+========================================= */
+
+.footer-container {
+    width: min(1420px, 92%);
+    margin: 0 auto;
+    padding: 65px 0 55px;
+
+    display: grid;
+    grid-template-columns:
+        1fr
+        1fr
+        1fr
+        1fr
+        1.25fr;
+
+    gap: 55px;
+}
+
+
+/* =========================================
+   FOOTER COLUMNS
+========================================= */
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.footer-column h3 {
+    margin: 0 0 24px;
+
+    color: #343b43;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.footer-column > a:not(.staff-portal-btn) {
+    margin-bottom: 13px;
+
+    color: #555e67;
+    font-size: 14px;
+    line-height: 1.4;
+    text-decoration: none;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.footer-column > a:not(.staff-portal-btn):hover {
+    color: #176b87;
+    transform: translateX(3px);
+}
+
+
+/* =========================================
+   STAFF PORTAL
+========================================= */
+
+.footer-staff p {
+    margin: 0 0 22px;
+
+    color: #66717c;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.staff-portal-btn {
+    width: 100%;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 15px 18px;
+
+    background: #0d6f8a;
+    color: #ffffff;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.staff-portal-btn:hover {
+    background: #095d75;
+    transform: translateY(-2px);
+}
+
+.staff-portal-btn span {
+    font-size: 20px;
+}
+
+
+/* =========================================
+   EMERGENCY CARD
+========================================= */
+
+.emergency-card {
+    width: 100%;
+    box-sizing: border-box;
+
+    margin-top: 16px;
+    padding: 15px 18px;
+
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    background: #fff4f2;
+    border: 1px solid #ffd9d2;
+    border-radius: 8px;
+
+    color: #e84d3d;
+}
+
+.emergency-icon {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    background: #e84d3d;
+    color: #ffffff;
+
+    font-size: 17px;
+}
+
+.emergency-card div {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.emergency-card small {
+    font-size: 12px;
+}
+
+.emergency-card strong {
+    font-size: 14px;
+}
+
+
+/* =========================================
+   FOOTER BOTTOM
+========================================= */
+
+.footer-bottom {
+    width: min(1420px, 92%);
+    margin: 0 auto;
+
+    padding: 24px 0;
+
+    border-top: 1px solid #e8ecef;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.footer-brand strong {
+    color: #0d6f8a;
+    font-size: 21px;
+}
+
+.footer-brand span {
+    color: #8a939c;
+    font-size: 13px;
+}
+
+.footer-bottom p {
+    margin: 0;
+    color: #8a939c;
+    font-size: 13px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1100px) {
+    .footer-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+
+@media (max-width: 750px) {
+    .footer-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+}
+
+
+@media (max-width: 520px) {
+    .site-footer {
+        margin-top: 60px;
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr;
+        padding: 45px 0;
+    }
+
+    .footer-brand {
+        flex-direction: column;
+        gap: 5px;
+    }
+}

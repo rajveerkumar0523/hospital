@@ -1,0 +1,251 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Admin Dashboard | MediCore
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'dashboard/css/admin_dashboard.css' %}?v=1"
+>
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-page">
+
+    <div class="admin-wrapper">
+
+        <header class="admin-header">
+
+            <div>
+                <span class="admin-label">
+                    HOSPITAL ADMINISTRATION
+                </span>
+
+                <h1>Admin Dashboard</h1>
+
+                <p>
+                    Manage doctors, patients, appointments
+                    and hospital operations.
+                </p>
+            </div>
+
+            <div class="admin-profile">
+                <span>Administrator</span>
+                <strong>
+                    {{ request.user.get_full_name|default:request.user.email }}
+                </strong>
+            </div>
+
+        </header>
+
+
+        <!-- STATISTICS -->
+
+        <div class="admin-stats">
+
+            <article class="admin-stat-card">
+                <div class="stat-icon">🩺</div>
+
+                <div>
+                    <span>Total Doctors</span>
+                    <strong>{{ total_doctors }}</strong>
+                </div>
+            </article>
+
+
+            <article class="admin-stat-card">
+                <div class="stat-icon">👥</div>
+
+                <div>
+                    <span>Total Patients</span>
+                    <strong>{{ total_patients }}</strong>
+                </div>
+            </article>
+
+
+            <article class="admin-stat-card">
+                <div class="stat-icon">📅</div>
+
+                <div>
+                    <span>Appointments</span>
+                    <strong>{{ total_appointments }}</strong>
+                </div>
+            </article>
+
+
+            <article class="admin-stat-card">
+                <div class="stat-icon">⏳</div>
+
+                <div>
+                    <span>Pending</span>
+                    <strong>{{ pending_appointments }}</strong>
+                </div>
+            </article>
+
+        </div>
+
+
+        <!-- MANAGEMENT -->
+
+        <div class="management-grid">
+
+            <a href="{% url 'dashboard:manage_doctors' %}" class="management-card">
+                <span class="management-icon">🩺</span>
+
+                <div>
+                    <h2>Manage Doctors</h2>
+                    <p>
+                        Add, edit, view and deactivate doctors.
+                    </p>
+                </div>
+
+                <span class="management-arrow">→</span>
+            </a>
+
+
+            <a
+    href="{% url 'dashboard:manage_patients' %}"
+    class="management-card"
+>
+                <span class="management-icon">👥</span>
+
+                <div>
+                    <h2>Manage Patients</h2>
+                    <p>
+                        View registered patients and health profiles.
+                    </p>
+                </div>
+
+                <span class="management-arrow">→</span>
+            </a>
+
+
+           <a
+    href="{% url 'dashboard:manage_appointments' %}"
+    class="management-card"
+>
+                <span class="management-icon">📅</span>
+
+                <div>
+                    <h2>Appointments</h2>
+                    <p>
+                        View and manage all hospital appointments.
+                    </p>
+                </div>
+
+                <span class="management-arrow">→</span>
+            </a>
+
+
+            <a
+    href="{% url 'dashboard:manage_departments' %}"
+    class="management-card"
+>
+                <span class="management-icon">🏥</span>
+
+                <div>
+                    <h2>Departments</h2>
+                    <p>
+                        Add and manage hospital departments.
+                    </p>
+                </div>
+
+                <span class="management-arrow">→</span>
+            </a>
+
+            <a
+    href="{% url 'dashboard:admin_reports' %}"
+    class="management-card"
+>
+    <span class="management-icon">📊</span>
+
+    <div>
+        <h2>Reports & Analytics</h2>
+
+        <p>
+            View hospital statistics and performance reports.
+        </p>
+    </div>
+
+    <span class="management-arrow">→</span>
+</a>
+
+<a
+    href="{% url 'dashboard:manage_beds' %}"
+    class="management-card"
+>
+    <span class="management-icon">🛏️</span>
+
+    <div>
+        <h2>Manage Beds</h2>
+
+        <p>
+            Add beds and monitor hospital capacity.
+        </p>
+    </div>
+
+    <span class="management-arrow">→</span>
+</a>
+
+<a
+    href="{% url 'dashboard:manage_ambulances' %}"
+    class="management-card"
+>
+    <span class="management-icon">🚑</span>
+
+    <div>
+        <h2>Manage Ambulances</h2>
+
+        <p>
+            Monitor ambulance availability and update fleet status.
+        </p>
+    </div>
+
+    <span class="management-arrow">→</span>
+</a>
+
+        </div>
+
+
+        <!-- APPOINTMENT STATUS -->
+
+        <section class="admin-card">
+
+            <div class="admin-card-header">
+                <div>
+                    <span>APPOINTMENT OVERVIEW</span>
+                    <h2>Current Status</h2>
+                </div>
+            </div>
+
+
+            <div class="status-overview">
+
+                <div class="status-item">
+                    <span>Pending</span>
+                    <strong>{{ pending_appointments }}</strong>
+                </div>
+
+                <div class="status-item">
+                    <span>Confirmed</span>
+                    <strong>{{ confirmed_appointments }}</strong>
+                </div>
+
+                <div class="status-item">
+                    <span>Completed</span>
+                    <strong>{{ completed_appointments }}</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</section>
+
+{% endblock %}

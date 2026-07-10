@@ -1,0 +1,671 @@
+/* =========================================
+   PAGE
+========================================= */
+
+.medical-records-page {
+    min-height: 100vh;
+    padding: 48px 24px 80px;
+
+    background: #f5f8fc;
+}
+
+.medical-records-wrapper {
+    width: 100%;
+    max-width: 1260px;
+
+    margin: 0 auto;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.records-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+
+    margin-bottom: 28px;
+}
+
+.page-label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #1268e8;
+
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+}
+
+.records-header h1 {
+    margin: 0;
+
+    color: #173354;
+
+    font-size: 36px;
+    font-weight: 800;
+}
+
+.records-header p {
+    margin: 8px 0 0;
+
+    color: #72839a;
+
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.back-dashboard-btn {
+    flex-shrink: 0;
+
+    padding: 12px 18px;
+
+    background: #ffffff;
+    border: 1px solid #dce5ef;
+    border-radius: 10px;
+
+    color: #173354;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition:
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.back-dashboard-btn:hover {
+    border-color: #1268e8;
+
+    transform: translateX(-2px);
+}
+
+
+/* =========================================
+   SUMMARY
+========================================= */
+
+.records-summary {
+    margin-bottom: 24px;
+}
+
+.summary-card {
+    max-width: 330px;
+
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    padding: 20px;
+
+    background: #ffffff;
+    border: 1px solid #e0e7ef;
+    border-radius: 15px;
+}
+
+.summary-icon {
+    width: 54px;
+    height: 54px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background: #eaf3ff;
+    border-radius: 13px;
+
+    font-size: 25px;
+}
+
+.prescription-icon {
+    background: #edf9f1;
+}
+
+.summary-card span {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #7b899c;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.summary-card strong {
+    color: #173354;
+
+    font-size: 25px;
+    font-weight: 800;
+}
+
+
+/* =========================================
+   RECORD SECTION
+========================================= */
+
+.records-section {
+    padding: 26px;
+
+    background: #ffffff;
+    border: 1px solid #e0e7ef;
+    border-radius: 18px;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 22px;
+}
+
+.section-heading span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #1268e8;
+
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.3px;
+}
+
+.section-heading h2 {
+    margin: 0;
+
+    color: #173354;
+
+    font-size: 23px;
+}
+
+.record-count {
+    min-width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #edf4ff;
+    border-radius: 10px;
+
+    color: #1268e8;
+
+    font-size: 13px;
+}
+
+
+/* =========================================
+   LAB TEST CARDS
+========================================= */
+
+.records-list {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.medical-record-card {
+    display: grid;
+    grid-template-columns:
+        58px
+        minmax(220px, 1fr)
+        170px
+        150px;
+
+    align-items: center;
+    gap: 18px;
+
+    padding: 20px;
+
+    background: #fbfcfe;
+    border: 1px solid #e3e9f0;
+    border-radius: 13px;
+}
+
+.record-icon {
+    width: 54px;
+    height: 54px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eaf3ff;
+    border-radius: 12px;
+
+    font-size: 24px;
+}
+
+.record-label,
+.record-meta span,
+.record-instructions span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #8795a8;
+
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.record-main h3 {
+    margin: 0;
+
+    color: #173354;
+
+    font-size: 18px;
+}
+
+.record-main p {
+    margin: 5px 0 0;
+
+    color: #1268e8;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.record-meta strong {
+    color: #405772;
+
+    font-size: 12px;
+}
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+.status-badge {
+    display: inline-flex;
+
+    padding: 7px 13px;
+
+    border-radius: 999px;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.status-ordered {
+    background: #fff5d9;
+    color: #a56b00;
+}
+
+.status-sample_collected {
+    background: #eaf3ff;
+    color: #1268e8;
+}
+
+.status-report_ready {
+    background: #e5f8ec;
+    color: #148348;
+}
+
+.status-reviewed {
+    background: #f0ebff;
+    color: #6945c5;
+}
+
+
+/* =========================================
+   INSTRUCTIONS
+========================================= */
+
+.record-instructions {
+    grid-column: 2 / -1;
+
+    padding-top: 15px;
+
+    border-top: 1px solid #e4eaf1;
+}
+
+.record-instructions p {
+    margin: 0;
+
+    color: #60738a;
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   PRESCRIPTION GRID
+========================================= */
+
+.prescription-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.prescription-card {
+    overflow: hidden;
+
+    background: #fbfcfe;
+    border: 1px solid #e1e8ef;
+    border-radius: 15px;
+}
+
+.prescription-card-top {
+    display: grid;
+    grid-template-columns: 52px 1fr auto;
+    align-items: center;
+    gap: 13px;
+
+    padding: 20px;
+
+    background: #f7faff;
+    border-bottom: 1px solid #e5eaf1;
+}
+
+.doctor-avatar {
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #1268e8;
+    border-radius: 12px;
+
+    color: #ffffff;
+
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.prescription-doctor span,
+.prescription-date span,
+.prescription-detail > span {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #8795a8;
+
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.prescription-doctor h3 {
+    margin: 0;
+
+    color: #173354;
+
+    font-size: 15px;
+}
+
+.prescription-doctor p {
+    margin: 4px 0 0;
+
+    color: #1268e8;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.prescription-date {
+    text-align: right;
+}
+
+.prescription-date strong {
+    color: #405772;
+
+    font-size: 11px;
+}
+
+
+/* CONTENT */
+
+.prescription-content {
+    padding: 20px;
+}
+
+.prescription-detail {
+    margin-bottom: 18px;
+}
+
+.prescription-detail:last-child {
+    margin-bottom: 0;
+}
+
+.prescription-detail p {
+    margin: 0;
+
+    color: #50657d;
+
+    font-size: 12px;
+    line-height: 1.65;
+}
+
+.medicine-detail {
+    padding: 14px;
+
+    background: #edf9f1;
+    border-radius: 9px;
+}
+
+
+/* FOOTER */
+
+.prescription-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    padding: 16px 20px;
+
+    border-top: 1px solid #e5eaf1;
+}
+
+.follow-up span {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #7b899c;
+
+    font-size: 9px;
+}
+
+.follow-up strong {
+    color: #173354;
+
+    font-size: 11px;
+}
+
+.no-follow-up {
+    color: #8795a8;
+
+    font-size: 11px;
+}
+
+.view-prescription-btn {
+    padding: 9px 13px;
+
+    background: #1268e8;
+    border-radius: 8px;
+
+    color: #ffffff;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    text-decoration: none;
+}
+
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.empty-records {
+    padding: 65px 20px;
+
+    text-align: center;
+}
+
+.empty-record-icon {
+    width: 62px;
+    height: 62px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 16px;
+
+    background: #edf4ff;
+    border-radius: 50%;
+
+    font-size: 28px;
+}
+
+.empty-records h3 {
+    margin: 0;
+
+    color: #173354;
+
+    font-size: 18px;
+}
+
+.empty-records p {
+    margin: 8px 0 0;
+
+    color: #8290a3;
+
+    font-size: 12px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
+
+    .medical-record-card {
+        grid-template-columns:
+            54px
+            1fr;
+    }
+
+    .record-meta,
+    .record-status {
+        grid-column: 2;
+    }
+
+    .record-instructions {
+        grid-column: 1 / -1;
+    }
+
+    .prescription-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .medical-records-page {
+        padding: 30px 15px 60px;
+    }
+
+    .records-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .records-header h1 {
+        font-size: 29px;
+    }
+
+    .summary-card {
+        max-width: none;
+    }
+
+    .records-section {
+        padding: 18px;
+    }
+
+    .medical-record-card {
+        grid-template-columns: 1fr;
+    }
+
+    .record-meta,
+    .record-status,
+    .record-instructions {
+        grid-column: auto;
+    }
+
+    .prescription-card-top {
+        grid-template-columns: 48px 1fr;
+    }
+
+    .prescription-date {
+        grid-column: 2;
+
+        text-align: left;
+    }
+
+    .prescription-footer {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+.record-status {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 10px;
+}
+
+.view-report-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 38px;
+    padding: 0 16px;
+
+    border-radius: 8px;
+
+    background: #1769e8;
+    color: #ffffff;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    text-decoration: none;
+    white-space: nowrap;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.view-report-btn:hover {
+    background: #1259c9;
+    transform: translateY(-1px);
+}

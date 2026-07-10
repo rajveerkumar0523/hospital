@@ -1,0 +1,395 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Book Appointment | MediCore
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'appointments/css/book_appointment.css' %}?v=1"
+>
+{% endblock %}
+
+
+{% block content %}
+
+<section class="booking-page">
+
+    <div class="booking-container">
+
+        <!-- BACK LINK -->
+        <a
+            href="{% url 'doctors:list' %}"
+            class="back-link"
+        >
+            ← Back to Doctors
+        </a>
+
+
+        <!-- PAGE HEADER -->
+        <div class="booking-header">
+
+            <span class="page-label">
+                APPOINTMENT BOOKING
+            </span>
+
+            <h1>Book Your Appointment</h1>
+
+            <p>
+                Choose a convenient date and available time slot
+                for your consultation.
+            </p>
+
+        </div>
+
+
+        <!-- DJANGO MESSAGES -->
+        {% if messages %}
+
+            <div class="messages">
+
+                {% for message in messages %}
+
+                    <div class="message {{ message.tags }}">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+
+        <div class="booking-layout">
+
+
+            <!-- =========================
+                 LEFT: DOCTOR INFORMATION
+            ========================== -->
+
+            <aside class="doctor-summary-card">
+
+                <div class="doctor-avatar">
+
+                    {{ doctor.user.first_name|first }}
+                    {{ doctor.user.last_name|first }}
+
+                </div>
+
+
+                <span class="department-badge">
+                    {{ doctor.department.name }}
+                </span>
+
+
+                <h2>
+                    Dr. {{ doctor.user.get_full_name }}
+                </h2>
+
+
+                <p class="specialization">
+                    {{ doctor.specialization }}
+                </p>
+
+
+                <p class="qualification">
+                    {{ doctor.qualification }}
+                </p>
+
+
+                <div class="doctor-divider"></div>
+
+
+                <div class="doctor-detail">
+
+                    <span class="detail-label">
+                        Experience
+                    </span>
+
+                    <strong>
+                        {{ doctor.experience_years }}+ Years
+                    </strong>
+
+                </div>
+
+
+                <div class="doctor-detail">
+
+                    <span class="detail-label">
+                        Consultation Fee
+                    </span>
+
+                    <strong>
+                        ₹{{ doctor.consultation_fee }}
+                    </strong>
+
+                </div>
+
+
+                <div class="doctor-detail">
+
+                    <span class="detail-label">
+                        Status
+                    </span>
+
+                    <strong class="available-status">
+                        ● Available
+                    </strong>
+
+                </div>
+
+
+                {% if doctor.bio %}
+
+                    <div class="doctor-divider"></div>
+
+                    <p class="doctor-bio">
+                        {{ doctor.bio }}
+                    </p>
+
+                {% endif %}
+
+            </aside>
+
+
+            <!-- =========================
+                 RIGHT: BOOKING FORM
+            ========================== -->
+
+            <main class="booking-card">
+
+
+                <!-- STEP 1 -->
+                <div class="booking-step">
+
+                    <div class="step-header">
+
+                        <span class="step-number">
+                            1
+                        </span>
+
+                        <div>
+                            <h3>Select Appointment Date</h3>
+
+                            <p>
+                                Choose a date to view available slots.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <form
+                        method="GET"
+                        class="date-form"
+                    >
+
+                        <input
+                            type="date"
+                            name="date"
+                            value="{{ selected_date|default:'' }}"
+                            min="{{ today }}"
+                            required
+                        >
+
+                        <button type="submit">
+                            Check Availability
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+                <!-- STEP 2 -->
+                {% if selected_date %}
+
+                    <div class="booking-step">
+
+                        <div class="step-header">
+
+                            <span class="step-number">
+                                2
+                            </span>
+
+                            <div>
+                                <h3>Select Available Time</h3>
+
+                                <p>
+                                    Available slots for
+                                    {{ selected_date }}
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        {% if available_slots %}
+
+                            <form
+                                method="POST"
+                                class="appointment-form"
+                            >
+
+                                {% csrf_token %}
+
+                                <input
+                                    type="hidden"
+                                    name="appointment_date"
+                                    value="{{ selected_date }}"
+                                >
+
+
+                                <div class="time-slots">
+
+                                    {% for slot in available_slots %}
+
+                                        <label class="time-slot">
+
+                                            <input
+                                                type="radio"
+                                                name="appointment_time"
+                                                value="{{ slot }}"
+                                                required
+                                            >
+
+                                            <span>
+                                                {{ slot }}
+                                            </span>
+
+                                        </label>
+
+                                    {% endfor %}
+
+                                </div>
+
+
+                                <!-- STEP 3 -->
+                                <div class="reason-section">
+
+                                    <div class="step-header">
+
+                                        <span class="step-number">
+                                            3
+                                        </span>
+
+                                        <div>
+                                            <h3>Reason for Visit</h3>
+
+                                            <p>
+                                                Briefly describe your
+                                                health concern.
+                                            </p>
+                                        </div>
+
+                                    </div>
+
+
+                                    <textarea
+                                        name="reason"
+                                        rows="5"
+                                        maxlength="500"
+                                        placeholder="Describe your symptoms or reason for consultation..."
+                                        required
+                                    ></textarea>
+
+                                </div>
+
+
+                                <!-- BOOKING SUMMARY -->
+                                <div class="booking-summary">
+
+                                    <div>
+
+                                        <span>
+                                            Appointment with
+                                        </span>
+
+                                        <strong>
+                                            Dr.
+                                            {{ doctor.user.get_full_name }}
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div>
+
+                                        <span>
+                                            Selected Date
+                                        </span>
+
+                                        <strong>
+                                            {{ selected_date }}
+                                        </strong>
+
+                                    </div>
+
+                                </div>
+
+
+                                <button
+                                    type="submit"
+                                    class="confirm-button"
+                                >
+                                    Confirm Appointment
+                                </button>
+
+                            </form>
+
+
+                        {% else %}
+
+                            <div class="no-slots">
+
+                                <div class="no-slots-icon">
+                                    🗓
+                                </div>
+
+                                <h4>
+                                    No slots available
+                                </h4>
+
+                                <p>
+                                    The doctor is not available on
+                                    this date. Please choose another
+                                    date.
+                                </p>
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                {% else %}
+
+                    <div class="select-date-placeholder">
+
+                        <div class="placeholder-icon">
+                            📅
+                        </div>
+
+                        <h3>Select a Date</h3>
+
+                        <p>
+                            Available appointment times will appear
+                            here after you select a date.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </main>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

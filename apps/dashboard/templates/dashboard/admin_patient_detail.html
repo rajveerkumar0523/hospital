@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Patient Details | MediCore
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'dashboard/css/patient_detail.css' %}?v=1"
+>
+{% endblock %}
+
+{% block content %}
+
+<section class="patient-detail-page">
+
+    <div class="detail-wrapper">
+
+        <div class="detail-header">
+
+            <div>
+                <span class="detail-label">
+                    PATIENT RECORD
+                </span>
+
+                <h1>
+                    {{ patient.get_full_name|default:patient.email }}
+                </h1>
+
+                <p>
+                    View patient information and appointment history.
+                </p>
+            </div>
+
+            <a
+                href="{% url 'dashboard:manage_patients' %}"
+                class="detail-back-btn"
+            >
+                ← Back to Patients
+            </a>
+
+        </div>
+
+
+        <div class="patient-summary-card">
+
+            <div class="detail-avatar">
+                {{ patient.first_name|first|upper }}
+                {{ patient.last_name|first|upper }}
+            </div>
+
+            <div class="summary-main">
+
+                <span>
+                    {{ patient_profile.patient_id }}
+                </span>
+
+                <h2>
+                    {{ patient.get_full_name|default:patient.email }}
+                </h2>
+
+                <p>{{ patient.email }}</p>
+
+            </div>
+
+            <div class="appointment-total">
+
+                <span>Total Appointments</span>
+
+                <strong>
+                    {{ appointment_count }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="medical-grid">
+
+            <div class="medical-card">
+                <span>Blood Group</span>
+
+                <strong>
+                    {{ patient_profile.blood_group|default:"N/A" }}
+                </strong>
+            </div>
+
+            <div class="medical-card">
+                <span>Known Allergies</span>
+
+                <strong>
+                    {{ patient_profile.allergies|default:"None" }}
+                </strong>
+            </div>
+
+            <div class="medical-card">
+                <span>Emergency Contact</span>
+
+                <strong>
+                    {{ patient_profile.emergency_contact|default:"N/A" }}
+                </strong>
+            </div>
+
+        </div>
+
+
+        <section class="history-card">
+
+            <div class="history-header">
+
+                <div>
+                    <span>MEDICAL ACTIVITY</span>
+                    <h2>Appointment History</h2>
+                </div>
+
+                <strong>
+                    {{ appointment_count }}
+                </strong>
+
+            </div>
+
+
+            {% if appointments %}
+
+                <div class="history-list">
+
+                    {% for appointment in appointments %}
+
+                        <article class="history-item">
+
+                            <div class="history-date">
+
+                                <strong>
+                                    {{ appointment.appointment_date|date:"d" }}
+                                </strong>
+
+                                <span>
+                                    {{ appointment.appointment_date|date:"M Y" }}
+                                </span>
+
+                            </div>
+
+
+                            <div class="history-info">
+
+                                <span>
+                                    {{ appointment.doctor.department.name }}
+                                </span>
+
+                                <h3>
+                                    Dr. {{ appointment.doctor.user.get_full_name }}
+                                </h3>
+
+                                <p>
+                                    {{ appointment.reason|truncatechars:70 }}
+                                </p>
+
+                            </div>
+
+
+                            <div class="history-time">
+
+                                <span>Time</span>
+
+                                <strong>
+                                    {{ appointment.appointment_time|time:"g:i A" }}
+                                </strong>
+
+                            </div>
+
+
+                            <span class="
+                                history-status
+                                status-{{ appointment.status|lower }}
+                            ">
+                                {{ appointment.get_status_display }}
+                            </span>
+
+                        </article>
+
+                    {% endfor %}
+
+                </div>
+
+
+            {% else %}
+
+                <div class="empty-history">
+
+                    <h3>No appointment history</h3>
+
+                    <p>
+                        This patient has not booked any appointments.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+    </div>
+
+</section>
+
+{% endblock %}

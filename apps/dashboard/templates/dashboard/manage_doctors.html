@@ -1,0 +1,275 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Manage Doctors | MediCore
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'dashboard/css/manage_doctors.css' %}?v=1"
+>
+{% endblock %}
+
+{% block content %}
+
+<section class="manage-page">
+
+    <div class="manage-wrapper">
+
+        <div class="manage-header">
+
+            <div>
+                <span class="page-label">
+                    ADMINISTRATION
+                </span>
+
+                <h1>Manage Doctors</h1>
+
+                <p>
+                    Add, view, edit and manage hospital doctors.
+                </p>
+            </div>
+
+            <a
+                href="{% url 'dashboard:add_doctor' %}"
+                class="add-doctor-btn"
+            >
+                + Add Doctor
+            </a>
+
+        </div>
+
+
+        {% if messages %}
+
+            {% for message in messages %}
+
+                <div class="admin-message">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+
+        <form
+            method="GET"
+            class="doctor-filters"
+        >
+
+            <input
+                type="text"
+                name="search"
+                value="{{ search_query }}"
+                placeholder="Search doctor..."
+            >
+
+
+            <select name="department">
+
+                <option value="">
+                    All Departments
+                </option>
+
+                {% for department in departments %}
+
+                    <option
+                        value="{{ department.id }}"
+                        {% if selected_department == department.id|stringformat:"s" %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ department.name }}
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+
+            <select name="status">
+
+                <option value="">
+                    All Status
+                </option>
+
+                <option
+                    value="AVAILABLE"
+                    {% if selected_status == "AVAILABLE" %}
+                        selected
+                    {% endif %}
+                >
+                    Available
+                </option>
+
+                <option
+                    value="ON_LEAVE"
+                    {% if selected_status == "ON_LEAVE" %}
+                        selected
+                    {% endif %}
+                >
+                    On Leave
+                </option>
+
+                <option
+                    value="INACTIVE"
+                    {% if selected_status == "INACTIVE" %}
+                        selected
+                    {% endif %}
+                >
+                    Inactive
+                </option>
+
+            </select>
+
+
+            <button type="submit">
+                Search
+            </button>
+
+        </form>
+
+
+        <div class="doctor-list-header">
+
+            <div>
+                <h2>Hospital Doctors</h2>
+
+                <p>
+                    {{ total_doctors }}
+                    doctor{{ total_doctors|pluralize }}
+                </p>
+            </div>
+
+        </div>
+
+
+        {% if doctors %}
+
+            <div class="doctor-admin-grid">
+
+                {% for doctor in doctors %}
+
+                    <article class="doctor-admin-card">
+
+                        <div class="doctor-avatar">
+
+                            {{ doctor.user.first_name|first|upper }}
+
+                            {{ doctor.user.last_name|first|upper }}
+
+                        </div>
+
+
+                        <div class="doctor-main-info">
+
+                            <span class="doctor-id">
+                                {{ doctor.doctor_id }}
+                            </span>
+
+                            <h3>
+                                Dr. {{ doctor.user.get_full_name }}
+                            </h3>
+
+                            <p>
+                                {{ doctor.specialization }}
+                            </p>
+
+                            <small>
+                                {{ doctor.department.name }}
+                            </small>
+
+                        </div>
+
+
+                        <div class="doctor-status">
+
+                            <span class="
+                                status-badge
+                                status-{{ doctor.status|lower }}
+                            ">
+                                {{ doctor.get_status_display }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="doctor-actions">
+
+                            <a
+                                href="{% url 'dashboard:admin_doctor_detail' doctor.id %}"
+                                class="view-btn"
+                            >
+                                View
+                            </a>
+
+
+                            <a
+                                href="{% url 'dashboard:edit_doctor' doctor.id %}"
+                                class="edit-btn"
+                            >
+                                Edit
+                            </a>
+
+
+                            <form
+                                method="POST"
+                                action="{% url 'dashboard:toggle_doctor_status' doctor.id %}"
+                            >
+
+                                {% csrf_token %}
+
+                                {% if doctor.status == "INACTIVE" %}
+
+                                    <button
+                                        type="submit"
+                                        class="activate-btn"
+                                    >
+                                        Activate
+                                    </button>
+
+                                {% else %}
+
+                                    <button
+                                        type="submit"
+                                        class="deactivate-btn"
+                                        onclick="return confirm('Deactivate this doctor?');"
+                                    >
+                                        Deactivate
+                                    </button>
+
+                                {% endif %}
+
+                            </form>
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+
+        {% else %}
+
+            <div class="empty-doctors">
+
+                <h3>No doctors found</h3>
+
+                <p>
+                    No doctor matches the selected filters.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,330 @@
+.edit-profile-page {
+    min-height: calc(100vh - 80px);
+    padding: 50px 20px;
+
+    background: #f5f8fd;
+}
+
+
+.edit-profile-container {
+    width: 100%;
+    max-width: 900px;
+
+    margin: 0 auto;
+    padding: 40px 45px;
+
+    background: #ffffff;
+
+    border: 1px solid #e7edf5;
+    border-radius: 20px;
+
+    box-shadow:
+        0 15px 45px
+        rgba(24, 67, 130, 0.09);
+}
+
+
+/* HEADER */
+
+.edit-profile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 25px;
+
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+
+    border-bottom: 1px solid #edf1f6;
+}
+
+
+.profile-badge {
+    display: inline-block;
+
+    padding: 6px 12px;
+    margin-bottom: 10px;
+
+    background: #eaf3ff;
+    color: #1265e8;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+.edit-profile-header h1 {
+    margin: 0;
+
+    color: #0b1f44;
+
+    font-size: 32px;
+}
+
+
+.edit-profile-header p {
+    margin: 8px 0 0;
+
+    color: #7b8495;
+
+    font-size: 14px;
+}
+
+
+.patient-id-box {
+    min-width: 180px;
+
+    padding: 15px 18px;
+
+    background: #f5f9ff;
+
+    border: 1px solid #e0ebfa;
+    border-radius: 12px;
+}
+
+
+.patient-id-box span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #8a94a6;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    text-transform: uppercase;
+}
+
+
+.patient-id-box strong {
+    color: #1265e8;
+
+    font-size: 15px;
+}
+
+
+/* FORM SECTION */
+
+.form-section {
+    padding: 25px 0;
+}
+
+
+.form-section + .form-section {
+    border-top: 1px solid #edf1f6;
+}
+
+
+.section-heading {
+    margin-bottom: 22px;
+}
+
+
+.section-heading h2 {
+    margin: 0;
+
+    color: #172b4d;
+
+    font-size: 19px;
+}
+
+
+.section-heading p {
+    margin: 6px 0 0;
+
+    color: #8a94a6;
+
+    font-size: 13px;
+}
+
+
+.form-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 0 20px;
+}
+
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #263550;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+
+    padding: 14px 15px;
+
+    background: #ffffff;
+
+    border: 1px solid #d9e1ec;
+    border-radius: 9px;
+
+    color: #263550;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    outline: none;
+
+    transition: 0.2s;
+}
+
+
+.form-group select {
+    height: 49px;
+}
+
+
+.form-group textarea {
+    min-height: 100px;
+
+    resize: vertical;
+}
+
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #1265e8;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(18, 101, 232, 0.10);
+}
+
+
+/* ERRORS */
+
+.errorlist {
+    margin: 7px 0 0;
+    padding: 0;
+
+    list-style: none;
+
+    color: #d92d20;
+
+    font-size: 12px;
+}
+
+
+.form-alert {
+    padding: 12px 15px;
+    margin-bottom: 20px;
+
+    background: #fff2f0;
+
+    border: 1px solid #ffc9c2;
+    border-radius: 8px;
+
+    color: #b42318;
+}
+
+
+/* ACTION BUTTONS */
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    padding-top: 25px;
+
+    border-top: 1px solid #edf1f6;
+}
+
+
+.cancel-btn,
+.save-btn {
+    padding: 13px 22px;
+
+    border-radius: 9px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    cursor: pointer;
+}
+
+
+.cancel-btn {
+    background: #ffffff;
+    color: #536078;
+
+    border: 1px solid #d9e1ec;
+}
+
+
+.save-btn {
+    border: none;
+
+    background: #1265e8;
+    color: #ffffff;
+}
+
+
+.save-btn:hover {
+    background: #0753c8;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 700px) {
+
+    .edit-profile-page {
+        padding: 30px 16px;
+    }
+
+    .edit-profile-container {
+        padding: 30px 22px;
+    }
+
+    .edit-profile-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .patient-id-box {
+        width: 100%;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .cancel-btn,
+    .save-btn {
+        width: 100%;
+
+        text-align: center;
+    }
+
+}

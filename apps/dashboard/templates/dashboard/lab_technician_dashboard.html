@@ -1,0 +1,291 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Add Doctor | MediCore
+{% endblock %}
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'dashboard/css/lab_technician_dashboard.css' %}?v=2"
+>
+{% endblock %}
+
+{% block content %}
+
+<!-- <nav class="lab-navbar">
+    <a
+        href="{% url 'dashboard:lab_technician' %}"
+        class="lab-brand"
+    >
+        <span class="lab-brand-icon">+</span>
+        <span class="lab-brand-name">MediCore</span>
+    </a>
+</nav> -->
+
+
+<section class="lab-dashboard-page">
+
+    <div class="lab-dashboard-wrapper">
+
+        <div class="lab-dashboard-header">
+
+            <div>
+                <span class="lab-page-label">
+                    LABORATORY OPERATIONS
+                </span>
+
+                <h1>
+                    Lab Technician Dashboard
+                </h1>
+
+                <p>
+                    Manage paid laboratory tests and patient reports.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="lab-queue-panel">
+
+            <div class="lab-panel-header">
+
+                <div>
+                    <h2>Paid Test Queue</h2>
+
+                    <p>
+                       {{ pending_test_count }}
+                        paid test{{ total_test_count|pluralize }}
+                        in the laboratory queue.
+                    </p>
+                </div>
+
+            </div>
+
+
+          {% if pending_tests %}
+
+                <div class="lab-test-list">
+
+                   {% for test in pending_tests %}
+
+                        <article class="lab-test-card">
+
+                            <div class="lab-test-info">
+
+                                <span>PATIENT ID</span>
+
+                                <h3>
+                                    {{ test.appointment.patient.patient_profile.patient_id }}
+                                </h3>
+
+                            </div>
+
+                            <div class="lab-test-info">
+                              <span>TEST ID</span>
+                              <h3>
+                                  {{ test.test_id }}
+                              </h3></div>
+
+
+                            <div class="lab-test-info">
+
+                                <span>PATIENT</span>
+
+                                <h3>
+                                    {{ test.appointment.patient.get_full_name }}
+                                </h3>
+
+                                <p>
+                                    {{ test.appointment.patient.email }}
+                                </p>
+
+                            </div>
+
+                            
+
+
+                            <div class="lab-test-info">
+                              
+
+                                <span>TEST</span>
+
+                                <h3>
+                                    🧪 {{ test.test_name }}
+                                </h3>
+
+                                <p>
+                                    {{ test.get_test_type_display }}
+                                </p>
+
+                            </div>
+
+
+                            <div class="lab-test-info">
+
+                                <span>ORDERED BY</span>
+
+                                <h3>
+                                    Dr.
+                                    {{ test.appointment.doctor.user.get_full_name }}
+                                </h3>
+
+                            </div>
+
+
+                            
+
+
+                            <a
+                                href="{% url 'dashboard:lab_test_detail' test.id %}"
+                                class="open-patient-btn"
+                            >
+                                Open Test
+                            </a>
+
+                        </article>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="lab-empty-state">
+
+                    <div class="lab-empty-icon">
+                        🧪
+                    </div>
+
+                    <h3>
+                        No paid tests waiting
+                    </h3>
+
+                    <p>
+                        Tests will appear here after payment is completed.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+        <div class="lab-queue-panel tested-panel">
+
+    <div class="lab-panel-header">
+
+        <div>
+            <h2>Tested List</h2>
+
+            <p>
+                {{ tested_test_count }}
+                completed test{{ tested_test_count|pluralize }}.
+            </p>
+        </div>
+
+    </div>
+
+
+    {% if tested_tests %}
+
+        <div class="lab-test-list">
+
+            {% for test in tested_tests %}
+
+                <article class="lab-test-card">
+
+                    <div class="lab-test-info">
+                        <span>TEST ID</span>
+
+                        <h3>
+                            {{ test.test_id }}
+                        </h3>
+                    </div>
+
+
+                    <div class="lab-test-info">
+                        <span>PATIENT</span>
+
+                        <h3>
+                            {{ test.appointment.patient.get_full_name }}
+                        </h3>
+
+                        <p>
+                            {{ test.appointment.patient.patient_profile.patient_id }}
+                        </p>
+                    </div>
+
+
+                    <div class="lab-test-info">
+                        <span>TEST</span>
+
+                        <h3>
+                            🧪 {{ test.test_name }}
+                        </h3>
+                    </div>
+
+
+                    <div class="lab-test-info">
+                        <span>RESULT</span>
+
+                        <strong class="
+                            result-badge
+                            result-{{ test.lab_result.result_status|lower }}
+                        ">
+                            {{ test.lab_result.get_result_status_display }}
+                        </strong>
+                    </div>
+
+
+                    <div class="lab-test-info">
+                        <span>TESTED ON</span>
+
+                        <h3>
+                            {{ test.lab_result.completed_at|date:"d M Y" }}
+                        </h3>
+
+                        <p>
+                            {{ test.lab_result.completed_at|time:"h:i A" }}
+                        </p>
+                    </div>
+
+
+                    <a
+                        href="{% url 'dashboard:lab_test_detail' test.id %}"
+                        class="view-result-btn"
+                    >
+                        View Result
+                    </a>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="lab-empty-state">
+
+            <div class="lab-empty-icon">
+                📋
+            </div>
+
+            <h3>No completed tests yet</h3>
+
+            <p>
+                Saved laboratory results will appear here.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+    </div>
+
+</section>
+
+{% endblock %}

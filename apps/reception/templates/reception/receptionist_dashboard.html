@@ -1,0 +1,412 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Reception Desk | MediCore
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'reception/css/receptionist_dashboard.css' %}?v=5"
+>
+{% endblock %}
+
+
+{% block content %}
+
+<section class="reception-page">
+
+    <div class="reception-wrapper">
+
+
+        <!-- HEADER -->
+
+        <div class="reception-header">
+
+            <div>
+                <span class="page-label">
+                    FRONT DESK OPERATIONS
+                </span>
+
+                <h1>
+                    Reception Dashboard
+                </h1>
+
+                <p>
+                    Search patients, manage test payments
+                    and monitor today's collections.
+                </p>
+            </div>
+
+            <div class="staff-profile">
+
+                <div class="staff-avatar">
+                    {{ request.user.first_name|first|upper }}
+                    {{ request.user.last_name|first|upper }}
+                </div>
+
+                <div>
+                    <strong>
+                        {{ request.user.get_full_name|default:request.user.email }}
+                    </strong>
+
+                    <span>
+                        Receptionist
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- STATISTICS -->
+
+        <div class="reception-stats">
+
+            <article class="reception-stat-card">
+
+                <div class="stat-icon patient-icon">
+                    👤
+                </div>
+
+                <div>
+                    <span>Patients Served</span>
+                 
+<strong>{{ patients_served }}</strong>
+                </div>
+
+            </article>
+
+
+            <article class="reception-stat-card">
+
+                <div class="stat-icon pending-icon">
+                    🧾
+                </div>
+
+                <div>
+                    <span>Pending Test Bills</span>
+                    <strong class="panel-count">
+    {{ pending_bill_count }}
+</strong>
+                </div>
+
+            </article>
+
+
+            <article class="reception-stat-card">
+
+                <div class="stat-icon paid-icon">
+                    ✓
+                </div>
+
+                <div>
+                    <span>Payments Collected</span>
+                    <strong>{{ payments_collected }}</strong>
+                </div>
+
+            </article>
+
+
+            <article class="reception-stat-card">
+
+                <div class="stat-icon money-icon">
+                    ₹
+                </div>
+
+                <div>
+                    <span>Today's Collection</span>
+                    <strong>₹{{ today_collection }}</strong>
+                </div>
+
+            </article>
+
+        </div>
+
+
+        <!-- PATIENT SEARCH -->
+
+        <section class="patient-search-card">
+
+            <div class="search-heading">
+
+                <div class="search-heading-icon">
+                    🔎
+                </div>
+
+                <div>
+                    <span>
+                        PATIENT LOOKUP
+                    </span>
+
+                    <h2>
+                        Find Patient
+                    </h2>
+
+                    <p>
+                        Search using Patient ID, name,
+                        email or phone number.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <form
+                method="GET"
+                action="#"
+                class="patient-search-form"
+            >
+
+                <input
+                    type="text"
+                    name="q"
+                    placeholder="Enter Patient ID, name, email or phone..."
+                >
+
+                <button type="submit">
+                    Search Patient
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- MAIN GRID -->
+
+        <div class="reception-main-grid">
+
+
+            <!-- PENDING BILLS -->
+
+            <section class="dashboard-panel">
+
+                <div class="panel-heading">
+
+                    <div>
+                        <span>
+                            PAYMENT QUEUE
+                        </span>
+
+                        <h2>
+                            Pending Test Bills
+                        </h2>
+                    </div>
+
+                   <strong>{{ pending_bill_count }}</strong>
+
+                </div>
+
+
+                {% if pending_bills %}
+
+    <div class="pending-bill-list">
+
+        {% for bill in pending_bills %}
+
+            <article class="pending-bill-item">
+
+                <div class="bill-top">
+
+                    <div>
+
+                        <span class="bill-label">
+                            TEST BILL #{{ bill.id }}
+                        </span>
+
+                        <h3>
+                            {{ bill.appointment.patient.get_full_name|default:bill.appointment.patient.email }}
+                        </h3>
+
+                        <p>
+                            {{ bill.appointment.patient.email }}
+                        </p>
+
+                    </div>
+
+
+                    <span class="unpaid-badge">
+                        Unpaid
+                    </span>
+
+                </div>
+
+
+                <div class="bill-tests">
+
+                    {% for item in bill.items.all %}
+
+                        <div class="bill-test-row">
+
+                            <span>
+                                {{ item.test_name }}
+                            </span>
+
+                            <strong>
+                                ₹{{ item.amount }}
+                            </strong>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <div class="bill-footer">
+
+                    <div>
+
+                        <span>
+                            TOTAL AMOUNT
+                        </span>
+
+                        <strong>
+                            ₹{{ bill.total_amount }}
+                        </strong>
+
+                    </div>
+
+
+<a
+    href="{% url 'reception:collect_test_payment' bill.id %}"
+    class="collect-payment-btn"
+>
+    Collect Payment
+</a>
+
+                </div>
+
+            </article>
+
+        {% endfor %}
+
+    </div>
+
+
+{% else %}
+
+    <div class="empty-panel">
+
+        <div class="empty-icon">
+            🧾
+        </div>
+
+        <h3>
+            No pending bills
+        </h3>
+
+        <p>
+            Unpaid test bills will appear here.
+        </p>
+
+    </div>
+
+{% endif %}
+
+            </section>
+
+
+            <!-- TODAY COLLECTIONS -->
+<section class="dashboard-panel">
+
+    <div class="panel-heading">
+        <div>
+            <span>TODAY'S ACTIVITY</span>
+            <h2>Recent Payments</h2>
+        </div>
+
+        <strong>
+            {{ payments_collected }}
+        </strong>
+    </div>
+
+
+    {% if today_payments %}
+
+        <div class="recent-payment-list">
+
+            {% for payment in today_payments %}
+
+                <article class="recent-payment-item">
+
+                    <div class="payment-patient">
+
+                        <div class="payment-avatar">
+                            {{ payment.appointment.patient.first_name|first|upper|default:"P" }}
+                        </div>
+
+                        <div class="recent-patient-details">
+
+    <span class="recent-patient-label">
+        PATIENT
+    </span>
+
+    <h3>
+        {{ payment.appointment.patient.get_full_name|default:payment.appointment.patient.email }}
+    </h3>
+
+   <p class="recent-patient-id">
+    Patient ID:
+    <strong>
+        {{ payment.appointment.patient.patient_profile.patient_id }}
+    </strong>
+</p>
+
+    <span class="recent-bill-number">
+        Bill #{{ payment.id }}
+    </span>
+
+</div>
+
+                    </div>
+
+
+                    <div class="payment-info">
+
+                        <strong>
+                            ₹{{ payment.total_amount }}
+                        </strong>
+
+                        <span>
+                            {{ payment.paid_at|date:"h:i A" }}
+                        </span>
+
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-panel">
+
+            <div class="empty-icon">
+                💳
+            </div>
+
+            <h3>No payments yet</h3>
+
+            <p>
+                Today's collected payments will appear here.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

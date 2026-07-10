@@ -1,0 +1,297 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title %}
+Create Account | MediCore
+{% endblock %}
+
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'accounts/css/signup.css' %}"
+>
+{% endblock %}
+
+
+{% block content %}
+
+<section class="signup-page">
+
+    <div class="signup-container">
+
+        <!-- LEFT SIDE -->
+
+        <div class="signup-info">
+
+            <div class="signup-info-content">
+
+                <span class="signup-badge">
+                    Smart Healthcare
+                </span>
+
+                <h1>
+                    Your Health,
+                    <span>Connected.</span>
+                </h1>
+
+                <p>
+                    Create your MediCore patient account to
+                    manage appointments, medical records,
+                    lab reports, and emergency services.
+                </p>
+
+
+                <div class="signup-features">
+
+                    <div class="signup-feature">
+                        <span>✓</span>
+
+                        <div>
+                            <h4>Easy Appointments</h4>
+                            <p>
+                                Book appointments with doctors
+                                and specialists.
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="signup-feature">
+                        <span>✓</span>
+
+                        <div>
+                            <h4>Digital Health Records</h4>
+                            <p>
+                                Access your medical history
+                                securely.
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="signup-feature">
+                        <span>✓</span>
+
+                        <div>
+                            <h4>Lab Reports</h4>
+                            <p>
+                                View your test results from
+                                anywhere.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT SIDE -->
+
+        <div class="signup-form-section">
+
+            <div class="signup-form-box">
+
+                <div class="form-heading">
+
+                    <h2>Create Patient Account</h2>
+
+                    <p>
+                        Enter your details to get started
+                    </p>
+
+                </div>
+
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+
+                    <!-- NON FIELD ERRORS -->
+
+                    {% if form.non_field_errors %}
+
+                        <div class="form-alert">
+
+                            {% for error in form.non_field_errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- FIRST + LAST NAME -->
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="{{ form.first_name.id_for_label }}">
+                                First Name
+                            </label>
+
+                            {{ form.first_name }}
+
+                            {% for error in form.first_name.errors %}
+                                <small class="field-error">
+                                    {{ error }}
+                                </small>
+                            {% endfor %}
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="{{ form.last_name.id_for_label }}">
+                                Last Name
+                            </label>
+
+                            {{ form.last_name }}
+
+                            {% for error in form.last_name.errors %}
+                                <small class="field-error">
+                                    {{ error }}
+                                </small>
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group">
+
+                        <label for="{{ form.email.id_for_label }}">
+                            Email Address
+                        </label>
+
+                        {{ form.email }}
+
+                        {% for error in form.email.errors %}
+                            <small class="field-error">
+                                {{ error }}
+                            </small>
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- PHONE -->
+
+                    <div class="form-group">
+
+                        <label for="{{ form.phone.id_for_label }}">
+                            Phone Number
+                        </label>
+
+                        {{ form.phone }}
+
+                        {% for error in form.phone.errors %}
+                            <small class="field-error">
+                                {{ error }}
+                            </small>
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- PASSWORDS -->
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="{{ form.password1.id_for_label }}">
+                                Password
+                            </label>
+
+                            {{ form.password1 }}
+
+                            {% for error in form.password1.errors %}
+                                <small class="field-error">
+                                    {{ error }}
+                                </small>
+                            {% endfor %}
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="{{ form.password2.id_for_label }}">
+                                Confirm Password
+                            </label>
+
+                            {{ form.password2 }}
+
+                            {% for error in form.password2.errors %}
+                                <small class="field-error">
+                                    {{ error }}
+                                </small>
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TERMS -->
+
+                    <div class="terms">
+
+                        <input
+                            type="checkbox"
+                            id="terms"
+                            required
+                        >
+
+                        <label for="terms">
+                            I agree to the Terms and Privacy Policy
+                        </label>
+
+                    </div>
+
+
+                    <!-- BUTTON -->
+
+                    <button
+                        type="submit"
+                        class="signup-submit-btn"
+                    >
+                        Create Account
+                    </button>
+
+                </form>
+
+
+                <div class="login-link">
+
+                    <p>
+                        Already have an account?
+
+                        <a href="{% url 'accounts:login' %}">
+                            Login
+                        </a>
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

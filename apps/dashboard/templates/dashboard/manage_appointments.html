@@ -1,0 +1,258 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Manage Appointments | MediCore
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'dashboard/css/manage_appointments.css' %}?v=1"
+>
+{% endblock %}
+
+{% block content %}
+
+<section class="appointments-admin-page">
+
+    <div class="appointments-admin-wrapper">
+
+        <div class="appointments-admin-header">
+
+            <div>
+                <span class="page-label">
+                    ADMINISTRATION
+                </span>
+
+                <h1>Manage Appointments</h1>
+
+                <p>
+                    View and monitor all hospital appointments.
+                </p>
+            </div>
+
+            <a
+                href="{% url 'dashboard:admin' %}"
+                class="back-dashboard-btn"
+            >
+                ← Dashboard
+            </a>
+
+        </div>
+
+
+        <div class="appointment-stats">
+
+            <div class="appointment-stat-card">
+                <span>Total</span>
+                <strong>{{ total_count }}</strong>
+            </div>
+
+            <div class="appointment-stat-card">
+                <span>Pending</span>
+                <strong>{{ pending_count }}</strong>
+            </div>
+
+            <div class="appointment-stat-card">
+                <span>Confirmed</span>
+                <strong>{{ confirmed_count }}</strong>
+            </div>
+
+            <div class="appointment-stat-card">
+                <span>Completed</span>
+                <strong>{{ completed_count }}</strong>
+            </div>
+
+        </div>
+
+
+        <form
+            method="GET"
+            class="appointment-filters"
+        >
+
+            <select name="status">
+
+                <option value="">
+                    All Status
+                </option>
+
+                <option
+                    value="PENDING"
+                    {% if selected_status == "PENDING" %}
+                        selected
+                    {% endif %}
+                >
+                    Pending
+                </option>
+
+                <option
+                    value="CONFIRMED"
+                    {% if selected_status == "CONFIRMED" %}
+                        selected
+                    {% endif %}
+                >
+                    Confirmed
+                </option>
+
+                <option
+                    value="COMPLETED"
+                    {% if selected_status == "COMPLETED" %}
+                        selected
+                    {% endif %}
+                >
+                    Completed
+                </option>
+
+                <option
+                    value="CANCELLED"
+                    {% if selected_status == "CANCELLED" %}
+                        selected
+                    {% endif %}
+                >
+                    Cancelled
+                </option>
+
+            </select>
+
+
+            <input
+                type="date"
+                name="date"
+                value="{{ selected_date }}"
+            >
+
+
+            <button type="submit">
+                Apply Filter
+            </button>
+
+
+            {% if selected_status or selected_date %}
+
+                <a
+                    href="{% url 'dashboard:manage_appointments' %}"
+                    class="clear-filter-btn"
+                >
+                    Clear
+                </a>
+
+            {% endif %}
+
+        </form>
+
+
+        <div class="appointment-list-heading">
+
+            <div>
+                <h2>All Appointments</h2>
+
+                <p>
+                    {{ appointments|length }}
+                    result{{ appointments|length|pluralize }}
+                </p>
+            </div>
+
+        </div>
+
+
+        {% if appointments %}
+
+            <div class="admin-appointment-list">
+
+                {% for appointment in appointments %}
+
+                    <article class="admin-appointment-card">
+
+                        <div class="admin-appointment-date">
+
+                            <strong>
+                                {{ appointment.appointment_date|date:"d" }}
+                            </strong>
+
+                            <span>
+                                {{ appointment.appointment_date|date:"M Y" }}
+                            </span>
+
+                            <small>
+                                {{ appointment.appointment_time|time:"g:i A" }}
+                            </small>
+
+                        </div>
+
+
+                        <div class="appointment-person">
+
+                            <span>Patient</span>
+
+                            <h3>
+                                {{ appointment.patient.get_full_name|default:appointment.patient.email }}
+                            </h3>
+
+                            <p>
+                                {{ appointment.patient.email }}
+                            </p>
+
+                        </div>
+
+
+                        <div class="appointment-person">
+
+                            <span>Doctor</span>
+
+                            <h3>
+                                Dr. {{ appointment.doctor.user.get_full_name }}
+                            </h3>
+
+                            <p>
+                                {{ appointment.doctor.department.name }}
+                            </p>
+
+                        </div>
+
+
+                        <div class="appointment-reason">
+
+                            <span>Reason</span>
+
+                            <p>
+                                {{ appointment.reason|truncatechars:50 }}
+                            </p>
+
+                        </div>
+
+
+                        <span class="
+                            admin-appointment-status
+                            status-{{ appointment.status|lower }}
+                        ">
+                            {{ appointment.get_status_display }}
+                        </span>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+
+        {% else %}
+
+            <div class="empty-admin-appointments">
+
+                <h3>No appointments found</h3>
+
+                <p>
+                    No appointment matches the selected filters.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

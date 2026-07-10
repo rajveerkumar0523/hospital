@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block navbar %}
+    {% include "components/staff_navbar.html" %}
+{% endblock %}
+
+{% block title %}
+Staff Portal | MediCore
+{% endblock %}
+
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'accounts/css/staff_portal.css' %}?v=1"
+>
+{% endblock %}
+
+
+{% block content %}
+
+<section class="staff-portal-page">
+
+    <div class="staff-portal-container">
+
+        <!-- LEFT SIDE -->
+
+        <div class="staff-portal-info">
+
+            <span class="portal-label">
+                MEDICORE INTERNAL ACCESS
+            </span>
+
+            <h1>
+                Welcome to the
+                <span>Staff Portal</span>
+            </h1>
+
+            <p>
+                Secure access for doctors, nurses,
+                and authorized hospital staff.
+            </p>
+
+            <div class="portal-features">
+
+                <div class="portal-feature">
+                    <span>✓</span>
+                    <p>Role-based secure access</p>
+                </div>
+
+                <div class="portal-feature">
+                    <span>✓</span>
+                    <p>Hospital management tools</p>
+                </div>
+
+                <div class="portal-feature">
+                    <span>✓</span>
+                    <p>Patient care and clinical workflows</p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT SIDE -->
+
+        <div class="staff-login-card">
+
+            <div class="login-card-header">
+                <h2>Staff Sign In</h2>
+
+                <p>
+                    Use the credentials provided by
+                    the hospital administrator.
+                </p>
+            </div>
+
+
+            {% if messages %}
+
+    <div class="portal-messages">
+
+        {% for message in messages %}
+
+            <div class="portal-message {{ message.tags }}">
+
+                <span>{{ message }}</span>
+
+                <button
+                    type="button"
+                    class="message-close"
+                    aria-label="Close message"
+                    onclick="this.parentElement.remove()"
+                >
+                    &times;
+                </button>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+{% endif %}
+
+            <form method="post">
+
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="email">
+                        Staff Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your staff email"
+                        required
+                    >
+                </div>
+
+
+                <div class="form-group">
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <!-- <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        required
+                    > -->
+
+                    <input
+                    type="password"
+                    name="password"
+                >
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="staff-login-btn"
+                >
+                    Sign In to Staff Portal
+                    <span>→</span>
+                </button>
+
+            </form>
+
+
+            <div class="staff-login-note">
+                <span>🔒</span>
+
+                <p>
+                    This portal is restricted to authorized
+                    MediCore personnel only.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

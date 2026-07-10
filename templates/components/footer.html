@@ -1,0 +1,106 @@
+{% load static %}
+
+<link
+    rel="stylesheet"
+    href="{% static 'hospital/CSS/footer.css' %}?v=2"
+>
+
+<footer class="site-footer">
+
+    <div class="footer-container">
+
+        <!-- PATIENT SERVICES -->
+        <!-- PATIENT SERVICES -->
+<div class="footer-column">
+    <h3>For Patients</h3>
+
+    <a href="{% url 'doctors:list' %}">Find a Doctor</a>
+    <a href="{% url 'accounts:login' %}">Patient Login</a>
+    <a href="{% url 'accounts:signup' %}">Patient Signup</a>
+    <a href="{% url 'beds:list' %}">Find Beds</a>
+    <a href="#">Emergency 24×7</a>
+    <a href="#">Medical Records</a>
+</div>
+
+
+        <!-- SPECIALITIES -->
+        <div class="footer-column">
+            <h3>Specialities</h3>
+
+            <a href="#">Cardiac Care</a>
+            <a href="#">Neurology</a>
+            <a href="#">Orthopaedics</a>
+            <a href="#">General Medicine</a>
+            <a href="#">Emergency Medicine</a>
+            <a href="#">More +</a>
+        </div>
+
+
+        <!-- HOSPITAL -->
+        <div class="footer-column">
+            <h3>Hospital</h3>
+
+            <a href="#">About Us</a>
+            <a href="#">Departments</a>
+            <a href="{% url 'doctors:list' %}">Our Doctors</a>
+            <a href="#">Services</a>
+            <a href="#">Contact Us</a>
+            <a href="#">Careers</a>
+        </div>
+
+
+        <!-- QUICK LINKS -->
+        <div class="footer-column">
+            <h3>Quick Links</h3>
+
+            <a href="#">Health Articles</a>
+            <a href="#">News & Events</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms & Conditions</a>
+            <a href="#">Help & Support</a>
+        </div>
+
+
+        <!-- STAFF PORTAL -->
+        <div class="footer-column footer-staff">
+
+            <h3>For Medical Staff</h3>
+
+            <p>
+                Secure access for doctors, nurses
+                and authorized hospital staff.
+            </p>
+
+            <a href="{% url 'accounts:staff_portal' %}" class="staff-portal-btn">
+                Staff Portal
+                <span>→</span>
+            </a>
+
+            <div class="emergency-card">
+                <span class="emergency-icon">✚</span>
+
+                <div>
+                    <small>24×7 Emergency</small>
+                    <strong>Immediate Support</strong>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <div class="footer-brand">
+            <strong>MediCore</strong>
+            <span>Smart Hospital & Emergency Management</span>
+        </div>
+
+        <p>
+            © {% now "Y" %} MediCore. All rights reserved.
+        </p>
+
+    </div>
+
+</footer>

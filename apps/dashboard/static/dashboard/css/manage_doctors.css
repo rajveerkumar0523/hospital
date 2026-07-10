@@ -1,0 +1,711 @@
+/* =========================================
+   MANAGE DOCTORS - PAGE
+========================================= */
+
+.manage-page {
+    min-height: 100vh;
+    padding: 42px 5% 80px;
+    background: #f5f8fd;
+}
+
+.manage-wrapper,
+.form-wrapper {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+
+/* =========================================
+   PAGE HEADER
+========================================= */
+
+.manage-header,
+.form-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    margin-bottom: 28px;
+}
+
+.page-label {
+    display: block;
+    margin-bottom: 7px;
+
+    color: #1769e8;
+
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.manage-header h1,
+.form-page-header h1 {
+    margin: 0 0 7px;
+
+    color: #14294b;
+
+    font-size: 34px;
+    line-height: 1.2;
+}
+
+.manage-header p,
+.form-page-header p {
+    margin: 0;
+
+    color: #7d899c;
+
+    font-size: 13px;
+}
+
+
+/* =========================================
+   HEADER BUTTONS
+========================================= */
+
+.add-doctor-btn,
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 44px;
+    padding: 0 20px;
+
+    border-radius: 9px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.add-doctor-btn {
+    color: #ffffff;
+    background: #1769e8;
+    border: 1px solid #1769e8;
+}
+
+.add-doctor-btn:hover {
+    background: #0f5fd7;
+    transform: translateY(-1px);
+}
+
+.back-btn {
+    color: #243853;
+    background: #ffffff;
+    border: 1px solid #dbe4ef;
+}
+
+.back-btn:hover {
+    color: #1769e8;
+    border-color: #1769e8;
+}
+
+
+/* =========================================
+   MESSAGES
+========================================= */
+
+.admin-message {
+    margin-bottom: 20px;
+    padding: 13px 16px;
+
+    color: #157347;
+    background: #eaf8f0;
+
+    border: 1px solid #b8e5ca;
+    border-radius: 9px;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/* =========================================
+   FILTER BAR
+========================================= */
+
+.doctor-filters {
+    display: grid;
+    grid-template-columns:
+        minmax(220px, 2fr)
+        minmax(170px, 1fr)
+        minmax(150px, 1fr)
+        auto;
+
+    gap: 12px;
+
+    margin-bottom: 25px;
+    padding: 18px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e9f3;
+    border-radius: 13px;
+}
+
+.doctor-filters input,
+.doctor-filters select {
+    width: 100%;
+    height: 44px;
+
+    padding: 0 13px;
+
+    color: #243853;
+    background: #f8fafd;
+
+    border: 1px solid #dce5f0;
+    border-radius: 8px;
+
+    outline: none;
+
+    font-family: inherit;
+    font-size: 12px;
+
+    box-sizing: border-box;
+}
+
+.doctor-filters input:focus,
+.doctor-filters select:focus {
+    background: #ffffff;
+    border-color: #1769e8;
+}
+
+.doctor-filters button {
+    min-width: 100px;
+    height: 44px;
+
+    padding: 0 20px;
+
+    color: #ffffff;
+    background: #1769e8;
+
+    border: none;
+    border-radius: 8px;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.doctor-filters button:hover {
+    background: #0f5fd7;
+}
+
+
+/* =========================================
+   DOCTOR LIST HEADER
+========================================= */
+
+.doctor-list-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 15px;
+}
+
+.doctor-list-header h2 {
+    margin: 0 0 4px;
+
+    color: #243853;
+
+    font-size: 18px;
+}
+
+.doctor-list-header p {
+    margin: 0;
+
+    color: #8490a2;
+
+    font-size: 11px;
+}
+
+
+/* =========================================
+   DOCTOR CARDS
+========================================= */
+
+.doctor-admin-grid {
+    display: grid;
+    gap: 13px;
+}
+
+.doctor-admin-card {
+    display: grid;
+    grid-template-columns:
+        58px
+        minmax(220px, 1fr)
+        130px
+        auto;
+
+    align-items: center;
+    gap: 18px;
+
+    padding: 18px 20px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e9f3;
+    border-radius: 13px;
+
+    transition: 0.2s ease;
+}
+
+.doctor-admin-card:hover {
+    border-color: #bdd5f6;
+
+    box-shadow:
+        0 8px 25px
+        rgba(31, 67, 120, 0.06);
+}
+
+
+/* =========================================
+   DOCTOR AVATAR
+========================================= */
+
+.doctor-avatar {
+    width: 54px;
+    height: 54px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #1769e8;
+    background: #edf5ff;
+
+    border-radius: 11px;
+
+    font-size: 15px;
+    font-weight: 800;
+}
+
+
+/* =========================================
+   DOCTOR INFORMATION
+========================================= */
+
+.doctor-id {
+    display: block;
+    margin-bottom: 4px;
+
+    color: #1769e8;
+
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+}
+
+.doctor-main-info h3 {
+    margin: 0 0 4px;
+
+    color: #1d3151;
+
+    font-size: 15px;
+}
+
+.doctor-main-info p {
+    margin: 0 0 4px;
+
+    color: #63728a;
+
+    font-size: 11px;
+}
+
+.doctor-main-info small {
+    color: #8a96a8;
+    font-size: 10px;
+}
+
+
+/* =========================================
+   STATUS BADGES
+========================================= */
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 7px 11px;
+
+    border-radius: 30px;
+
+    font-size: 9px;
+    font-weight: 800;
+
+    white-space: nowrap;
+}
+
+.status-available {
+    color: #168348;
+    background: #e8f8ef;
+}
+
+.status-on_leave {
+    color: #b87900;
+    background: #fff5dc;
+}
+
+.status-inactive {
+    color: #d34242;
+    background: #ffebed;
+}
+
+
+/* =========================================
+   ACTION BUTTONS
+========================================= */
+
+.doctor-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 7px;
+}
+
+.doctor-actions form {
+    margin: 0;
+}
+
+.view-btn,
+.edit-btn,
+.activate-btn,
+.deactivate-btn {
+    min-height: 34px;
+    padding: 0 12px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 7px;
+
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 700;
+
+    text-decoration: none;
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.view-btn {
+    color: #1769e8;
+    background: #edf5ff;
+    border: 1px solid #d6e7ff;
+}
+
+.view-btn:hover {
+    background: #deecff;
+}
+
+.edit-btn {
+    color: #4e6078;
+    background: #ffffff;
+    border: 1px solid #d8e1ed;
+}
+
+.edit-btn:hover {
+    color: #1769e8;
+    border-color: #1769e8;
+}
+
+.activate-btn {
+    color: #168348;
+    background: #ecf9f1;
+    border: 1px solid #b9e6ca;
+}
+
+.deactivate-btn {
+    color: #d34242;
+    background: #ffffff;
+    border: 1px solid #f0b9bd;
+}
+
+.deactivate-btn:hover {
+    background: #fff0f1;
+}
+
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.empty-doctors {
+    padding: 70px 25px;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e9f3;
+    border-radius: 13px;
+}
+
+.empty-doctors h3 {
+    margin: 0 0 7px;
+
+    color: #243853;
+
+    font-size: 18px;
+}
+
+.empty-doctors p {
+    margin: 0;
+
+    color: #8490a2;
+
+    font-size: 12px;
+}
+
+
+/* =========================================
+   ADD / EDIT DOCTOR FORM
+========================================= */
+
+.form-wrapper {
+    max-width: 950px;
+}
+
+.doctor-form {
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e9f3;
+    border-radius: 15px;
+}
+
+.form-section {
+    padding: 27px 30px;
+
+    border-bottom: 1px solid #e8edf4;
+}
+
+.form-section h2 {
+    margin: 0 0 20px;
+
+    color: #243853;
+
+    font-size: 16px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 19px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    color: #42536d;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+
+    color: #243853;
+    background: #f8fafd;
+
+    border: 1px solid #dce5f0;
+    border-radius: 8px;
+
+    outline: none;
+
+    font-family: inherit;
+    font-size: 12px;
+
+    box-sizing: border-box;
+
+    transition: 0.2s ease;
+}
+
+.form-group input,
+.form-group select {
+    height: 45px;
+    padding: 0 13px;
+}
+
+.form-group textarea {
+    min-height: 120px;
+    padding: 12px 13px;
+
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    background: #ffffff;
+    border-color: #1769e8;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(23, 105, 232, 0.08);
+}
+
+
+/* =========================================
+   FORM ACTIONS
+========================================= */
+
+.form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+
+    padding: 20px 30px;
+
+    background: #fafbfd;
+}
+
+.cancel-btn,
+.save-doctor-btn {
+    min-height: 43px;
+    padding: 0 20px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    cursor: pointer;
+}
+
+.cancel-btn {
+    color: #52627a;
+    background: #ffffff;
+
+    border: 1px solid #d9e2ed;
+}
+
+.cancel-btn:hover {
+    border-color: #aebdd0;
+}
+
+.save-doctor-btn {
+    color: #ffffff;
+    background: #1769e8;
+
+    border: 1px solid #1769e8;
+}
+
+.save-doctor-btn:hover {
+    background: #0f5fd7;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 950px) {
+
+    .doctor-filters {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .doctor-admin-card {
+        grid-template-columns: 55px 1fr;
+    }
+
+    .doctor-status {
+        grid-column: 2;
+    }
+
+    .doctor-actions {
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+
+        padding-top: 12px;
+
+        border-top: 1px solid #edf1f6;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .manage-page {
+        padding: 30px 16px 60px;
+    }
+
+    .manage-header,
+    .form-page-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .manage-header h1,
+    .form-page-header h1 {
+        font-size: 28px;
+    }
+
+    .doctor-filters,
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .doctor-admin-card {
+        grid-template-columns: 1fr;
+    }
+
+    .doctor-status,
+    .doctor-actions {
+        grid-column: auto;
+    }
+
+    .doctor-actions {
+        flex-wrap: wrap;
+    }
+
+    .form-section {
+        padding: 22px 18px;
+    }
+
+    .form-actions {
+        padding: 18px;
+
+        flex-direction: column-reverse;
+    }
+
+    .cancel-btn,
+    .save-doctor-btn {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+}

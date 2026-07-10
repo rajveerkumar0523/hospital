@@ -1,0 +1,523 @@
+/* ========================================
+   FIND DOCTORS PAGE
+======================================== */
+
+.doctors-page {
+    min-height: 100vh;
+    padding: 55px 5% 80px;
+    background: #f5f8fd;
+}
+
+.doctors-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+/* ========================================
+   PAGE HEADER
+======================================== */
+
+.page-header {
+    max-width: 680px;
+    margin-bottom: 35px;
+}
+
+.page-label {
+    display: inline-block;
+    margin-bottom: 10px;
+
+    color: #1265e8;
+
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.page-header h1 {
+    margin: 0;
+
+    color: #0b1f44;
+
+    font-size: 40px;
+    font-weight: 750;
+    line-height: 1.2;
+}
+
+.page-header p {
+    margin: 13px 0 0;
+
+    color: #788397;
+
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+
+/* ========================================
+   FILTER CARD
+======================================== */
+
+.filter-card {
+    margin-bottom: 38px;
+    padding: 22px 25px;
+
+    background: #ffffff;
+
+    border: 1px solid #e4ebf4;
+    border-radius: 15px;
+
+    box-shadow:
+        0 8px 28px
+        rgba(30, 70, 130, 0.06);
+}
+
+.filter-content {
+    display: flex;
+    align-items: flex-end;
+    gap: 15px;
+}
+
+.filter-field {
+    width: 100%;
+    max-width: 420px;
+}
+
+.filter-field label {
+    display: block;
+    margin-bottom: 8px;
+
+    color: #394760;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.filter-field select {
+    width: 100%;
+    height: 46px;
+
+    padding: 0 14px;
+
+    background: #f8faff;
+    color: #263550;
+
+    border: 1px solid #dfe7f1;
+    border-radius: 8px;
+
+    font-size: 13px;
+
+    outline: none;
+}
+
+.filter-field select:focus {
+    border-color: #1265e8;
+}
+
+.filter-button {
+    height: 46px;
+    padding: 0 22px;
+
+    background: #1265e8;
+    color: #ffffff;
+
+    border: none;
+    border-radius: 8px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.filter-button:hover {
+    background: #0753c8;
+}
+
+.clear-filter {
+    height: 46px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 8px;
+
+    color: #7c8799;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+
+/* ========================================
+   RESULTS HEADER
+======================================== */
+
+.results-header {
+    margin-bottom: 20px;
+}
+
+.results-header h2 {
+    margin: 0;
+
+    color: #172b4d;
+
+    font-size: 21px;
+}
+
+.results-header p {
+    margin: 5px 0 0;
+
+    color: #8993a5;
+
+    font-size: 12px;
+}
+
+
+/* ========================================
+   DOCTOR GRID
+======================================== */
+
+.doctor-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 22px;
+}
+
+
+/* ========================================
+   DOCTOR CARD
+======================================== */
+
+.doctor-card {
+    display: flex;
+    flex-direction: column;
+
+    padding: 24px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5ebf3;
+    border-radius: 17px;
+
+    box-shadow:
+        0 8px 28px
+        rgba(30, 70, 130, 0.05);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.doctor-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 15px 35px
+        rgba(30, 70, 130, 0.1);
+}
+
+
+/* TOP */
+
+.doctor-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+}
+
+.doctor-avatar {
+    width: 62px;
+    height: 62px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1265e8,
+            #4b91f7
+        );
+
+    color: #ffffff;
+
+    border-radius: 16px;
+
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.status-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 6px 9px;
+
+    background: #edfff5;
+    color: #17894d;
+
+    border-radius: 20px;
+
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.status-badge span {
+    width: 6px;
+    height: 6px;
+
+    background: #22b864;
+
+    border-radius: 50%;
+}
+
+
+/* INFORMATION */
+
+.department-badge {
+    display: inline-block;
+
+    margin-bottom: 10px;
+    padding: 5px 8px;
+
+    background: #edf5ff;
+    color: #1265e8;
+
+    border-radius: 5px;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.doctor-info h3 {
+    margin: 0;
+
+    color: #172b4d;
+
+    font-size: 19px;
+}
+
+.specialization {
+    margin: 7px 0 0;
+
+    color: #1265e8;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.qualification {
+    margin: 6px 0 0;
+
+    color: #8a94a6;
+
+    font-size: 11px;
+}
+
+
+/* ========================================
+   STATS
+======================================== */
+
+.doctor-stats {
+    display: flex;
+    align-items: center;
+
+    margin: 20px 0;
+    padding: 15px 0;
+
+    border-top: 1px solid #edf1f6;
+    border-bottom: 1px solid #edf1f6;
+}
+
+.doctor-stat {
+    flex: 1;
+}
+
+.doctor-stat strong {
+    display: block;
+
+    color: #263550;
+
+    font-size: 15px;
+}
+
+.doctor-stat span {
+    display: block;
+    margin-top: 4px;
+
+    color: #929bad;
+
+    font-size: 9px;
+}
+
+.stat-divider {
+    width: 1px;
+    height: 30px;
+
+    margin: 0 15px;
+
+    background: #e7ecf3;
+}
+
+
+/* ========================================
+   BIO
+======================================== */
+
+.doctor-bio {
+    flex: 1;
+
+    margin: 0 0 20px;
+
+    color: #7e899b;
+
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+
+/* ========================================
+   BUTTONS
+======================================== */
+
+.doctor-actions {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+
+    gap: 10px;
+}
+
+.profile-button,
+.book-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 42px;
+    padding: 0 10px;
+
+    border-radius: 8px;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.profile-button {
+    color: #42516a;
+
+    border: 1px solid #dce4ef;
+}
+
+.profile-button:hover {
+    background: #f5f8fd;
+}
+
+.book-button {
+    background: #1265e8;
+    color: #ffffff;
+}
+
+.book-button:hover {
+    background: #0753c8;
+}
+
+
+/* ========================================
+   EMPTY STATE
+======================================== */
+
+.empty-doctors {
+    padding: 70px 20px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5ebf3;
+    border-radius: 17px;
+
+    text-align: center;
+}
+
+.empty-icon {
+    font-size: 35px;
+}
+
+.empty-doctors h3 {
+    margin: 15px 0 0;
+
+    color: #263550;
+}
+
+.empty-doctors p {
+    margin: 8px 0 20px;
+
+    color: #8993a5;
+
+    font-size: 13px;
+}
+
+.empty-doctors a {
+    color: #1265e8;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 1000px) {
+
+    .doctor-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+@media (max-width: 650px) {
+
+    .doctors-page {
+        padding: 35px 16px 60px;
+    }
+
+    .page-header h1 {
+        font-size: 31px;
+    }
+
+    .filter-content {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-field {
+        max-width: none;
+    }
+
+    .doctor-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-button {
+        width: 100%;
+    }
+}

@@ -1,0 +1,586 @@
+/* =========================================
+   ADMIN REPORTS & ANALYTICS
+========================================= */
+
+.reports-page {
+    min-height: 100vh;
+    padding: 42px 5% 80px;
+    background: #f5f8fd;
+}
+
+.reports-wrapper {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+
+/* =========================================
+   PAGE HEADER
+========================================= */
+
+.reports-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+.page-label {
+    display: block;
+    margin-bottom: 7px;
+
+    color: #1769e8;
+
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.reports-header h1 {
+    margin: 0 0 7px;
+
+    color: #14294b;
+
+    font-size: 34px;
+    line-height: 1.2;
+}
+
+.reports-header p {
+    margin: 0;
+
+    color: #7d899c;
+
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.back-btn {
+    min-height: 42px;
+    padding: 0 18px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #243853;
+    background: #ffffff;
+
+    border: 1px solid #dbe4ef;
+    border-radius: 9px;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.back-btn:hover {
+    color: #1769e8;
+    border-color: #1769e8;
+}
+
+
+/* =========================================
+   TOP STAT CARDS
+========================================= */
+
+.report-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+
+    margin-bottom: 20px;
+}
+
+.report-stat-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding: 20px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e9f3;
+    border-radius: 13px;
+
+    transition: 0.2s ease;
+}
+
+.report-stat-card:hover {
+    transform: translateY(-2px);
+
+    border-color: #bdd5f6;
+
+    box-shadow:
+        0 8px 25px
+        rgba(31, 67, 120, 0.06);
+}
+
+.report-stat-icon {
+    width: 46px;
+    height: 46px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #edf5ff;
+
+    border-radius: 10px;
+
+    font-size: 20px;
+}
+
+.report-stat-card span {
+    display: block;
+    margin-bottom: 6px;
+
+    color: #8490a2;
+
+    font-size: 9px;
+    font-weight: 600;
+}
+
+.report-stat-card strong {
+    display: block;
+
+    color: #243853;
+
+    font-size: 24px;
+    line-height: 1;
+}
+
+
+/* =========================================
+   COMMON REPORT CARD
+========================================= */
+
+.report-card {
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e9f3;
+    border-radius: 14px;
+}
+
+.report-card-header {
+    min-height: 70px;
+    padding: 19px 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    box-sizing: border-box;
+
+    border-bottom: 1px solid #e8edf4;
+}
+
+.report-card-header span {
+    display: block;
+    margin-bottom: 5px;
+
+    color: #1769e8;
+
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+}
+
+.report-card-header h2 {
+    margin: 0;
+
+    color: #243853;
+
+    font-size: 17px;
+}
+
+.report-card-header > strong {
+    min-width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #1769e8;
+    background: #edf5ff;
+
+    border-radius: 9px;
+
+    font-size: 14px;
+}
+
+
+/* =========================================
+   APPOINTMENT STATUS REPORT
+========================================= */
+
+.status-report-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 13px;
+
+    padding: 20px;
+}
+
+.status-report-item {
+    padding: 18px;
+
+    border: 1px solid transparent;
+    border-radius: 11px;
+}
+
+.status-report-item span {
+    display: block;
+    margin-bottom: 9px;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.status-report-item strong {
+    display: block;
+
+    font-size: 25px;
+    line-height: 1;
+}
+
+
+/* PENDING */
+
+.status-report-item.pending {
+    background: #fff8e8;
+    border-color: #f6e3b1;
+}
+
+.status-report-item.pending span,
+.status-report-item.pending strong {
+    color: #b87900;
+}
+
+
+/* CONFIRMED */
+
+.status-report-item.confirmed {
+    background: #edf5ff;
+    border-color: #d6e7ff;
+}
+
+.status-report-item.confirmed span,
+.status-report-item.confirmed strong {
+    color: #1769e8;
+}
+
+
+/* COMPLETED */
+
+.status-report-item.completed {
+    background: #ebf9f1;
+    border-color: #c7ead5;
+}
+
+.status-report-item.completed span,
+.status-report-item.completed strong {
+    color: #168348;
+}
+
+
+/* CANCELLED */
+
+.status-report-item.cancelled {
+    background: #fff0f1;
+    border-color: #f3c9cc;
+}
+
+.status-report-item.cancelled span,
+.status-report-item.cancelled strong {
+    color: #d34242;
+}
+
+
+/* =========================================
+   TWO COLUMN ANALYTICS
+========================================= */
+
+.analytics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    gap: 18px;
+
+    margin-top: 20px;
+}
+
+
+/* =========================================
+   DEPARTMENT REPORT
+========================================= */
+
+.department-report-list {
+    display: grid;
+}
+
+.department-report-item {
+    display: grid;
+    grid-template-columns: 46px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 13px;
+
+    padding: 15px 20px;
+
+    border-bottom: 1px solid #edf1f6;
+}
+
+.department-report-item:last-child {
+    border-bottom: none;
+}
+
+.department-report-item:hover {
+    background: #fbfcfe;
+}
+
+.department-report-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #edf5ff;
+
+    border-radius: 9px;
+
+    font-size: 18px;
+}
+
+.department-report-info h3 {
+    margin: 0 0 4px;
+
+    color: #243853;
+
+    font-size: 13px;
+}
+
+.department-report-info p {
+    margin: 0;
+
+    color: #8490a2;
+
+    font-size: 9px;
+}
+
+.department-doctor-count {
+    min-width: 62px;
+    text-align: center;
+}
+
+.department-doctor-count strong {
+    display: block;
+    margin-bottom: 3px;
+
+    color: #1769e8;
+
+    font-size: 18px;
+}
+
+.department-doctor-count span {
+    color: #8490a2;
+
+    font-size: 8px;
+}
+
+
+/* =========================================
+   DOCTOR REPORT
+========================================= */
+
+.doctor-report-list {
+    display: grid;
+}
+
+.doctor-report-item {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 13px;
+
+    padding: 15px 20px;
+
+    border-bottom: 1px solid #edf1f6;
+}
+
+.doctor-report-item:last-child {
+    border-bottom: none;
+}
+
+.doctor-report-item:hover {
+    background: #fbfcfe;
+}
+
+.doctor-report-avatar {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #1769e8;
+    background: #edf5ff;
+
+    border-radius: 9px;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.doctor-report-info h3 {
+    margin: 0 0 4px;
+
+    color: #243853;
+
+    font-size: 13px;
+}
+
+.doctor-report-info p {
+    margin: 0;
+
+    color: #8490a2;
+
+    font-size: 9px;
+}
+
+
+/* =========================================
+   DOCTOR STATUS
+========================================= */
+
+.doctor-report-status {
+    min-width: 72px;
+    padding: 7px 9px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 30px;
+
+    font-size: 8px;
+    font-weight: 800;
+
+    white-space: nowrap;
+}
+
+.status-available {
+    color: #168348;
+    background: #e8f8ef;
+}
+
+.status-on_leave {
+    color: #b87900;
+    background: #fff5dc;
+}
+
+.status-inactive {
+    color: #d34242;
+    background: #ffebed;
+}
+
+
+/* =========================================
+   EMPTY REPORT
+========================================= */
+
+.empty-report {
+    padding: 55px 20px;
+
+    text-align: center;
+}
+
+.empty-report h3 {
+    margin: 0 0 7px;
+
+    color: #243853;
+
+    font-size: 16px;
+}
+
+.empty-report p {
+    margin: 0;
+
+    color: #8490a2;
+
+    font-size: 10px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1000px) {
+
+    .report-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .analytics-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .reports-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .reports-header h1 {
+        font-size: 28px;
+    }
+
+    .status-report-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .reports-page {
+        padding: 30px 16px 60px;
+    }
+
+    .report-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .status-report-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .department-report-item,
+    .doctor-report-item {
+        grid-template-columns: 42px 1fr;
+    }
+
+    .department-doctor-count,
+    .doctor-report-status {
+        grid-column: 2;
+        justify-self: start;
+    }
+
+}

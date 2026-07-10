@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Manage Patients | MediCore
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'dashboard/css/manage_patients.css' %}?v=1"
+>
+{% endblock %}
+
+{% block content %}
+
+<section class="patients-page">
+
+    <div class="patients-wrapper">
+
+        <div class="patients-header">
+
+            <div>
+                <span class="page-label">
+                    ADMINISTRATION
+                </span>
+
+                <h1>Manage Patients</h1>
+
+                <p>
+                    View registered patients and their medical activity.
+                </p>
+            </div>
+
+            <a
+                href="{% url 'dashboard:admin' %}"
+                class="back-btn"
+            >
+                ← Dashboard
+            </a>
+
+        </div>
+
+
+        <form
+            method="GET"
+            class="patient-search"
+        >
+
+            <input
+                type="text"
+                name="search"
+                value="{{ search_query }}"
+                placeholder="Search by name or email..."
+            >
+
+            <button type="submit">
+                Search
+            </button>
+
+            {% if search_query %}
+
+                <a href="{% url 'dashboard:manage_patients' %}">
+                    Clear
+                </a>
+
+            {% endif %}
+
+        </form>
+
+
+        <div class="list-heading">
+
+            <div>
+                <h2>Registered Patients</h2>
+
+                <p>
+                    {{ total_patients }}
+                    patient{{ total_patients|pluralize }}
+                </p>
+            </div>
+
+        </div>
+
+
+        {% if patients %}
+
+            <div class="patient-list">
+
+                {% for patient in patients %}
+
+                    <article class="patient-card">
+
+                        <div class="patient-avatar">
+                            {{ patient.first_name|first|upper }}
+                            {{ patient.last_name|first|upper }}
+                        </div>
+
+
+                        <div class="patient-info">
+
+                            <h3>
+                                {{ patient.get_full_name|default:patient.email }}
+                            </h3>
+
+                            <p>
+                                {{ patient.email }}
+                            </p>
+
+                            {% if patient.patient_profile %}
+
+                                <small>
+                                    Patient ID:
+                                    {{ patient.patient_profile.patient_id }}
+                                </small>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="patient-health">
+
+                            {% if patient.patient_profile %}
+
+                                <span>Blood Group</span>
+
+                                <strong>
+                                    {{ patient.patient_profile.blood_group|default:"N/A" }}
+                                </strong>
+
+                            {% else %}
+
+                                <span>Profile</span>
+                                <strong>Incomplete</strong>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <a
+                            href="{% url 'dashboard:admin_patient_detail' patient.id %}"
+                            class="view-patient-btn"
+                        >
+                            View Details
+                        </a>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+
+        {% else %}
+
+            <div class="empty-patients">
+                <h3>No patients found</h3>
+
+                <p>
+                    No registered patient matches your search.
+                </p>
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

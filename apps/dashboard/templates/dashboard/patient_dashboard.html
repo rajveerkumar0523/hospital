@@ -1,0 +1,757 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Patient Dashboard | MediCore
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'dashboard/css/patient_dashboard.css' %}?v=12"
+>
+{% endblock %}
+
+{% block content %}
+
+<section class="dashboard-page">
+    <div class="dashboard-wrapper">
+
+        <!-- WELCOME SECTION -->
+        <div class="dashboard-header">
+
+            <div class="welcome-content">
+                <span class="dashboard-label">
+                    Patient Dashboard
+                </span>
+
+                <h1>
+                    Welcome back,
+                    {{ request.user.first_name }}
+                </h1>
+
+                <p>
+                    Manage your appointments, medical records,
+                    reports and profile from one place.
+                </p>
+            </div>
+
+            <div class="patient-id-card">
+                <span>Patient ID</span>
+                <strong>{{ patient.patient_id }}</strong>
+            </div>
+
+        </div>
+
+
+        <!-- STAT CARDS -->
+        <div class="stats-grid">
+
+            <div class="stat-card">
+                <div class="stat-icon">📅</div>
+
+                <div class="stat-content">
+                    <span>Upcoming Appointments</span>
+                    <strong>{{ upcoming_appointments }}</strong>
+                </div>
+            </div>
+
+
+            <div class="stat-card">
+                <div class="stat-icon">🧪</div>
+
+                <div class="stat-content">
+                    <span>Pending Reports</span>
+                    <strong>{{ pending_reports }}</strong>
+                </div>
+            </div>
+
+
+            <div class="stat-card">
+                <div class="stat-icon">💊</div>
+
+                <div class="stat-content">
+                    <span>Active Prescriptions</span>
+                    <strong>{{ active_prescriptions }}</strong>
+                </div>
+            </div>
+
+
+            <div class="stat-card emergency-stat">
+                <div class="stat-icon">🚑</div>
+
+                <div class="stat-content">
+                    <span>Emergency Support</span>
+                    <strong>24/7</strong>
+                </div>
+            </div>
+
+        </div>
+
+        
+
+
+        <!-- MAIN DASHBOARD GRID -->
+        <div class="dashboard-grid">
+
+            <!-- LEFT COLUMN -->
+            <main class="dashboard-main">
+
+                <!-- APPOINTMENTS -->
+               <section class="appointments-section">
+
+    <div class="section-heading">
+        <div>
+            <h2>Your Appointments</h2>
+            <p>
+                {{ appointment_count }}
+                appointment{{ appointment_count|pluralize }}
+            </p>
+        </div>
+
+        <a href="{% url 'doctors:list' %}" class="new-booking-btn">
+            + Book Appointment
+        </a>
+    </div>
+
+
+    {% if appointments %}
+
+        <div class="appointment-list">
+
+            {% for appointment in appointments %}
+
+                <article class="appointment-card">
+
+                    <div class="appointment-date-box">
+
+                        <span class="appointment-month">
+                            {{ appointment.appointment_date|date:"M" }}
+                        </span>
+
+                        <strong>
+                            {{ appointment.appointment_date|date:"d" }}
+                        </strong>
+
+                        <small>
+                            {{ appointment.appointment_date|date:"Y" }}
+                        </small>
+
+                    </div>
+
+
+                    <div class="appointment-info">
+
+                        <span class="department-name">
+                            {{ appointment.doctor.department.name }}
+                        </span>
+
+                        <h3>
+                            Dr. {{ appointment.doctor.user.get_full_name }}
+                        </h3>
+
+                        <p>
+                            {{ appointment.doctor.specialization }}
+                        </p>
+
+                        <div class="appointment-meta">
+
+                            <span>
+                                🕒
+                                {{ appointment.appointment_time|time:"g:i A" }}
+                            </span>
+
+                            <span>
+                                📋 {{ appointment.reason|truncatechars:45 }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="appointment-actions">
+
+    <span class="
+        status-badge
+        status-{{ appointment.status|lower }}
+    ">
+        {{ appointment.get_status_display }}
+    </span>
+
+    {% if appointment.status == "PENDING" or appointment.status == "CONFIRMED" %}
+
+        <form
+            method="POST"
+            action="{% url 'appointments:cancel' appointment.id %}"
+            onsubmit="return confirm('Are you sure you want to cancel this appointment?');"
+        >
+            {% csrf_token %}
+
+            <button
+                type="submit"
+                class="cancel-appointment-btn"
+            >
+                Cancel
+            </button>
+        </form>
+
+    {% endif %}
+
+</div> 
+
+
+{% if appointment.status == "AWAITING_TESTS" and appointment.test_bill %}
+
+    <div class="patient-test-bill">
+
+        <div class="test-bill-header">
+
+            <div>
+                <span class="test-bill-label">
+                    🧪 LAB TEST BILL
+                </span>
+
+                <h3>
+                    Bill #{{ appointment.test_bill.id }}
+                </h3>
+            </div>
+
+            {% if appointment.test_bill.payment_status == "PAID" %}
+
+                <span class="bill-status paid">
+                    ✓ Paid
+                </span>
+
+            {% else %}
+
+                <span class="bill-status unpaid">
+                    Payment Pending
+                </span>
+
+            {% endif %}
+
+        </div>
+
+
+        <div class="patient-test-list">
+
+            {% for item in appointment.test_bill.items.all %}
+
+                <div class="patient-test-row">
+                    <span>{{ item.test_name }}</span>
+                    <strong>₹{{ item.amount }}</strong>
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <div class="patient-bill-total">
+            <span>Total Test Fee</span>
+
+            <strong>
+                ₹{{ appointment.test_bill.total_amount }}
+            </strong>
+        </div>
+
+
+        {% if appointment.test_bill.payment_status == "UNPAID" %}
+
+            <div class="patient-payment-actions">
+
+                <a
+                    href="#"
+                    class="pay-online-btn"
+                >
+                    Pay Online
+                </a>
+
+                <span>
+                    or pay at hospital reception
+                </span>
+
+            </div>
+
+        {% else %}
+
+            <div class="payment-success-message">
+                ✓ Test fee paid via
+                {{ appointment.test_bill.get_payment_method_display }}
+            </div>
+
+        {% endif %}
+
+    </div>
+
+{% endif %}
+{% if appointment.prescription %}
+
+    <div class="patient-prescription-card">
+
+        <div class="prescription-header">
+
+            <div>
+                <span class="prescription-label">
+                    💊 MEDICAL PRESCRIPTION
+                </span>
+
+                <h3>
+                    Prescription from
+                    Dr. {{ appointment.doctor.user.get_full_name }}
+                </h3>
+
+                <p>
+                    Issued on
+                    {{ appointment.prescription.created_at|date:"d M Y, h:i A" }}
+                </p>
+            </div>
+
+            <!-- <span class="prescription-status">
+                Active
+            </span> -->
+
+        </div>
+
+
+        <div class="prescription-details-grid">
+
+            <div class="prescription-detail-box">
+
+                <span class="detail-label">
+                    DIAGNOSIS
+                </span>
+
+                <p>
+                    {{ appointment.prescription.diagnosis }}
+                </p>
+
+            </div>
+
+
+            <div class="prescription-detail-box medicines-box">
+
+                <span class="detail-label">
+                    MEDICINES & DOSAGE
+                </span>
+
+                <p>
+                    {{ appointment.prescription.medicines|linebreaksbr }}
+                </p>
+
+            </div>
+
+        </div>
+
+
+        {% if appointment.prescription.instructions %}
+
+            <div class="prescription-instructions">
+
+                <span class="detail-label">
+                    DOCTOR'S INSTRUCTIONS
+                </span>
+
+                <p>
+                    {{ appointment.prescription.instructions|linebreaksbr }}
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+        <div class="prescription-footer">
+
+            <div>
+                <span>
+                    CONSULTING DOCTOR
+                </span>
+
+                <strong>
+                    Dr. {{ appointment.doctor.user.get_full_name }}
+                </strong>
+            </div>
+
+
+            {% if appointment.prescription.follow_up_date %}
+
+                <div>
+                    <span>
+                        FOLLOW-UP DATE
+                    </span>
+
+                    <strong>
+                        {{ appointment.prescription.follow_up_date|date:"d M Y" }}
+                    </strong>
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+{% endif %}
+
+</article>
+
+
+            {% endfor %}
+
+        </div>
+
+
+    {% else %}
+
+        <div class="empty-appointments">
+
+            <div class="empty-icon">📅</div>
+
+            <h3>No appointments yet</h3>
+
+            <p>
+                You have not booked any appointments.
+            </p>
+
+            <a href="{% url 'doctors:list' %}">
+                Find a Doctor
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+
+                <!-- RECENT ACTIVITY -->
+                <div class="dashboard-card">
+
+                    <div class="card-header">
+                        <div>
+                            <h2>Recent Medical Activity</h2>
+                            <p>Your latest healthcare updates</p>
+                        </div>
+                    </div>
+
+                    {% if recent_medical_activity %}
+
+                        <div class="medical-activity-list">
+
+                            {% for item in recent_medical_activity %}
+
+                                {% if item.type == "prescription" %}
+
+                                    <div class="activity-prescription-card">
+
+                                        <div class="activity-icon">
+                                            💊
+                                        </div>
+
+                                        <div class="activity-content">
+
+                                            <span class="activity-type">
+                                                PRESCRIPTION
+                                            </span>
+
+                                            <h3>
+                                                {{ item.appointment.prescription.diagnosis }}
+                                            </h3>
+
+                                            <p>
+                                                Prescribed by Dr.
+                                                {{ item.appointment.doctor.user.get_full_name }}
+                                            </p>
+
+                                            <div class="activity-medicines">
+                                                {{ item.appointment.prescription.medicines|linebreaksbr }}
+                                            </div>
+
+                                            {% if item.appointment.prescription.instructions %}
+
+                                                <div class="activity-instructions">
+                                                    <strong>Instructions:</strong>
+                                                    {{ item.appointment.prescription.instructions|linebreaksbr }}
+                                                </div>
+
+                                            {% endif %}
+
+                                            {% if item.appointment.prescription.follow_up_date %}
+
+                                                <div class="activity-follow-up">
+                                                    📅 Follow-up:
+                                                    {{ item.appointment.prescription.follow_up_date|date:"d M Y" }}
+                                                </div>
+
+                                            {% endif %}
+
+                                        </div>
+
+                                        <div class="activity-date">
+                                            {{ item.date|date:"d M Y" }}
+                                        </div>
+
+                                    </div>
+
+                                {% elif item.type == "lab_report" %}
+
+                                    <article class="patient-lab-report-card">
+
+                                        <div class="lab-report-icon">
+                                            🧪
+                                        </div>
+
+                                        <div class="lab-report-main">
+
+                                            <div class="lab-report-top">
+
+                                                <div>
+                                                    <span class="lab-report-label">
+                                                        LAB REPORT READY
+                                                    </span>
+
+                                                    <h3>
+                                                        {{ item.test.test_name }}
+                                                    </h3>
+                                                </div>
+
+                                                <span class="lab-ready-badge">
+                                                    Report Ready
+                                                </span>
+
+                                            </div>
+
+                                            <div class="lab-report-meta">
+
+                                                <span>
+                                                    Test ID:
+                                                    <strong>
+                                                        {{ item.test.test_id }}
+                                                    </strong>
+                                                </span>
+
+                                                <span>
+                                                    Ordered by:
+                                                    <strong>
+                                                        Dr. {{ item.test.appointment.doctor.user.get_full_name }}
+                                                    </strong>
+                                                </span>
+
+                                                <span>
+                                                    Department:
+                                                    <strong>
+                                                        {{ item.test.appointment.doctor.department.name }}
+                                                    </strong>
+                                                </span>
+
+                                            </div>
+
+                                            <div class="lab-report-summary">
+
+                                                <div>
+                                                    <span>Result Status</span>
+                                                    <strong>
+                                                        {{ item.test.lab_result.get_result_status_display }}
+                                                    </strong>
+                                                </div>
+
+                                                <div>
+                                                    <span>Result Value</span>
+                                                    <strong>
+                                                        {{ item.test.lab_result.result_value|default:"—" }}
+                                                    </strong>
+                                                </div>
+
+                                                <div>
+                                                    <span>Completed</span>
+                                                    <strong>
+                                                        {{ item.test.lab_result.completed_at|date:"d M Y" }}
+                                                    </strong>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="lab-report-actions">
+
+                                                <a
+                                                    href="{% url 'appointments:patient_lab_report_detail' item.test.id %}"
+                                                    class="view-lab-report-btn"
+                                                >
+                                                    View Full Report
+                                                </a>
+
+                                            </div>
+
+                                        </div>
+
+                                    </article>
+
+                                {% endif %}
+
+                            {% endfor %}
+
+                        </div>
+
+                    {% else %}
+
+                        <div class="empty-state">
+
+                            <div class="empty-icon">
+                                📋
+                            </div>
+
+                            <h3>No medical activity yet</h3>
+
+                            <p>
+                                Your consultations, prescriptions and lab reports
+                                will appear here.
+                            </p>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </main>
+
+
+            <!-- RIGHT SIDEBAR -->
+            <aside class="dashboard-sidebar">
+
+                <!-- QUICK ACTIONS -->
+                <div class="dashboard-card quick-actions">
+
+                    <div class="card-header">
+                        <div>
+                            <h2>Quick Actions</h2>
+                            <p>Common patient services</p>
+                        </div>
+                    </div>
+
+
+                    <a href="{% url 'doctors:list' %}" class="action-item">
+
+                        <span class="action-icon">🩺</span>
+
+                        <div>
+                            <strong>Book Appointment</strong>
+                            <small>Find a doctor</small>
+                        </div>
+
+                        <span class="arrow">→</span>
+
+                    </a>
+
+
+                    <a
+                        href="{% url 'patients:profile' %}"
+                        class="action-item"
+                    >
+
+                        <span class="action-icon">👤</span>
+
+                        <div>
+                            <strong>My Profile</strong>
+                            <small>View health information</small>
+                        </div>
+
+                        <span class="arrow">→</span>
+
+                    </a>
+
+
+                    <a href="{% url 'appointments:patient_lab_tests' %}" class="action-item">
+
+                        <span class="action-icon">🧪</span>
+
+                        <div>
+                            <strong>Lab Reports</strong>
+                            <small>View test results</small>
+                        </div>
+
+                        <span class="arrow">→</span>
+
+                    </a>
+
+                    <a href="{% url 'appointments:patient_prescriptions' %}"class="action-item">
+
+                        <span class="action-icon">💊</span>
+
+                        <div>
+                            <strong>Prescriptions</strong>
+                            <small>View your medicines</small>
+                        </div>
+
+                        <span class="arrow">→</span>
+
+                    </a>
+
+
+                    <a
+                        href="#"
+                        class="action-item emergency-action"
+                    >
+
+                        <span class="action-icon">🚑</span>
+
+                        <div>
+                            <strong>Emergency Help</strong>
+                            <small>Request urgent support</small>
+                        </div>
+
+                        <span class="arrow">→</span>
+
+                    </a>
+
+                </div>
+
+
+                <!-- HEALTH SUMMARY -->
+                <div class="dashboard-card health-summary">
+
+                    <div class="card-header">
+                        <div>
+                            <h2>Health Summary</h2>
+                            <p>Your medical information</p>
+                        </div>
+                    </div>
+
+
+                    <div class="health-item">
+                        <span>Blood Group</span>
+
+                        <strong>
+                            {{ patient.blood_group|default:"N/A" }}
+                        </strong>
+                    </div>
+
+
+                    <div class="health-item">
+                        <span>Known Allergies</span>
+
+                        <strong>
+                            {{ patient.allergies|default:"None" }}
+                        </strong>
+                    </div>
+
+
+                    <div class="health-item">
+                        <span>Emergency Contact</span>
+
+                        <strong>
+                            {{ patient.emergency_contact }}
+                        </strong>
+                    </div>
+
+                </div>
+
+            </aside>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

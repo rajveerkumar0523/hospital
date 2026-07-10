@@ -1,0 +1,351 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Bed Availability | MediCore
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'beds/css/bed_list.css' %}?v=1"
+>
+{% endblock %}
+
+
+{% block content %}
+
+<section class="beds-page">
+
+    <div class="beds-wrapper">
+
+        <!-- HEADER -->
+
+        <div class="beds-header">
+
+            <div>
+                <span class="page-label">
+                    LIVE HOSPITAL CAPACITY
+                </span>
+
+                <h1>Bed Availability</h1>
+
+                <p>
+                    Check current hospital bed availability
+                    by department and bed type.
+                </p>
+            </div>
+
+            <a
+                href="{% url 'home' %}"
+                class="back-home-btn"
+            >
+                ← Home
+            </a>
+
+        </div>
+
+
+        <!-- STATISTICS -->
+
+        <div class="bed-stats">
+
+            <article class="bed-stat-card">
+
+                <div class="bed-stat-icon">
+                    🛏️
+                </div>
+
+                <div>
+                    <span>Total Beds</span>
+                    <strong>{{ total_beds }}</strong>
+                </div>
+
+            </article>
+
+
+            <article class="bed-stat-card available-card">
+
+                <div class="bed-stat-icon">
+                    ✓
+                </div>
+
+                <div>
+                    <span>Available</span>
+                    <strong>{{ available_beds }}</strong>
+                </div>
+
+            </article>
+
+
+            <article class="bed-stat-card occupied-card">
+
+                <div class="bed-stat-icon">
+                    👤
+                </div>
+
+                <div>
+                    <span>Occupied</span>
+                    <strong>{{ occupied_beds }}</strong>
+                </div>
+
+            </article>
+
+
+            <article class="bed-stat-card maintenance-card">
+
+                <div class="bed-stat-icon">
+                    ⚙️
+                </div>
+
+                <div>
+                    <span>Maintenance</span>
+                    <strong>{{ maintenance_beds }}</strong>
+                </div>
+
+            </article>
+
+        </div>
+
+
+        <!-- FILTERS -->
+
+        <form
+            method="GET"
+            class="bed-filters"
+        >
+
+            <select name="department">
+
+                <option value="">
+                    All Departments
+                </option>
+
+                {% for department in departments %}
+
+                    <option
+                        value="{{ department.id }}"
+                        {% if selected_department == department.id|stringformat:"s" %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ department.name }}
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+
+            <select name="type">
+
+                <option value="">
+                    All Bed Types
+                </option>
+
+                {% for value, label in bed_types %}
+
+                    <option
+                        value="{{ value }}"
+                        {% if selected_type == value %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ label }}
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+
+            <select name="status">
+
+                <option value="">
+                    All Statuses
+                </option>
+
+                <option
+                    value="AVAILABLE"
+                    {% if selected_status == "AVAILABLE" %}
+                        selected
+                    {% endif %}
+                >
+                    Available
+                </option>
+
+                <option
+                    value="OCCUPIED"
+                    {% if selected_status == "OCCUPIED" %}
+                        selected
+                    {% endif %}
+                >
+                    Occupied
+                </option>
+
+                <option
+                    value="MAINTENANCE"
+                    {% if selected_status == "MAINTENANCE" %}
+                        selected
+                    {% endif %}
+                >
+                    Maintenance
+                </option>
+
+            </select>
+
+
+            <button type="submit">
+                Apply Filters
+            </button>
+
+
+            <a
+                href="{% url 'beds:list' %}"
+                class="clear-filter-btn"
+            >
+                Clear
+            </a>
+
+        </form>
+
+
+        <!-- LIST HEADER -->
+
+        <div class="bed-list-header">
+
+            <div>
+                <span>HOSPITAL BEDS</span>
+                <h2>Current Availability</h2>
+            </div>
+
+            <strong>
+                {{ beds|length }}
+            </strong>
+
+        </div>
+
+
+        <!-- BED LIST -->
+
+        {% if beds %}
+
+            <div class="bed-grid">
+
+                {% for bed in beds %}
+
+                    <article class="bed-card">
+
+                        <div class="bed-card-top">
+
+                            <div class="bed-icon">
+                                🛏️
+                            </div>
+
+                            <span class="
+                                bed-status
+                                status-{{ bed.status|lower }}
+                            ">
+                                {{ bed.get_status_display }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="bed-card-info">
+
+                            <span class="bed-number-label">
+                                BED NUMBER
+                            </span>
+
+                            <h3>
+                                {{ bed.bed_number }}
+                            </h3>
+
+                            <p>
+                                {{ bed.department.name }}
+                            </p>
+
+                        </div>
+
+
+                        <div class="bed-details">
+
+                            <div>
+                                <span>Bed Type</span>
+
+                                <strong>
+                                    {{ bed.get_bed_type_display }}
+                                </strong>
+                            </div>
+
+
+                            {% if bed.status == "OCCUPIED" %}
+
+                                <div>
+                                    <span>Patient</span>
+
+                                    <strong>
+                                        {{ bed.patient.get_full_name|default:"Assigned" }}
+                                    </strong>
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        {% if bed.status == "AVAILABLE" %}
+
+                            <div class="availability-note">
+                                ✓ Ready for admission
+                            </div>
+
+                        {% elif bed.status == "OCCUPIED" %}
+
+                            <div class="availability-note occupied-note">
+                                Currently occupied
+                            </div>
+
+                        {% else %}
+
+                            <div class="availability-note maintenance-note">
+                                Temporarily unavailable
+                            </div>
+
+                        {% endif %}
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+
+        {% else %}
+
+            <div class="empty-beds">
+
+                <div class="empty-bed-icon">
+                    🛏️
+                </div>
+
+                <h3>No beds found</h3>
+
+                <p>
+                    No hospital beds match the selected filters.
+                </p>
+
+                <a href="{% url 'beds:list' %}">
+                    Clear Filters
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

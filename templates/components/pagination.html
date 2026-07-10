@@ -1,0 +1,45 @@
+{% if page_obj.has_other_pages %}
+
+<nav class="pagination">
+
+    <!-- Previous -->
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}"
+           class="page-btn">
+            ← Previous
+        </a>
+    {% endif %}
+
+
+    <!-- Page Numbers -->
+    {% for page_number in page_obj.paginator.page_range %}
+
+        {% if page_number == page_obj.number %}
+
+            <span class="page-btn active">
+                {{ page_number }}
+            </span>
+
+        {% else %}
+
+            <a href="?page={{ page_number }}"
+               class="page-btn">
+                {{ page_number }}
+            </a>
+
+        {% endif %}
+
+    {% endfor %}
+
+
+    <!-- Next -->
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}"
+           class="page-btn">
+            Next →
+        </a>
+    {% endif %}
+
+</nav>
+
+{% endif %}

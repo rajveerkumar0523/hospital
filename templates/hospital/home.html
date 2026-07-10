@@ -1,0 +1,223 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title %}
+MediCore | Smart Hospital
+{% endblock %}
+
+
+{% block content %}
+
+<!-- ================= HERO SECTION ================= -->
+
+<section class="hero">
+
+    <!-- LEFT CONTENT -->
+
+    <div class="hero-content">
+
+        <h1>
+            Smart Hospital
+            <span>Better Care for</span>
+            Better Life
+        </h1>
+
+
+        <p class="hero-description">
+            Advanced technology and caring professionals
+            working together for your better health.
+        </p>
+
+
+        <div class="hero-buttons">
+
+           {% if not user.is_authenticated %}
+
+    <a
+        href="{% url 'accounts:login' %}"
+        class="primary-btn"
+    >
+        Book Appointment
+    </a>
+
+{% elif user.role == "PATIENT" %}
+
+    <a
+        href="{% url 'doctors:list' %}"
+        class="primary-btn"
+    >
+        Book Appointment
+    </a>
+
+{% elif user.role == "DOCTOR" %}
+
+    <a
+        href="{% url 'dashboard:doctor' %}"
+        class="primary-btn"
+    >
+        Go to Dashboard
+    </a>
+
+{% elif user.is_staff %}
+
+    <a
+        href="/admin/"
+        class="primary-btn"
+    >
+        Admin Panel
+    </a>
+
+{% endif %}
+
+            <a href="#" class="secondary-btn">
+                Our Services
+            </a>
+
+        </div>
+
+
+        <!-- STATS -->
+
+        <div class="stats">
+
+            <div class="stat">
+                <h3>120+</h3>
+                <p>Doctors</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="stat">
+                <h3>5000+</h3>
+                <p>Patients</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="stat">
+                <h3>24/7</h3>
+                <p>Emergency</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="stat">
+                <h3>50+</h3>
+                <p>Departments</p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- RIGHT IMAGE -->
+
+    <div class="hero-image">
+
+        <img
+            src="{% static 'hospital/images/hospital.jpg' %}"
+            alt="MediCore Hospital"
+        >
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= SERVICES ================= -->
+
+<section class="services">
+
+    <div class="service-card">
+
+        <div class="service-icon">🩺</div>
+
+        <h3>Find Doctors</h3>
+
+        <p>
+            Book appointments
+            with specialists
+        </p>
+
+    
+        <a href="{% url 'doctors:list' %}">
+   →
+</a>
+
+    </div>
+
+
+    <div class="service-card">
+
+        <div class="service-icon">🛏️</div>
+
+        <h3>Find Beds</h3>
+
+        <p>
+            Real-time bed
+            availability
+        </p>
+
+        <a href="{% url 'beds:list' %}">→</a>
+
+    </div>
+
+
+    <div class="service-card">
+
+        <div class="service-icon">🚑</div>
+
+        <h3>Emergency</h3>
+
+        <p>
+            24/7 emergency
+            medical support
+        </p>
+
+        <a href="{% url 'emergency:request' %}">→</a>
+
+    </div>
+
+
+    <div class="service-card">
+
+        <div class="service-icon">📋</div>
+
+        <h3>Medical Records</h3>
+
+        <p>
+            Access your digital
+            health records
+        </p>
+
+        <a href="#">→</a>
+
+    </div>
+
+
+    <div class="service-card">
+
+        <div class="service-icon">🧪</div>
+
+        <h3>Lab Tests</h3>
+
+        <p>
+            Accurate reports
+            and quick results
+        </p>
+
+        <a href="#">→</a>
+
+    </div>
+
+</section>
+
+
+{% endblock %}
+
+{% block footer %}
+    {% include "components/footer.html" %}
+{% endblock %}

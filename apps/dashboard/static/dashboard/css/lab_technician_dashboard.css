@@ -1,0 +1,611 @@
+/* =========================================
+   LAB TECHNICIAN DASHBOARD
+========================================= */
+
+.lab-dashboard-page {
+    min-height: calc(100vh - 80px);
+    padding: 45px 5% 80px;
+    background: #f5f8fd;
+}
+
+.lab-dashboard-wrapper {
+    width: 100%;
+    max-width: 1250px;
+    margin: 0 auto;
+}
+
+
+
+/* =========================================
+   SIMPLE NAVBAR
+========================================= */
+
+.lab-navbar {
+    width: 100%;
+    height: 72px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 5%;
+
+    background: #ffffff;
+    border-bottom: 1px solid #e3eaf3;
+
+    box-sizing: border-box;
+}
+
+.lab-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    color: #0b1f44;
+    text-decoration: none;
+}
+
+.lab-brand-icon {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #1265e8;
+    border-radius: 10px;
+
+    color: #ffffff;
+
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.lab-brand-name {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.4px;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.lab-dashboard-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 28px;
+}
+
+.lab-page-label {
+    display: block;
+    margin-bottom: 8px;
+
+    color: #1265e8;
+
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.3px;
+}
+
+.lab-dashboard-header h1 {
+    margin: 0;
+
+    color: #0b1f44;
+
+    font-size: 34px;
+    font-weight: 800;
+}
+
+.lab-dashboard-header p {
+    margin: 8px 0 0;
+
+    color: #7b8495;
+
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   SUMMARY CARD
+========================================= */
+
+.lab-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.lab-summary-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding: 20px;
+
+    background: #ffffff;
+    border: 1px solid #e3eaf3;
+    border-radius: 14px;
+}
+
+.lab-summary-icon {
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background: #edf5ff;
+    border-radius: 12px;
+
+    font-size: 22px;
+}
+
+.lab-summary-card span {
+    display: block;
+    margin-bottom: 4px;
+
+    color: #8490a3;
+
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.lab-summary-card strong {
+    color: #172b4d;
+
+    font-size: 22px;
+    font-weight: 800;
+}
+
+
+/* =========================================
+   MAIN QUEUE PANEL
+========================================= */
+
+.lab-queue-panel {
+    padding: 25px;
+
+    background: #ffffff;
+    border: 1px solid #e3eaf3;
+    border-radius: 17px;
+
+    box-shadow:
+        0 8px 28px rgba(24, 67, 130, 0.05);
+}
+
+.lab-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    padding-bottom: 20px;
+    margin-bottom: 18px;
+
+    border-bottom: 1px solid #edf1f6;
+}
+
+.lab-panel-header h2 {
+    margin: 0;
+
+    color: #172b4d;
+
+    font-size: 20px;
+}
+
+.lab-panel-header p {
+    margin: 5px 0 0;
+
+    color: #8a94a6;
+
+    font-size: 12px;
+}
+
+.lab-queue-count {
+    min-width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #edf5ff;
+    border-radius: 10px;
+
+    color: #1265e8;
+
+    font-size: 13px;
+    font-weight: 800;
+}
+
+
+/* =========================================
+   PATIENT LIST
+========================================= */
+
+.lab-patient-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.lab-patient-card {
+    display: grid;
+    grid-template-columns:
+        minmax(120px, 0.7fr)
+        minmax(180px, 1.4fr)
+        minmax(180px, 1.4fr)
+        minmax(90px, 0.6fr)
+        auto;
+
+    align-items: center;
+    gap: 20px;
+
+    padding: 18px;
+
+    background: #fbfcfe;
+    border: 1px solid #e3eaf3;
+    border-radius: 13px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.lab-patient-card:hover {
+    border-color: #c9d9ed;
+
+    box-shadow:
+        0 8px 22px rgba(24, 67, 130, 0.06);
+
+    transform: translateY(-1px);
+}
+
+.lab-patient-card > div {
+    min-width: 0;
+}
+
+.lab-patient-card > div > span {
+    display: block;
+    margin-bottom: 6px;
+
+    color: #8b97a8;
+
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+}
+
+.lab-patient-card h3 {
+    margin: 0;
+
+    color: #173354;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    word-break: break-word;
+}
+
+.lab-patient-card p {
+    margin: 4px 0 0;
+
+    color: #718197;
+
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+.lab-patient-card strong {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 6px 10px;
+
+    background: #e7f8ed;
+    border-radius: 999px;
+
+    color: #158447;
+
+    font-size: 9px;
+    font-weight: 800;
+}
+
+
+/* =========================================
+   OPEN PATIENT BUTTON
+========================================= */
+
+.open-patient-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 40px;
+    padding: 0 16px;
+
+    background: #1265e8;
+    border-radius: 9px;
+
+    color: #ffffff;
+
+    font-size: 10px;
+    font-weight: 800;
+    text-decoration: none;
+
+    white-space: nowrap;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.open-patient-btn:hover {
+    background: #0753c8;
+    transform: translateY(-1px);
+}
+
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.lab-empty-state {
+    padding: 70px 20px;
+
+    text-align: center;
+}
+
+.lab-empty-icon {
+    width: 62px;
+    height: 62px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 16px;
+
+    background: #edf5ff;
+    border-radius: 50%;
+
+    font-size: 27px;
+}
+
+.lab-empty-state h3 {
+    margin: 0;
+
+    color: #263550;
+
+    font-size: 17px;
+}
+
+.lab-empty-state p {
+    max-width: 420px;
+    margin: 8px auto 0;
+
+    color: #8a94a6;
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1000px) {
+
+    .lab-patient-card {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .open-patient-btn {
+        min-height: 44px;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .lab-dashboard-page {
+        padding: 30px 16px 60px;
+    }
+
+    .lab-dashboard-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .lab-dashboard-header h1 {
+        font-size: 28px;
+    }
+
+    .lab-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .lab-patient-card {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .lab-panel-header {
+        align-items: flex-start;
+    }
+}
+
+
+/* =========================================
+   INDIVIDUAL TEST QUEUE
+========================================= */
+
+.lab-test-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.lab-test-card {
+    display: grid;
+    grid-template-columns:
+        minmax(100px, 0.7fr)
+        minmax(170px, 1.3fr)
+        minmax(150px, 1.2fr)
+        minmax(160px, 1.2fr)
+        minmax(120px, 0.8fr)
+        auto;
+
+    align-items: center;
+    gap: 18px;
+
+    padding: 18px;
+
+    background: #fbfcfe;
+    border: 1px solid #e3eaf3;
+    border-radius: 13px;
+}
+
+.lab-test-info {
+    min-width: 0;
+}
+
+.lab-test-info > span {
+    display: block;
+    margin-bottom: 6px;
+
+    color: #8b97a8;
+
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+}
+
+.lab-test-info h3 {
+    margin: 0;
+
+    color: #173354;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.lab-test-info p {
+    margin: 4px 0 0;
+
+    color: #718197;
+
+    font-size: 10px;
+}
+
+.lab-test-status {
+    display: inline-flex;
+    padding: 7px 10px;
+
+    border-radius: 999px;
+
+    font-size: 9px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.lab-status-ordered {
+    background: #fff3d6;
+    color: #a46800;
+}
+
+.lab-status-sample_collected {
+    background: #e8f2ff;
+    color: #1265e8;
+}
+
+.lab-status-report_ready {
+    background: #e7f8ed;
+    color: #158447;
+}
+
+.lab-status-reviewed {
+    background: #f0eaff;
+    color: #6842c2;
+}
+
+@media (max-width: 1100px) {
+    .lab-test-card {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .lab-test-card {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================
+   TESTED LIST
+========================================= */
+
+.tested-panel {
+    margin-top: 24px;
+}
+
+.result-badge {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 7px 10px;
+
+    border-radius: 999px;
+
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.result-normal,
+.result-negative {
+    background: #e7f8ed;
+    color: #158447;
+}
+
+.result-abnormal,
+.result-positive {
+    background: #ffe8eb;
+    color: #c92f43;
+}
+
+.result-inconclusive {
+    background: #fff3d6;
+    color: #a46800;
+}
+
+.view-result-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 40px;
+    padding: 0 16px;
+
+    background: #edf5ff;
+    border-radius: 9px;
+
+    color: #1265e8;
+
+    font-size: 10px;
+    font-weight: 800;
+    text-decoration: none;
+    white-space: nowrap;
+}

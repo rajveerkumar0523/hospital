@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Emergency Ambulance | MediCore
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'emergency/css/emergency_request.css' %}?v=2"
+>
+{% endblock %}
+
+{% block content %}
+
+<section class="ambulance-page">
+
+    <div class="ambulance-wrapper">
+
+        <div class="ambulance-header">
+
+            <div>
+                <span class="page-label">
+                    24/7 EMERGENCY RESPONSE
+                </span>
+
+                <h1>
+                    Emergency Ambulance
+                </h1>
+
+                <p>
+                    Check live ambulance availability and request
+                    immediate emergency assistance.
+                </p>
+            </div>
+
+            <div class="emergency-live-badge">
+                <span></span>
+                Emergency Service Active
+            </div>
+
+        </div>
+
+
+        <div class="ambulance-stats">
+
+            <article class="ambulance-stat-card">
+
+                <div class="stat-icon">
+                    🚑
+                </div>
+
+                <div>
+                    <span>Total Ambulances</span>
+                    <strong>{{ total_ambulances }}</strong>
+                </div>
+
+            </article>
+
+
+            <article class="ambulance-stat-card available">
+
+                <div class="stat-icon">
+                    ✓
+                </div>
+
+                <div>
+                    <span>Available Now</span>
+                    <strong>{{ available_ambulances }}</strong>
+                </div>
+
+            </article>
+
+
+            <article class="ambulance-stat-card on-duty">
+
+                <div class="stat-icon">
+                    ●
+                </div>
+
+                <div>
+                    <span>On Duty</span>
+                    <strong>{{ on_duty_ambulances }}</strong>
+                </div>
+
+            </article>
+
+        </div>
+
+
+        <div class="ambulance-list-header">
+
+            <div>
+                <span>LIVE FLEET STATUS</span>
+                <h2>Available Ambulances</h2>
+            </div>
+
+            <strong>
+                {{ available_ambulances }} available
+            </strong>
+
+        </div>
+
+
+        <div class="ambulance-grid">
+
+            {% for ambulance in ambulances %}
+
+                <article class="ambulance-card">
+
+                    <div class="ambulance-card-top">
+
+                        <div class="ambulance-icon">
+                            🚑
+                        </div>
+
+                        <span class="
+                            ambulance-status
+                            status-{{ ambulance.status|lower }}
+                        ">
+                            {{ ambulance.get_status_display }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="ambulance-info">
+
+                        <span>AMBULANCE NUMBER</span>
+
+                        <h3>
+                            {{ ambulance.ambulance_number }}
+                        </h3>
+
+                        <p>
+                            Vehicle {{ ambulance.vehicle_number }}
+                        </p>
+
+                    </div>
+
+
+                    <div class="ambulance-details">
+
+                        <div>
+                            <span>Driver</span>
+                            <strong>
+                                {{ ambulance.driver_name }}
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>Contact</span>
+                            <strong>
+                                {{ ambulance.driver_phone }}
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    {% if ambulance.status == "AVAILABLE" %}
+
+                        <a
+    href="tel:{{ ambulance.driver_phone }}"
+    class="request-ambulance-btn"
+>
+    Call Ambulance
+    <span>☎</span>
+</a>
+
+                    {% else %}
+
+                        <button
+                            type="button"
+                            class="request-ambulance-btn unavailable"
+                            disabled
+                        >
+                            Currently Unavailable
+                        </button>
+
+                    {% endif %}
+
+                </article>
+
+            {% empty %}
+
+                <div class="no-ambulances">
+                    <span>🚑</span>
+                    <h3>No ambulances found</h3>
+                    <p>Emergency fleet information is currently unavailable.</p>
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

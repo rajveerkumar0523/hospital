@@ -1,0 +1,694 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Appointment Details | MediCore
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'appointments/css/appointment_detail.css' %}?v=1"
+>
+{% endblock %}
+
+{% block content %}
+
+<section class="appointment-detail-page">
+
+    <div class="appointment-detail-wrapper">
+
+        <header class="detail-header">
+            <div>
+                <span class="detail-label">APPOINTMENT DETAILS</span>
+                <h1>Patient Consultation</h1>
+                <p>
+                    Review patient information and manage this appointment.
+                </p>
+            </div>
+
+            <a
+                href="{% url 'dashboard:doctor' %}"
+                class="back-dashboard-btn"
+            >
+                ← Back to Dashboard
+            </a>
+        </header>
+
+
+        {% if messages %}
+            <div class="detail-messages">
+                {% for message in messages %}
+                    <div class="detail-message {{ message.tags }}">
+                        <span>{{ message }}</span>
+
+                        <button
+                            type="button"
+                            onclick="this.parentElement.remove()"
+                        >
+                            ×
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+
+        <div class="detail-grid">
+
+            <main class="detail-main">
+
+                <section class="detail-card patient-card">
+
+                    <div class="card-heading">
+                        <div>
+                            <span>PATIENT INFORMATION</span>
+                            <h2>{{ patient.get_full_name }}</h2>
+                        </div>
+
+                        <div class="patient-avatar">
+                            {{ patient.first_name|first }}
+                            {{ patient.last_name|first }}
+                        </div>
+                    </div>
+
+
+                    <div class="patient-details-grid">
+
+                        <div class="detail-item">
+                            <span>Email</span>
+                            <strong>{{ patient.email }}</strong>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>Patient ID</span>
+                            <strong>
+                                {{ patient_profile.patient_id|default:"N/A" }}
+                            </strong>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>Blood Group</span>
+                            <strong>
+                                {{ patient_profile.blood_group|default:"N/A" }}
+                            </strong>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>Emergency Contact</span>
+                            <strong>
+                                {{ patient_profile.emergency_contact|default:"N/A" }}
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <section class="detail-card">
+
+                    <div class="section-heading">
+                        <span>MEDICAL INFORMATION</span>
+                        <h2>Health Summary</h2>
+                    </div>
+
+                    <div class="medical-info-grid">
+
+                        <div class="medical-item">
+                            <span>Known Allergies</span>
+                            <p>
+                                {{ patient_profile.allergies|default:"No known allergies" }}
+                            </p>
+                        </div>
+
+                        <div class="medical-item">
+                            <span>Reason for Visit</span>
+                            <p>{{ appointment.reason }}</p>
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </main>
+
+
+            <aside class="detail-sidebar">
+
+                <section class="detail-card appointment-summary">
+
+                    <div class="section-heading">
+                        <span>CONSULTATION</span>
+                        <h2>Appointment Summary</h2>
+                    </div>
+
+
+                    <div class="summary-row">
+                        <span>Date</span>
+                        <strong>
+                            {{ appointment.appointment_date|date:"d M Y" }}
+                        </strong>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Day</span>
+                        <strong>
+                            {{ appointment.appointment_date|date:"l" }}
+                        </strong>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Time</span>
+                        <strong>
+                            {{ appointment.appointment_time|time:"g:i A" }}
+                        </strong>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Department</span>
+                        <strong>
+                            {{ appointment.doctor.department.name }}
+                        </strong>
+                    </div>
+
+
+                    <!-- <div class="appointment-current-status">
+                        <span>Current Status</span>
+
+                        <strong class="status-{{ appointment.status|lower }}">
+                            {{ display_status }} 
+                        </strong>
+                    </div> -->
+
+                    <div class="appointment-current-status">
+
+    <span>Current Status</span>
+
+    <strong class="
+        current-status-badge
+
+        {% if display_status == 'AWAITING TESTS' %}
+            status-awaiting-tests
+
+        {% elif display_status == 'REPORT READY' %}
+            status-report-ready
+
+        {% elif display_status == 'COMPLETED' %}
+            status-completed
+
+        {% endif %}
+    ">
+        {{ display_status }}
+    </strong>
+
+</div>
+                   
+
+
+                    <div class="detail-actions">
+
+                        {% if appointment.status == "PENDING" %}
+
+                            <form
+                                method="POST"
+                                action="{% url 'appointments:update_status' appointment.id 'confirm' %}"
+                            >
+                                {% csrf_token %}
+
+                                <button
+                                    type="submit"
+                                    class="confirm-detail-btn"
+                                >
+                                    Confirm Appointment
+                                </button>
+                            </form>
+
+                            <form
+                                method="POST"
+                                action="{% url 'appointments:update_status' appointment.id 'cancel' %}"
+                                onsubmit="return confirm('Cancel this appointment?');"
+                            >
+                                {% csrf_token %}
+
+                                <button
+                                    type="submit"
+                                    class="cancel-detail-btn"
+                                >
+                                    Cancel Appointment
+                                </button>
+                            </form>
+
+
+                        {% elif appointment.status == "CONFIRMED" %}
+
+                            <form
+                                method="POST"
+                                action="{% url 'appointments:update_status' appointment.id 'complete' %}"
+                            >
+                                {% csrf_token %}
+
+                                <button
+                                    type="submit"
+                                    class="complete-detail-btn"
+                                >
+                                    Mark as Completed
+                                </button>
+                            </form>
+
+                            <form
+                                method="POST"
+                                action="{% url 'appointments:update_status' appointment.id 'cancel' %}"
+                                onsubmit="return confirm('Cancel this appointment?');"
+                            >
+                                {% csrf_token %}
+
+                                <button
+                                    type="submit"
+                                    class="cancel-detail-btn"
+                                >
+                                    Cancel Appointment
+                                </button>
+                            </form>
+
+                        {% endif %}
+
+                    </div>
+
+                </section>
+
+            </aside>
+
+        </div>
+
+    </div>
+
+    {% if appointment.status == "CONFIRMED" %}
+
+<section class="test-order-section"
+            id="medicalTestsSection"
+            >
+
+    <div class="test-order-heading">
+
+        <span>DIAGNOSTIC INVESTIGATION</span>
+
+        <h2>Order Medical Tests</h2>
+
+        <p>
+            Select the tests required before the next consultation.
+        </p>
+
+    </div>
+
+
+    <form
+        method="POST"
+        action="{% url 'appointments:order_tests' appointment.id %}"
+        class="test-order-form"
+    >
+        {% csrf_token %}
+
+        <div class="test-options">
+
+            <label class="test-option">
+                <input
+                    type="checkbox"
+                    name="test_type"
+                    value="BLOOD"
+                >
+                <span>🩸 Blood Test</span>
+            </label>
+
+
+            <label class="test-option">
+                <input
+                    type="checkbox"
+                    name="test_type"
+                    value="URINE"
+                >
+                <span>🧪 Urine Test</span>
+            </label>
+
+
+            <label class="test-option">
+                <input
+                    type="checkbox"
+                    name="test_type"
+                    value="XRAY"
+                >
+                <span>🩻 X-Ray</span>
+            </label>
+
+
+            <label class="test-option">
+                <input
+                    type="checkbox"
+                    name="test_type"
+                    value="ULTRASOUND"
+                >
+                <span>📡 Ultrasound</span>
+            </label>
+
+
+            <label class="test-option">
+                <input
+                    type="checkbox"
+                    name="test_type"
+                    value="ECG"
+                >
+                <span>❤️ ECG</span>
+            </label>
+
+
+            <label class="test-option">
+                <input
+                    type="checkbox"
+                    name="test_type"
+                    value="CT_SCAN"
+                >
+                <span>🧠 CT Scan</span>
+            </label>
+
+
+            <label class="test-option">
+                <input
+                    type="checkbox"
+                    name="test_type"
+                    value="MRI"
+                >
+                <span>🔬 MRI</span>
+            </label>
+
+
+            <label class="test-option">
+                <input
+                    type="checkbox"
+                    name="test_type"
+                    value="OTHER"
+                >
+                <span>➕ Other Test</span>
+            </label>
+
+        </div>
+
+
+        <div class="test-form-group">
+
+            <label>
+                Other Test Name
+            </label>
+
+            <input
+                type="text"
+                name="custom_test_name"
+                placeholder="Enter test name if Other is selected"
+            >
+
+        </div>
+
+
+        <div class="test-form-group">
+
+            <label>
+                Test Instructions
+            </label>
+
+            <textarea
+                name="test_instructions"
+                rows="3"
+                placeholder="Example: Fasting required for 8 hours"
+            ></textarea>
+
+        </div>
+
+
+        <button
+            type="submit"
+            class="order-tests-btn"
+        >
+            Order Selected Tests →
+        </button>
+       
+</div>
+
+    </form>
+    <!-- <form
+    method="POST"
+    action="{% url 'appointments:update_status' appointment.id 'complete' %}"
+    onsubmit="return confirm('Confirm that no medical tests are required and complete this appointment?');"
+>
+    {% csrf_token %}
+
+    <button
+        type="submit"
+        class="no-test-required-btn"
+    >
+         No Tests Required
+    </button>
+</form> -->
+
+<div class="no-test-divider">
+    <span>OR</span>
+</div>
+
+<button
+    type="button"
+    class="no-test-required-btn"
+    id="noTestRequiredBtn"
+>
+    ✓ No Tests Required — Continue to Prescription
+</button>
+
+</section>
+
+{% endif %}
+
+
+
+
+{% if appointment.status != "CANCELLED" %}
+
+<section
+    class="prescription-section"
+    id="prescriptionSection"
+>
+
+    {% if prescription %}
+
+        <div class="saved-prescription">
+
+            <div class="saved-prescription-header">
+
+                <div>
+                    <span class="section-label">
+                        PRESCRIPTION
+                    </span>
+
+                    <h2>
+                        Saved Prescription
+                    </h2>
+
+                    <p>
+                        Prescription issued during this consultation.
+                    </p>
+                </div>
+
+                <span class="prescription-saved-badge">
+                    ✓ Saved
+                </span>
+
+            </div>
+
+
+            <div class="prescription-detail-grid">
+
+                <div class="prescription-detail-card">
+
+                    <span>
+                        DIAGNOSIS
+                    </span>
+
+                    <p>
+                        {{ prescription.diagnosis }}
+                    </p>
+
+                </div>
+
+
+                <div class="prescription-detail-card">
+
+                    <span>
+                        MEDICINES
+                    </span>
+
+                    <p>
+                        {{ prescription.medicines|linebreaksbr }}
+                    </p>
+
+                </div>
+
+
+                <div class="prescription-detail-card full-width">
+
+                    <span>
+                        INSTRUCTIONS
+                    </span>
+
+                    <p>
+                        {{ prescription.instructions|default:"No additional instructions."|linebreaksbr }}
+                    </p>
+
+                </div>
+
+
+                <div class="prescription-detail-card full-width">
+
+                    <span>
+                        FOLLOW-UP DATE
+                    </span>
+
+                    <p>
+                        {% if prescription.follow_up_date %}
+
+                            {{ prescription.follow_up_date|date:"d M Y" }}
+
+                        {% else %}
+
+                            No follow-up scheduled
+
+                        {% endif %}
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    {% else %}
+
+        <div class="prescription-heading">
+            <span>MEDICAL CONSULTATION</span>
+
+            <h2>
+                {% if appointment.prescription %}
+                    Update Prescription
+                {% else %}
+                    Write Prescription
+                {% endif %}
+            </h2>
+
+            <p>
+                Record diagnosis, medicines and follow-up instructions.
+            </p>
+        </div>
+
+
+        <form
+            method="POST"
+            action="{% url 'appointments:save_prescription' appointment.id %}"
+            class="prescription-form"
+        >
+            {% csrf_token %}
+
+            <div class="prescription-form-group">
+                <label>Diagnosis *</label>
+
+                <textarea
+                    name="diagnosis"
+                    rows="3"
+                    placeholder="Enter diagnosis"
+                    required
+                >{% if appointment.prescription %}{{ appointment.prescription.diagnosis }}{% endif %}</textarea>
+            </div>
+
+
+            <div class="prescription-form-group">
+                <label>Medicines *</label>
+
+                <textarea
+                    name="medicines"
+                    rows="5"
+                    placeholder="Example: Paracetamol 500mg — twice daily for 3 days"
+                    required
+                >{% if appointment.prescription %}{{ appointment.prescription.medicines }}{% endif %}</textarea>
+            </div>
+
+
+            <div class="prescription-form-group">
+                <label>Instructions</label>
+
+                <textarea
+                    name="instructions"
+                    rows="3"
+                    placeholder="Diet, rest or other instructions"
+                >{% if appointment.prescription %}{{ appointment.prescription.instructions }}{% endif %}</textarea>
+            </div>
+
+
+            <!-- <div class="prescription-form-group">
+                <label>Follow-up Date</label>
+
+                <input
+                    type="date"
+                    name="follow_up_date"
+                    value="{% if appointment.prescription.follow_up_date %}{{ appointment.prescription.follow_up_date|date:'Y-m-d' }}{% endif %}"
+                >
+            </div> -->
+
+
+            <button
+                type="submit"
+                class="save-prescription-btn"
+            >
+                {% if appointment.prescription %}
+                    Update Prescription
+                {% else %}
+                    Save Prescription & Complete Appointment
+                {% endif %}
+            </button>
+
+        </form>
+
+    {% endif %}
+
+</section>
+
+{% endif %}
+
+</section>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const noTestButton =
+        document.getElementById("noTestRequiredBtn");
+
+    const testSection =
+        document.getElementById("medicalTestsSection");
+
+    const prescriptionSection =
+        document.getElementById("prescriptionSection");
+
+    if (noTestButton && testSection && prescriptionSection) {
+
+        noTestButton.addEventListener("click", function () {
+
+            testSection.style.display = "none";
+            prescriptionSection.style.display = "block";
+
+            prescriptionSection.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+        });
+
+    }
+
+});
+</script>
+
+{% endblock %}

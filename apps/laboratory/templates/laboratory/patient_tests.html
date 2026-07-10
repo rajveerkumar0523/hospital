@@ -1,0 +1,412 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+{{ patient.get_full_name }} Tests | MediCore
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'laboratory/css/patient_tests.css' %}?v=2"
+>
+{% endblock %}
+
+
+{% block content %}
+
+<main class="patient-tests-page">
+
+    <div class="patient-tests-wrapper">
+
+
+        <!-- PAGE HEADER -->
+
+        <header class="page-header">
+
+            <div>
+                <span class="page-label">
+                    LABORATORY PATIENT RECORD
+                </span>
+
+                <h1>
+                    {{ patient.get_full_name|default:patient.email }}
+                </h1>
+
+                <p>
+                    Access paid tests and complete laboratory results.
+                </p>
+            </div>
+
+
+            <a
+                href="{% url 'laboratory:dashboard' %}"
+                class="back-dashboard-btn"
+            >
+                ← Patient Queue
+            </a>
+
+        </header>
+
+
+
+        <!-- PATIENT SUMMARY -->
+
+        <section class="patient-summary-card">
+
+            <div class="patient-avatar">
+
+                {% if patient.first_name %}
+                    {{ patient.first_name|first|upper }}
+                {% else %}
+                    {{ patient.email|first|upper }}
+                {% endif %}
+
+            </div>
+
+
+            <div class="patient-main-info">
+
+                <span>PATIENT</span>
+
+                <h2>
+                    {{ patient.get_full_name|default:patient.email }}
+                </h2>
+
+                <p>
+                    {{ patient.email }}
+                </p>
+
+            </div>
+
+
+            <div class="patient-meta">
+
+                <div>
+                    <span>PATIENT ID</span>
+
+                    <strong>
+                        {{ patient.patient_profile.patient_id }}
+                    </strong>
+                </div>
+
+
+                <div>
+                    <span>PENDING TESTS</span>
+
+                    <strong>
+                        {{ pending_count }}
+                    </strong>
+                </div>
+
+
+                <div>
+                    <span>COMPLETED</span>
+
+                    <strong>
+                        {{ completed_count }}
+                    </strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- PENDING TESTS -->
+
+        <section class="tests-section">
+
+            <div class="section-header">
+
+                <div>
+                    <span>ACTIVE LAB QUEUE</span>
+
+                    <h2>Pending Tests</h2>
+                </div>
+
+                <strong class="section-count pending-count">
+                    {{ pending_count }}
+                </strong>
+
+            </div>
+
+
+            {% if pending_tests %}
+
+                <div class="tests-list">
+
+                    {% for test in pending_tests %}
+
+                        <article class="test-card">
+
+
+                            <!-- TEST ICON -->
+
+                            <div class="test-icon">
+
+                                {% if test.test_type == "BLOOD" %}
+                                    🩸
+
+                                {% elif test.test_type == "URINE" %}
+                                    🧪
+
+                                {% elif test.test_type == "XRAY" %}
+                                    🩻
+
+                                {% elif test.test_type == "MRI" %}
+                                    🧠
+
+                                {% elif test.test_type == "ECG" %}
+                                    ❤️
+
+                                {% elif test.test_type == "CT_SCAN" %}
+                                    🔬
+
+                                {% else %}
+                                    🧫
+                                {% endif %}
+
+                            </div>
+
+
+
+                            <!-- TEST DETAILS -->
+
+                            <div class="test-main">
+
+                                <span class="test-label">
+                                    PAID LAB TEST
+                                </span>
+
+                                <h3>
+                                    {{ test.test_name }}
+                                </h3>
+
+                                <p>
+                                    Test ID:
+
+                                    <strong>
+                                        {% if test.test_id %}
+                                            {{ test.test_id }}
+                                        {% else %}
+                                            TEST-{{ test.id }}
+                                        {% endif %}
+                                    </strong>
+                                </p>
+
+                            </div>
+
+
+
+                            <!-- DOCTOR DETAILS -->
+
+                            <div class="test-meta">
+
+                                <span>ORDERED BY</span>
+
+                                <strong>
+                                    Dr.
+                                    {{ test.appointment.doctor.user.get_full_name }}
+                                </strong>
+
+                                <small>
+                                    {{ test.appointment.doctor.department.name }}
+                                </small>
+
+                            </div>
+
+
+
+                            <!-- STATUS -->
+
+                            <div class="test-status">
+
+                                <span class="
+                                    status-badge
+                                    status-{{ test.status|lower }}
+                                ">
+                                    {{ test.get_status_display }}
+                                </span>
+
+                            </div>
+
+
+
+                            <!-- OPEN TEST -->
+
+                            <a
+                                href="{% url 'laboratory:test_detail' test.id %}"
+                                class="open-test-btn"
+                            >
+                                Open Test
+                                <span>→</span>
+                            </a>
+
+                        </article>
+
+                    {% endfor %}
+
+                </div>
+
+
+            {% else %}
+
+                <div class="empty-tests">
+
+                    <div>✓</div>
+
+                    <h3>No pending tests</h3>
+
+                    <p>
+                        All paid tests for this patient
+                        have been completed.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+
+
+        <!-- COMPLETED TESTS -->
+
+        <section class="tests-section completed-section">
+
+            <div class="section-header">
+
+                <div>
+                    <span>LABORATORY HISTORY</span>
+
+                    <h2>Completed Tests</h2>
+                </div>
+
+                <strong class="section-count completed-count">
+                    {{ completed_count }}
+                </strong>
+
+            </div>
+
+
+            {% if completed_tests %}
+
+                <div class="tests-list">
+
+                    {% for test in completed_tests %}
+
+                        <article class="test-card completed-test-card">
+
+
+                            <!-- COMPLETED ICON -->
+
+                            <div class="test-icon completed-icon">
+                                ✓
+                            </div>
+
+
+
+                            <!-- TEST DETAILS -->
+
+                            <div class="test-main">
+
+                                <span class="test-label">
+                                    COMPLETED TEST
+                                </span>
+
+                                <h3>
+                                    {{ test.test_name }}
+                                </h3>
+
+                                <p>
+                                    Test ID:
+
+                                    <strong>
+                                        {% if test.test_id %}
+                                            {{ test.test_id }}
+                                        {% else %}
+                                            TEST-{{ test.id }}
+                                        {% endif %}
+                                    </strong>
+                                </p>
+
+                            </div>
+
+
+
+                            <!-- RESULT -->
+
+                            <div class="test-meta">
+
+                                <span>RESULT STATUS</span>
+
+                                <strong>
+                                    {{ test.lab_result.get_result_status_display }}
+                                </strong>
+
+                                <small>
+                                    {{ test.lab_result.completed_at|date:"d M Y, h:i A" }}
+                                </small>
+
+                            </div>
+
+
+
+                            <!-- STATUS -->
+
+                            <div class="test-status">
+
+                                <span class="
+                                    status-badge
+                                    status-{{ test.status|lower }}
+                                ">
+                                    {{ test.get_status_display }}
+                                </span>
+
+                            </div>
+
+
+
+                            <!-- VIEW RESULT -->
+
+                            <a
+                                href="{% url 'laboratory:test_detail' test.id %}"
+                                class="view-result-btn"
+                            >
+                                View Result
+                                <span>→</span>
+                            </a>
+
+                        </article>
+
+                    {% endfor %}
+
+                </div>
+
+
+            {% else %}
+
+                <div class="empty-tests">
+
+                    <div>🧪</div>
+
+                    <h3>No completed tests yet</h3>
+
+                    <p>
+                        Completed laboratory results
+                        will appear here.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+    </div>
+
+</main>
+
+{% endblock %}

@@ -1,0 +1,343 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Reports & Analytics | MediCore
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'dashboard/css/admin_reports.css' %}?v=1"
+>
+{% endblock %}
+
+{% block content %}
+
+<section class="reports-page">
+
+    <div class="reports-wrapper">
+
+        <!-- PAGE HEADER -->
+
+        <div class="reports-header">
+
+            <div>
+                <span class="page-label">
+                    HOSPITAL ANALYTICS
+                </span>
+
+                <h1>Reports & Analytics</h1>
+
+                <p>
+                    Monitor hospital activity, appointments
+                    and medical staff performance.
+                </p>
+            </div>
+
+            <a
+                href="{% url 'dashboard:admin' %}"
+                class="back-btn"
+            >
+                ← Dashboard
+            </a>
+
+        </div>
+
+
+        <!-- OVERVIEW STATS -->
+
+        <div class="report-stats">
+
+            <article class="report-stat-card">
+
+                <div class="report-stat-icon">
+                    📅
+                </div>
+
+                <div>
+                    <span>Total Appointments</span>
+                    <strong>{{ total_appointments }}</strong>
+                </div>
+
+            </article>
+
+
+            <article class="report-stat-card">
+
+                <div class="report-stat-icon">
+                    🩺
+                </div>
+
+                <div>
+                    <span>Total Doctors</span>
+                    <strong>{{ total_doctors }}</strong>
+                </div>
+
+            </article>
+
+
+            <article class="report-stat-card">
+
+                <div class="report-stat-icon">
+                    👥
+                </div>
+
+                <div>
+                    <span>Total Patients</span>
+                    <strong>{{ total_patients }}</strong>
+                </div>
+
+            </article>
+
+
+            <article class="report-stat-card">
+
+                <div class="report-stat-icon">
+                    🏥
+                </div>
+
+                <div>
+                    <span>Departments</span>
+                    <strong>{{ departments|length }}</strong>
+                </div>
+
+            </article>
+
+        </div>
+
+
+        <!-- APPOINTMENT STATUS -->
+
+        <section class="report-card">
+
+            <div class="report-card-header">
+
+                <div>
+                    <span>APPOINTMENT ANALYSIS</span>
+                    <h2>Appointment Status</h2>
+                </div>
+
+                <strong>
+                    {{ total_appointments }}
+                </strong>
+
+            </div>
+
+
+            <div class="status-report-grid">
+
+                <div class="status-report-item pending">
+
+                    <span>Pending</span>
+
+                    <strong>
+                        {{ pending_count }}
+                    </strong>
+
+                </div>
+
+
+                <div class="status-report-item confirmed">
+
+                    <span>Confirmed</span>
+
+                    <strong>
+                        {{ confirmed_count }}
+                    </strong>
+
+                </div>
+
+
+                <div class="status-report-item completed">
+
+                    <span>Completed</span>
+
+                    <strong>
+                        {{ completed_count }}
+                    </strong>
+
+                </div>
+
+
+                <div class="status-report-item cancelled">
+
+                    <span>Cancelled</span>
+
+                    <strong>
+                        {{ cancelled_count }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- TWO COLUMN ANALYTICS -->
+
+        <div class="analytics-grid">
+
+
+            <!-- DEPARTMENT REPORT -->
+
+            <section class="report-card">
+
+                <div class="report-card-header">
+
+                    <div>
+                        <span>HOSPITAL STRUCTURE</span>
+                        <h2>Department Overview</h2>
+                    </div>
+
+                </div>
+
+
+                {% if departments %}
+
+                    <div class="department-report-list">
+
+                        {% for department in departments %}
+
+                            <div class="department-report-item">
+
+                                <div class="department-report-icon">
+                                    🏥
+                                </div>
+
+
+                                <div class="department-report-info">
+
+                                    <h3>
+                                        {{ department.name }}
+                                    </h3>
+
+                                    <p>
+                                        Active medical department
+                                    </p>
+
+                                </div>
+
+
+                                <div class="department-doctor-count">
+
+                                    <strong>
+                                        {{ department.doctors.count }}
+                                    </strong>
+
+                                    <span>
+                                        Doctor{{ department.doctors.count|pluralize }}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                {% else %}
+
+                    <div class="empty-report">
+
+                        <h3>No departments found</h3>
+
+                        <p>
+                            Department data will appear here.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </section>
+
+
+            <!-- DOCTOR REPORT -->
+
+            <section class="report-card">
+
+                <div class="report-card-header">
+
+                    <div>
+                        <span>MEDICAL STAFF</span>
+                        <h2>Doctor Overview</h2>
+                    </div>
+
+                    <strong>
+                        {{ total_doctors }}
+                    </strong>
+
+                </div>
+
+
+                {% if doctors %}
+
+                    <div class="doctor-report-list">
+
+                        {% for doctor in doctors %}
+
+                            <div class="doctor-report-item">
+
+                                <div class="doctor-report-avatar">
+
+                                    {{ doctor.user.first_name|first|upper }}
+
+                                    {{ doctor.user.last_name|first|upper }}
+
+                                </div>
+
+
+                                <div class="doctor-report-info">
+
+                                    <h3>
+                                        Dr. {{ doctor.user.get_full_name }}
+                                    </h3>
+
+                                    <p>
+                                        {{ doctor.department.name }}
+                                    </p>
+
+                                </div>
+
+
+                                <span class="
+                                    doctor-report-status
+                                    status-{{ doctor.status|lower }}
+                                ">
+                                    {{ doctor.get_status_display }}
+                                </span>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                {% else %}
+
+                    <div class="empty-report">
+
+                        <h3>No doctors found</h3>
+
+                        <p>
+                            Doctor information will appear here.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </section>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

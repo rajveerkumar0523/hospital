@@ -1,0 +1,306 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Manage Ambulances | MediCore
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'dashboard/css/manage_ambulances.css' %}?v=1"
+>
+{% endblock %}
+
+{% block content %}
+
+<section class="manage-ambulances-page">
+
+    <div class="manage-ambulances-wrapper">
+
+        <!-- HEADER -->
+
+        <div class="ambulances-header">
+
+            <div>
+                <span class="page-label">
+                    EMERGENCY FLEET ADMINISTRATION
+                </span>
+
+                <h1>Manage Ambulances</h1>
+
+                <p>
+                    Monitor the emergency fleet and update
+                    real-time ambulance availability.
+                </p>
+            </div>
+
+            <a
+                href="{% url 'dashboard:admin' %}"
+                class="back-dashboard-btn"
+            >
+                ← Dashboard
+            </a>
+
+        </div>
+
+
+        <!-- MESSAGES -->
+
+        {% if messages %}
+
+            <div class="ambulance-messages">
+
+                {% for message in messages %}
+
+                    <div class="
+                        ambulance-message
+                        {% if message.tags %}
+                            {{ message.tags }}
+                        {% endif %}
+                    ">
+                        <span>{{ message }}</span>
+
+                        <button
+                            type="button"
+                            onclick="this.parentElement.remove()"
+                        >
+                            &times;
+                        </button>
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- STATISTICS -->
+
+        <div class="ambulance-admin-stats">
+
+            <article class="ambulance-stat-card">
+
+                <div class="stat-icon total-icon">
+                    🚑
+                </div>
+
+                <div>
+                    <span>Total Ambulances</span>
+                    <strong>{{ total_ambulances }}</strong>
+                </div>
+
+            </article>
+
+
+            <article class="ambulance-stat-card">
+
+                <div class="stat-icon available-icon">
+                    ✓
+                </div>
+
+                <div>
+                    <span>Available</span>
+                    <strong>{{ available_ambulances }}</strong>
+                </div>
+
+            </article>
+
+
+            <article class="ambulance-stat-card">
+
+                <div class="stat-icon duty-icon">
+                    ●
+                </div>
+
+                <div>
+                    <span>On Duty</span>
+                    <strong>{{ on_duty_ambulances }}</strong>
+                </div>
+
+            </article>
+
+
+            <article class="ambulance-stat-card">
+
+                <div class="stat-icon maintenance-icon">
+                    ⚙
+                </div>
+
+                <div>
+                    <span>Maintenance</span>
+                    <strong>{{ maintenance_ambulances }}</strong>
+                </div>
+
+            </article>
+
+        </div>
+
+
+        <!-- FLEET LIST -->
+
+        <div class="fleet-card">
+
+            <div class="fleet-heading">
+
+                <div>
+                    <span>EMERGENCY FLEET</span>
+                    <h2>All Ambulances</h2>
+                </div>
+
+                <strong>
+                    {{ total_ambulances }}
+                </strong>
+
+            </div>
+
+
+            {% if ambulances %}
+
+                <div class="ambulance-admin-grid">
+
+                    {% for ambulance in ambulances %}
+
+                        <article class="ambulance-admin-card">
+
+                            <div class="ambulance-card-top">
+
+                                <div class="ambulance-identity">
+
+                                    <div class="ambulance-icon">
+                                        🚑
+                                    </div>
+
+                                    <div>
+                                        <span>
+                                            AMBULANCE NUMBER
+                                        </span>
+
+                                        <h3>
+                                            {{ ambulance.ambulance_number }}
+                                        </h3>
+                                    </div>
+
+                                </div>
+
+
+                                <span class="
+                                    ambulance-status
+                                    status-{{ ambulance.status|lower }}
+                                ">
+                                    {{ ambulance.get_status_display }}
+                                </span>
+
+                            </div>
+
+
+                            <div class="ambulance-vehicle">
+
+                                <span>VEHICLE NUMBER</span>
+
+                                <strong>
+                                    {{ ambulance.vehicle_number }}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="ambulance-driver">
+
+                                <div>
+                                    <span>Driver</span>
+
+                                    <strong>
+                                        {{ ambulance.driver_name }}
+                                    </strong>
+                                </div>
+
+                                <div>
+                                    <span>Contact</span>
+
+                                    <strong>
+                                        {{ ambulance.driver_phone }}
+                                    </strong>
+                                </div>
+
+                            </div>
+
+
+                            <!-- STATUS FORM -->
+
+                            <form
+    method="POST"
+    action="{% url 'dashboard:update_ambulance_status' ambulance.id %}"
+    class="ambulance-status-form"
+>
+
+                                {% csrf_token %}
+
+                                <input
+                                    type="hidden"
+                                    name="ambulance_id"
+                                    value="{{ ambulance.id }}"
+                                >
+
+                                <label>
+                                    Update Status
+                                </label>
+
+                                <div class="status-control">
+
+                                    <select name="status">
+
+                                        {% for value, label in status_choices %}
+
+                                            <option
+                                                value="{{ value }}"
+                                                {% if ambulance.status == value %}
+                                                    selected
+                                                {% endif %}
+                                            >
+                                                {{ label }}
+                                            </option>
+
+                                        {% endfor %}
+
+                                    </select>
+
+                                    <button type="submit">
+                                        Update
+                                    </button>
+
+                                </div>
+
+                            </form>
+
+                        </article>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="empty-fleet">
+
+                    <div>🚑</div>
+
+                    <h3>No ambulances found</h3>
+
+                    <p>
+                        No active ambulances are currently
+                        registered in the system.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,846 @@
+/* =========================================
+   PAGE
+========================================= */
+
+.lab-detail-page {
+    min-height: 100vh;
+    padding: 42px 5% 80px;
+    background: #f5f8fd;
+}
+
+.lab-detail-wrapper {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+
+/* =========================================
+   NAVBAR
+========================================= */
+
+.lab-detail-navbar {
+    width: 100%;
+    height: 72px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 5%;
+
+    background: #ffffff;
+    border-bottom: 1px solid #e3eaf3;
+
+    box-sizing: border-box;
+}
+
+.lab-detail-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    color: #10264b;
+    text-decoration: none;
+
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.lab-detail-brand-icon {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #1265e8;
+    border-radius: 10px;
+
+    color: #ffffff;
+
+    font-size: 25px;
+    line-height: 1;
+}
+
+.back-dashboard-btn {
+    padding: 10px 15px;
+
+    color: #1265e8;
+    background: #edf5ff;
+
+    border-radius: 9px;
+
+    font-size: 11px;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+
+/* =========================================
+   PAGE HEADER
+========================================= */
+
+.lab-detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+
+    margin-bottom: 25px;
+}
+
+.page-label,
+.section-label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #1265e8;
+
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+}
+
+.lab-detail-header h1 {
+    margin: 0;
+
+    color: #10264b;
+
+    font-size: 34px;
+    font-weight: 800;
+}
+
+.lab-detail-header p {
+    margin: 8px 0 0;
+
+    color: #7c899e;
+
+    font-size: 13px;
+}
+
+.test-status-badge {
+    display: inline-flex;
+
+    padding: 9px 14px;
+
+    border-radius: 999px;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.status-ordered {
+    background: #fff3d6;
+    color: #a46800;
+}
+
+.status-sample_collected {
+    background: #e8f2ff;
+    color: #1265e8;
+}
+
+.status-report_ready {
+    background: #e7f8ed;
+    color: #158447;
+}
+
+
+/* =========================================
+   DETAIL CARDS
+========================================= */
+
+.detail-card {
+    margin-bottom: 20px;
+    padding: 25px;
+
+    background: #ffffff;
+
+    border: 1px solid #e1e8f1;
+    border-radius: 16px;
+
+    box-shadow:
+        0 8px 28px rgba(24, 67, 130, 0.04);
+}
+
+.section-heading {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+
+    padding-bottom: 20px;
+    margin-bottom: 22px;
+
+    border-bottom: 1px solid #edf1f6;
+}
+
+.section-icon {
+    width: 46px;
+    height: 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background: #edf5ff;
+    border-radius: 11px;
+
+    font-size: 20px;
+}
+
+.section-heading h2 {
+    margin: 0;
+
+    color: #172b4d;
+
+    font-size: 20px;
+}
+
+.section-heading p {
+    margin: 5px 0 0;
+
+    color: #8490a3;
+
+    font-size: 11px;
+}
+
+
+/* =========================================
+   INFORMATION
+========================================= */
+
+.patient-information-grid,
+.test-information-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.information-item {
+    padding: 16px;
+
+    background: #f8faff;
+    border: 1px solid #edf1f6;
+    border-radius: 11px;
+}
+
+.information-item span {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #8a96a8;
+
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.information-item strong {
+    color: #173354;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    word-break: break-word;
+}
+
+.test-instructions {
+    margin-top: 18px;
+    padding: 16px;
+
+    background: #fff9eb;
+    border: 1px solid #f5e4b7;
+    border-radius: 11px;
+}
+
+.test-instructions span {
+    color: #a46b00;
+
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+}
+
+.test-instructions p {
+    margin: 7px 0 0;
+
+    color: #715421;
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   FORM
+========================================= */
+
+.lab-result-form {
+    display: flex;
+    flex-direction: column;
+    gap: 19px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    color: #263c5c;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.form-group label span {
+    color: #e23d4f;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    background: #fbfcfe;
+
+    border: 1px solid #dce5ef;
+    border-radius: 9px;
+
+    box-sizing: border-box;
+
+    color: #173354;
+
+    font-family: inherit;
+    font-size: 12px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.form-group input,
+.form-group select {
+    min-height: 45px;
+}
+
+.form-group textarea {
+    resize: vertical;
+    line-height: 1.6;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #1265e8;
+
+    box-shadow:
+        0 0 0 3px rgba(18, 101, 232, 0.08);
+}
+
+
+/* =========================================
+   FORM ACTIONS
+========================================= */
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #edf1f6;
+}
+
+.cancel-result-btn,
+.save-result-btn {
+    min-height: 44px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 20px;
+
+    border-radius: 9px;
+
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 800;
+
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.cancel-result-btn {
+    background: #ffffff;
+
+    border: 1px solid #dce5ef;
+
+    color: #65758c;
+}
+
+.save-result-btn {
+    background: #1265e8;
+
+    border: 1px solid #1265e8;
+
+    color: #ffffff;
+}
+
+.save-result-btn:hover {
+    background: #0753c8;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
+
+    .patient-information-grid,
+    .test-information-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+
+@media (max-width: 650px) {
+
+    .lab-detail-page {
+        padding: 30px 16px 60px;
+    }
+
+    .lab-detail-navbar {
+        padding: 0 16px;
+    }
+
+    .lab-detail-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .lab-detail-header h1 {
+        font-size: 28px;
+    }
+
+    .patient-information-grid,
+    .test-information-grid,
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .cancel-result-btn,
+    .save-result-btn {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+
+/* =========================================
+   SAVED LAB RESULT
+========================================= */
+
+.saved-result-card {
+    border-top: 4px solid #1a9b57;
+}
+
+.report-status-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+
+    margin-bottom: 20px;
+}
+
+.report-status-row > div {
+    padding: 18px;
+
+    background: #f8faff;
+    border: 1px solid #e5ebf3;
+    border-radius: 11px;
+}
+
+.report-field-label {
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: #8592a6;
+
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.7px;
+}
+
+.result-status-large {
+    display: inline-flex;
+
+    padding: 8px 13px;
+
+    border-radius: 999px;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.result-normal,
+.result-negative {
+    color: #158447;
+    background: #e7f8ed;
+}
+
+.result-abnormal,
+.result-positive {
+    color: #c92f43;
+    background: #ffe8eb;
+}
+
+.result-inconclusive {
+    color: #a46800;
+    background: #fff3d6;
+}
+
+.report-values-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+
+    margin-bottom: 20px;
+}
+
+.report-value-box {
+    padding: 17px;
+
+    background: #f8faff;
+    border: 1px solid #e5ebf3;
+    border-radius: 11px;
+}
+
+.report-value-box span {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #8592a6;
+
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.report-value-box strong {
+    color: #173354;
+
+    font-size: 13px;
+}
+
+.report-text-section {
+    margin-top: 15px;
+    padding: 18px;
+
+    background: #fbfcfe;
+    border: 1px solid #e5ebf3;
+    border-radius: 11px;
+}
+
+.report-text-section span {
+    color: #1265e8;
+
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+}
+
+.report-text-section p {
+    margin: 10px 0 0;
+
+    color: #405570;
+
+    font-size: 13px;
+    line-height: 1.7;
+    white-space: pre-line;
+}
+
+.saved-result-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    margin-top: 22px;
+    padding-top: 20px;
+
+    border-top: 1px solid #edf1f6;
+}
+
+.back-result-btn {
+    padding: 12px 18px;
+
+    color: #1265e8;
+    background: #edf5ff;
+
+    border-radius: 9px;
+
+    font-size: 11px;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+@media (max-width: 800px) {
+    .report-status-row,
+    .report-values-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 550px) {
+    .report-status-row,
+    .report-values-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.saved-result-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+
+    margin-top: 24px;
+    padding-top: 20px;
+
+    border-top: 1px solid #e5ebf3;
+}
+
+.whatsapp-send-form {
+    margin: 0;
+}
+
+.whatsapp-report-btn {
+    min-height: 44px;
+    padding: 0 20px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #168b4d;
+    color: #ffffff;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.whatsapp-report-btn:hover {
+    background: #11763f;
+}
+
+.whatsapp-sent-badge {
+    display: inline-flex;
+    align-items: center;
+
+    min-height: 44px;
+    padding: 0 18px;
+
+    border-radius: 9px;
+
+    background: #e7f8ed;
+    color: #168447;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+/* =========================================
+   RESULT ENTRY FORM — STRUCTURED LAYOUT
+========================================= */
+
+.result-entry-card {
+    padding: 28px 30px;
+}
+
+.result-entry-form {
+    width: 100%;
+    margin-top: 24px;
+}
+
+
+/* TOP 4 FIELDS */
+
+.result-entry-form .form-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+
+/* FORM GROUP */
+
+.result-entry-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+}
+
+.result-entry-form .form-group label {
+    margin: 0;
+
+    color: #152d52;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+/* INPUTS */
+
+.result-entry-form input,
+.result-entry-form select,
+.result-entry-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+
+    border: 1px solid #d8e2f0;
+    border-radius: 10px;
+
+    background: #f9fbfe;
+    color: #13294b;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    outline: none;
+}
+
+.result-entry-form input,
+.result-entry-form select {
+    height: 48px;
+    padding: 0 14px;
+}
+
+.result-entry-form textarea {
+    min-height: 110px;
+    padding: 14px;
+
+    line-height: 1.6;
+    resize: vertical;
+}
+
+
+/* FULL WIDTH TEXTAREAS */
+
+.result-entry-form .full-width {
+    width: 100%;
+    margin-top: 18px;
+}
+
+
+/* FOCUS */
+
+.result-entry-form input:focus,
+.result-entry-form select:focus,
+.result-entry-form textarea:focus {
+    border-color: #1769e8;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(23, 105, 232, 0.08);
+}
+
+
+/* BUTTON AREA */
+
+.result-form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+
+    margin-top: 24px;
+    padding-top: 20px;
+
+    border-top: 1px solid #e5ebf4;
+}
+
+.cancel-result-btn,
+.save-result-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 44px;
+    padding: 0 20px;
+
+    border-radius: 9px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+.cancel-result-btn {
+    border: 1px solid #d5dfec;
+
+    background: #ffffff;
+    color: #536783;
+}
+
+.save-result-btn {
+    border: none;
+
+    background: #1769e8;
+    color: #ffffff;
+
+    cursor: pointer;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 1100px) {
+    .result-entry-form .form-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 650px) {
+    .result-entry-card {
+        padding: 20px;
+    }
+
+    .result-entry-form .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .result-form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .cancel-result-btn,
+    .save-result-btn {
+        width: 100%;
+    }
+}

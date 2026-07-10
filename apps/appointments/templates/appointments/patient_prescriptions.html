@@ -1,0 +1,254 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+My Prescriptions | MediCore
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'appointments/css/patient_medical_records.css' %}?v=1"
+>
+{% endblock %}
+
+
+{% block content %}
+
+<section class="medical-records-page">
+
+    <div class="medical-records-wrapper">
+
+
+        <!-- HEADER -->
+
+        <div class="records-header">
+
+            <div>
+                <span class="page-label">
+                    MEDICAL RECORDS
+                </span>
+
+                <h1>My Prescriptions</h1>
+
+                <p>
+                    View medicines, diagnosis and instructions
+                    provided by your doctors.
+                </p>
+            </div>
+
+            <a
+                href="{% url 'dashboard:patient' %}"
+                class="back-dashboard-btn"
+            >
+                ← Dashboard
+            </a>
+
+        </div>
+
+
+        <!-- SUMMARY -->
+
+        <div class="records-summary">
+
+            <article class="summary-card">
+
+                <div class="summary-icon prescription-icon">
+                    💊
+                </div>
+
+                <div>
+                    <span>Total Prescriptions</span>
+
+                    <strong>
+                        {{ prescriptions|length }}
+                    </strong>
+                </div>
+
+            </article>
+
+        </div>
+
+
+        <!-- PRESCRIPTION LIST -->
+
+        <div class="records-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <span>CONSULTATION RECORDS</span>
+
+                    <h2>Prescriptions</h2>
+                </div>
+
+                <strong class="record-count">
+                    {{ prescriptions|length }}
+                </strong>
+
+            </div>
+
+
+            {% if prescriptions %}
+
+                <div class="prescription-grid">
+
+                    {% for prescription in prescriptions %}
+
+                        <article class="prescription-card">
+
+                            <div class="prescription-card-top">
+
+                                <div class="doctor-avatar">
+                                    {{ prescription.appointment.doctor.user.first_name|first|upper }}
+                                    {{ prescription.appointment.doctor.user.last_name|first|upper }}
+                                </div>
+
+
+                                <div class="prescription-doctor">
+
+                                    <span>
+                                        PRESCRIBED BY
+                                    </span>
+
+                                    <h3>
+                                        Dr.
+                                        {{ prescription.appointment.doctor.user.get_full_name }}
+                                    </h3>
+
+                                    <p>
+                                        {{ prescription.appointment.doctor.department.name }}
+                                    </p>
+
+                                </div>
+
+
+                                <div class="prescription-date">
+
+                                    <span>
+                                        DATE
+                                    </span>
+
+                                    <strong>
+                                        {{ prescription.created_at|date:"d M Y" }}
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="prescription-content">
+
+                                <div class="prescription-detail">
+
+                                    <span>
+                                        DIAGNOSIS
+                                    </span>
+
+                                    <p>
+                                        {{ prescription.diagnosis }}
+                                    </p>
+
+                                </div>
+
+
+                                <div class="prescription-detail medicine-detail">
+
+                                    <span>
+                                        MEDICINES
+                                    </span>
+
+                                    <p>
+                                        {{ prescription.medicines|linebreaksbr }}
+                                    </p>
+
+                                </div>
+
+
+                                {% if prescription.instructions %}
+
+                                    <div class="prescription-detail">
+
+                                        <span>
+                                            DOCTOR'S INSTRUCTIONS
+                                        </span>
+
+                                        <p>
+                                            {{ prescription.instructions }}
+                                        </p>
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="prescription-footer">
+
+                                {% if prescription.follow_up_date %}
+
+                                    <div class="follow-up">
+
+                                        <span>
+                                            📅 Follow-up
+                                        </span>
+
+                                        <strong>
+                                            {{ prescription.follow_up_date|date:"d M Y" }}
+                                        </strong>
+
+                                    </div>
+
+                                {% else %}
+
+                                    <span class="no-follow-up">
+                                        No follow-up scheduled
+                                    </span>
+
+                                {% endif %}
+
+
+                                <a
+                                    href="{% url 'appointments:prescription_detail' prescription.appointment.id %}"
+                                    class="view-prescription-btn"
+                                >
+                                    View Details →
+                                </a>
+
+                            </div>
+
+                        </article>
+
+                    {% endfor %}
+
+                </div>
+
+
+            {% else %}
+
+                <div class="empty-records">
+
+                    <div class="empty-record-icon">
+                        💊
+                    </div>
+
+                    <h3>No prescriptions yet</h3>
+
+                    <p>
+                        Prescriptions provided by your doctor
+                        will appear here.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

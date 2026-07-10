@@ -1,0 +1,526 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+My Schedule | MediCore
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'doctors/css/doctor_schedule.css' %}?v=1"
+>
+{% endblock %}
+
+{% block content %}
+
+<section class="schedule-page">
+
+    <div class="schedule-wrapper">
+
+        <!-- HEADER -->
+        <header class="schedule-header">
+
+            <div>
+                <span class="schedule-label">
+                    AVAILABILITY MANAGEMENT
+                </span>
+
+                <h1>My Schedule</h1>
+
+                <p>
+                    Manage your weekly consultation availability
+                    and appointment slot duration.
+                </p>
+            </div>
+
+            <a
+                href="{% url 'dashboard:doctor' %}"
+                class="back-dashboard-btn"
+            >
+                ← Back to Dashboard
+            </a>
+
+        </header>
+
+
+        <!-- DJANGO MESSAGES -->
+        {% if messages %}
+    <div class="schedule-messages">
+        {% for message in messages %}
+            <div class="schedule-message {{ message.tags }}">
+
+                <span>{{ message }}</span>
+
+                <button
+                    type="button"
+                    class="message-close-btn"
+                    onclick="this.parentElement.remove()"
+                    aria-label="Close notification"
+                >
+                    ×
+                </button>
+
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+
+        <!-- DOCTOR INFO -->
+        <section class="doctor-summary">
+
+            <div class="doctor-avatar">
+                {{ doctor.user.first_name|first }}
+                {{ doctor.user.last_name|first }}
+            </div>
+
+            <div class="doctor-summary-info">
+
+                <span>
+                    {{ doctor.department.name }}
+                </span>
+
+                <h2>
+                    Dr. {{ doctor.user.get_full_name }}
+                </h2>
+
+                <p>
+                    {{ doctor.specialization }}
+                </p>
+
+            </div>
+
+            <div class="doctor-summary-status">
+
+                <span>Current Status</span>
+
+                <strong>
+                    ● {{ doctor.get_status_display }}
+                </strong>
+
+            </div>
+
+        </section>
+
+
+        <!-- MAIN GRID -->
+        <div class="schedule-grid">
+
+
+            <!-- LEFT: ADD SCHEDULE -->
+            <section class="schedule-card">
+
+                <div class="card-heading">
+
+                    <div class="heading-icon">
+                        ＋
+                    </div>
+
+                    <div>
+                        <h2>Add Availability</h2>
+
+                        <p>
+                            Create a consultation time window
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <form
+                    method="POST"
+                    class="schedule-form"
+                >
+
+                    {% csrf_token %}
+
+
+                    <!-- DAY -->
+                    <div class="form-group">
+
+                        <label for="day_of_week">
+                            Day of Week
+                        </label>
+
+                        <select
+                            id="day_of_week"
+                            name="day_of_week"
+                            required
+                        >
+
+                            <option value="">
+                                Select a day
+                            </option>
+
+                            {% for value, label in day_choices %}
+
+                                <option value="{{ value }}">
+                                    {{ label }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- TIME ROW -->
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="start_time">
+                                Start Time
+                            </label>
+
+                            <input
+                                type="time"
+                                id="start_time"
+                                name="start_time"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="end_time">
+                                End Time
+                            </label>
+
+                            <input
+                                type="time"
+                                id="end_time"
+                                name="end_time"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SLOT DURATION -->
+                    <div class="form-group">
+
+                        <label for="slot_duration">
+                            Appointment Duration
+                        </label>
+
+                        <select
+                            id="slot_duration"
+                            name="slot_duration"
+                            required
+                        >
+
+                            <option value="">
+                                Select slot duration
+                            </option>
+
+                            <option value="15">
+                                15 Minutes
+                            </option>
+
+                            <option value="20">
+                                20 Minutes
+                            </option>
+
+                            <option value="30" selected>
+                                30 Minutes
+                            </option>
+
+                            <option value="45">
+                                45 Minutes
+                            </option>
+
+                            <option value="60">
+                                60 Minutes
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- EXAMPLE -->
+                    <div class="schedule-example">
+
+                        <span>Example</span>
+
+                        <p>
+                            09:00 AM – 01:00 PM with 30-minute slots
+                            creates 8 appointment slots.
+                        </p>
+
+                    </div>
+
+
+                    <!-- SUBMIT -->
+                    <button
+                        type="submit"
+                        class="add-schedule-btn"
+                    >
+                        + Add to Schedule
+                    </button>
+
+                </form>
+
+            </section>
+
+
+            <!-- RIGHT: WEEKLY SCHEDULE -->
+            <section class="schedule-card weekly-card">
+
+                <div class="weekly-header">
+
+                    <div>
+
+                        <h2>
+                            Weekly Availability
+                        </h2>
+
+                        <p>
+                            Your active consultation schedule
+                        </p>
+
+                    </div>
+
+                    <span class="schedule-count">
+                        {{ availabilities|length }}
+                        schedule{{ availabilities|length|pluralize }}
+                    </span>
+
+                </div>
+
+
+                {% if availabilities %}
+
+                    <div class="availability-list">
+
+                        {% for availability in availabilities %}
+
+                            <article class="availability-item">
+
+
+                                <!-- DAY ICON -->
+                                <div class="day-icon">
+
+                                    {{ availability.get_day_of_week_display|slice:":2"|upper }}
+
+                                </div>
+
+
+                                <!-- SCHEDULE DETAILS -->
+                                <div class="availability-info">
+
+                                    <h3>
+                                        {{ availability.get_day_of_week_display }}
+                                    </h3>
+
+                                    <div class="availability-meta">
+
+                                        <span>
+                                            🕒
+                                            {{ availability.start_time|time:"g:i A" }}
+                                            –
+                                            {{ availability.end_time|time:"g:i A" }}
+                                        </span>
+
+                                        <span>
+                                            ⏱
+                                            {{ availability.slot_duration }}
+                                            min slots
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- STATUS -->
+                               <div class="availability-actions">
+
+    {% if availability.is_active %}
+
+        <span class="active-status">
+            ● Active
+        </span>
+
+    {% else %}
+
+        <span class="inactive-status">
+            ● Inactive
+        </span>
+
+    {% endif %}
+
+
+    <div class="schedule-action-buttons">
+
+        <form
+            method="POST"
+            action="{% url 'doctors:toggle_schedule' availability.id %}"
+        >
+            {% csrf_token %}
+
+            <button
+                type="submit"
+                class="toggle-schedule-btn"
+            >
+                {% if availability.is_active %}
+                    Disable
+                {% else %}
+                    Enable
+                {% endif %}
+            </button>
+        </form>
+
+
+        <form
+            method="POST"
+            action="{% url 'doctors:delete_schedule' availability.id %}"
+            onsubmit="return confirm('Delete this schedule permanently?');"
+        >
+            {% csrf_token %}
+
+            <button
+                type="submit"
+                class="delete-schedule-btn"
+            >
+                Delete
+            </button>
+        </form>
+
+    </div>
+
+</div>
+
+                            </article>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                {% else %}
+
+                    <!-- EMPTY STATE -->
+                    <div class="schedule-empty">
+
+                        <div class="empty-calendar">
+                            📅
+                        </div>
+
+                        <h3>
+                            No availability added
+                        </h3>
+
+                        <p>
+                            Add your weekly consultation hours
+                            using the form.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </section>
+
+        </div>
+ <!-- TODAY'S APPOINTMENTS YAHAN PASTE KARO -->
+
+        <section class="today-appointments-card">
+
+    <div class="today-appointments-header">
+        <div>
+            <span class="today-label">TODAY'S QUEUE</span>
+
+            <h2>Today's Appointments</h2>
+
+            <p>
+                {{ today|date:"l, d F Y" }}
+            </p>
+        </div>
+
+        <span class="today-patient-count">
+            {{ todays_appointments|length }}
+            patient{{ todays_appointments|length|pluralize }}
+        </span>
+    </div>
+
+
+    {% if todays_appointments %}
+
+        <div class="today-appointment-list">
+
+            {% for appointment in todays_appointments %}
+
+                <article class="today-appointment-item">
+
+                    <div class="appointment-time-box">
+                        <span>
+                            {{ appointment.appointment_time|time:"g:i" }}
+                        </span>
+
+                        <small>
+                            {{ appointment.appointment_time|time:"A" }}
+                        </small>
+                    </div>
+
+
+                    <div class="today-patient-avatar">
+                        {{ appointment.patient.first_name|first }}
+                        {{ appointment.patient.last_name|first }}
+                    </div>
+
+
+                    <div class="today-patient-info">
+                        <span>PATIENT</span>
+
+                        <h3>
+                            {{ appointment.patient.get_full_name }}
+                        </h3>
+
+                        <p>
+                            {{ appointment.reason|truncatechars:70 }}
+                        </p>
+                    </div>
+
+
+                    <span class="
+                        queue-status
+                        queue-{{ appointment.status|lower }}
+                    ">
+                        {{ appointment.get_status_display }}
+                    </span>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="today-empty-state">
+            <div>🩺</div>
+
+            <h3>No patients scheduled today</h3>
+
+            <p>
+                Today's patient appointments will appear here.
+            </p>
+        </div>
+
+    {% endif %}
+
+</section>
+
+    </div>
+
+</section>
+
+{% endblock %}

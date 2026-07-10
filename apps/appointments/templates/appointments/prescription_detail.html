@@ -1,0 +1,305 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Prescription Details | MediCore
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'appointments/css/prescription_detail.css' %}?v=1"
+>
+{% endblock %}
+
+
+{% block content %}
+
+<section class="prescription-page">
+
+    <div class="prescription-wrapper">
+
+
+        <!-- PAGE HEADER -->
+
+        <div class="page-header">
+
+            <div>
+                <span class="page-label">
+                    MEDICAL RECORD
+                </span>
+
+                <h1>Prescription Details</h1>
+
+                <p>
+                    View your diagnosis, medicines and instructions
+                    provided during this consultation.
+                </p>
+            </div>
+
+
+            <a
+                href="{% url 'appointments:patient_prescriptions' %}"
+                class="back-btn"
+            >
+                ← My Prescriptions
+            </a>
+
+        </div>
+
+
+        <!-- PRESCRIPTION DOCUMENT -->
+
+        <article class="prescription-document">
+
+
+            <!-- DOCUMENT HEADER -->
+
+            <div class="document-header">
+
+                <div class="hospital-brand">
+
+                    <div class="hospital-icon">
+                        ✚
+                    </div>
+
+                    <div>
+                        <span>MEDICORE</span>
+
+                        <h2>
+                            Medical Prescription
+                        </h2>
+                    </div>
+
+                </div>
+
+
+                <div class="prescription-id">
+
+                    <span>PRESCRIPTION ID</span>
+
+                    <strong>
+                        #RX-{{ prescription.id }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- DOCTOR + DATE -->
+
+            <div class="consultation-info">
+
+                <div class="doctor-info">
+
+                    <div class="doctor-avatar">
+                        {{ appointment.doctor.user.first_name|first|upper }}
+                        {{ appointment.doctor.user.last_name|first|upper }}
+                    </div>
+
+                    <div>
+                        <span class="info-label">
+                            PRESCRIBED BY
+                        </span>
+
+                        <h3>
+                            Dr. {{ appointment.doctor.user.get_full_name }}
+                        </h3>
+
+                        <p>
+                            {{ appointment.doctor.specialization }}
+                        </p>
+
+                        <small>
+                            {{ appointment.doctor.department.name }}
+                        </small>
+                    </div>
+
+                </div>
+
+
+                <div class="consultation-date">
+
+                    <span>ISSUED ON</span>
+
+                    <strong>
+                        {{ prescription.created_at|date:"d M Y" }}
+                    </strong>
+
+                    <small>
+                        {{ prescription.created_at|time:"g:i A" }}
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRESCRIPTION BODY -->
+
+            <div class="prescription-body">
+
+
+                <!-- DIAGNOSIS -->
+
+                <section class="medical-section">
+
+                    <div class="section-icon">
+                        🩺
+                    </div>
+
+                    <div class="section-content">
+
+                        <span class="section-label">
+                            DIAGNOSIS
+                        </span>
+
+                        <h3>
+                            Clinical Diagnosis
+                        </h3>
+
+                        <div class="medical-value">
+                            {{ prescription.diagnosis }}
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- MEDICINES -->
+
+                <section class="medical-section medicine-section">
+
+                    <div class="section-icon">
+                        💊
+                    </div>
+
+                    <div class="section-content">
+
+                        <span class="section-label">
+                            PRESCRIBED MEDICINES
+                        </span>
+
+                        <h3>
+                            Medicines & Dosage
+                        </h3>
+
+                        <div class="medical-value medicine-value">
+                            {{ prescription.medicines|linebreaksbr }}
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- INSTRUCTIONS -->
+
+                <section class="medical-section">
+
+                    <div class="section-icon">
+                        📋
+                    </div>
+
+                    <div class="section-content">
+
+                        <span class="section-label">
+                            DOCTOR'S INSTRUCTIONS
+                        </span>
+
+                        <h3>
+                            Care Instructions
+                        </h3>
+
+                        <div class="medical-value">
+                            {{ prescription.instructions|default:"No additional instructions provided."|linebreaksbr }}
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+            <!-- FOLLOW UP -->
+
+            {% if prescription.follow_up_date %}
+
+                <div class="follow-up-card">
+
+                    <div class="follow-up-icon">
+                        📅
+                    </div>
+
+                    <div>
+                        <span>
+                            NEXT FOLLOW-UP
+                        </span>
+
+                        <strong>
+                            {{ prescription.follow_up_date|date:"d M Y" }}
+                        </strong>
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- FOOTER -->
+
+            <div class="document-footer">
+
+                <div>
+
+                    <span>
+                        CONSULTING DOCTOR
+                    </span>
+
+                    <strong>
+                        Dr. {{ appointment.doctor.user.get_full_name }}
+                    </strong>
+
+                    <small>
+                        {{ appointment.doctor.department.name }}
+                    </small>
+
+                </div>
+
+
+                <div class="verified-badge">
+                    <span>✓</span>
+
+                    <div>
+                        <strong>Digitally Recorded</strong>
+                        <small>MediCore Hospital System</small>
+                    </div>
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- NOTE -->
+
+        <div class="medical-note">
+
+            <span>ℹ️</span>
+
+            <p>
+                This prescription is part of your MediCore medical record.
+                Follow the prescribed dosage and consult your doctor before
+                making any changes to your medication.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,222 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+My Lab Tests | MediCore
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'appointments/css/patient_medical_records.css' %}?v=1"
+>
+{% endblock %}
+
+
+{% block content %}
+
+<section class="medical-records-page">
+
+    <div class="medical-records-wrapper">
+
+
+        <!-- HEADER -->
+
+        <div class="records-header">
+
+            <div>
+                <span class="page-label">
+                    DIAGNOSTIC RECORDS
+                </span>
+
+                <h1>My Lab Tests</h1>
+
+                <p>
+                    View tests ordered by your doctors and
+                    track their current status.
+                </p>
+            </div>
+
+            <a
+                href="{% url 'dashboard:patient' %}"
+                class="back-dashboard-btn"
+            >
+                ← Dashboard
+            </a>
+
+        </div>
+
+
+        <!-- SUMMARY -->
+
+        <div class="records-summary">
+
+            <article class="summary-card">
+
+                <div class="summary-icon">
+                    🧪
+                </div>
+
+                <div>
+                    <span>Total Tests</span>
+
+                    <strong>
+                        {{ test_orders|length }}
+                    </strong>
+                </div>
+
+            </article>
+
+        </div>
+
+
+        <!-- TEST LIST -->
+
+        <div class="records-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <span>MEDICAL INVESTIGATIONS</span>
+
+                    <h2>Ordered Tests</h2>
+                </div>
+
+                <strong class="record-count">
+                    {{ test_orders|length }}
+                </strong>
+
+            </div>
+
+
+            {% if test_orders %}
+
+                <div class="records-list">
+
+                    {% for test in test_orders %}
+
+                        <article class="medical-record-card">
+
+                            <div class="record-icon">
+                                {% if test.test_type == "BLOOD" %}
+                                    🩸
+                                {% elif test.test_type == "URINE" %}
+                                    🧪
+                                {% elif test.test_type == "XRAY" %}
+                                    🩻
+                                {% elif test.test_type == "ECG" %}
+                                    ❤️
+                                {% elif test.test_type == "MRI" %}
+                                    🧠
+                                {% elif test.test_type == "CT_SCAN" %}
+                                    🔬
+                                {% else %}
+                                    🧫
+                                {% endif %}
+                            </div>
+
+
+                            <div class="record-main">
+
+                                <span class="record-label">
+                                    LAB TEST
+                                </span>
+
+                                <h3>
+                                    {{ test.test_name }}
+                                </h3>
+
+                                <p>
+                                    Ordered by
+                                    Dr. {{ test.appointment.doctor.user.get_full_name }}
+                                </p>
+
+                            </div>
+
+
+                            <div class="record-meta">
+
+                                <span>
+                                    ORDERED ON
+                                </span>
+
+                                <strong>
+                                    {{ test.ordered_at|date:"d M Y" }}
+                                </strong>
+
+                            </div>
+
+
+                           <div class="record-status">
+
+    <span class="
+        status-badge
+        status-{{ test.status|lower }}
+    ">
+        {{ test.get_status_display }}
+    </span>
+
+
+    {% if test.status == "REPORT_READY" or test.status == "REVIEWED" %}
+
+        <a
+            href="{% url 'appointments:patient_lab_report_detail' test.id %}"
+            class="view-report-btn"
+        >
+            View Report
+        </a>
+
+    {% endif %}
+
+</div>
+
+
+                            {% if test.instructions %}
+
+                                <div class="record-instructions">
+
+                                    <span>
+                                        INSTRUCTIONS
+                                    </span>
+
+                                    <p>
+                                        {{ test.instructions }}
+                                    </p>
+
+                                </div>
+
+                            {% endif %}
+
+                        </article>
+
+                    {% endfor %}
+
+                </div>
+
+
+            {% else %}
+
+                <div class="empty-records">
+
+                    <div class="empty-record-icon">
+                        🧪
+                    </div>
+
+                    <h3>No lab tests ordered</h3>
+
+                    <p>
+                        Tests ordered by your doctor will
+                        appear here.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

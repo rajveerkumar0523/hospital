@@ -1,0 +1,287 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Collect Payment | MediCore
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'reception/css/collect_payment.css' %}?v=1"
+>
+{% endblock %}
+
+
+{% block content %}
+
+<main class="payment-page">
+
+    <div class="payment-wrapper">
+
+
+        <!-- HEADER -->
+
+        <header class="payment-header">
+
+            <div>
+
+                <span class="page-label">
+                    FRONT DESK PAYMENT
+                </span>
+
+                <h1>
+                    Collect Test Payment
+                </h1>
+
+                <p>
+                    Review the bill and confirm payment.
+                </p>
+
+            </div>
+
+
+            <a
+                href="{% url 'reception:dashboard' %}"
+                class="back-btn"
+            >
+                ← Reception Dashboard
+            </a>
+
+        </header>
+
+
+        <div class="payment-grid">
+
+
+            <!-- BILL DETAILS -->
+
+            <section class="payment-card bill-card">
+
+                <div class="card-heading">
+
+                    <div>
+                        <span>
+                            TEST BILL
+                        </span>
+
+                        <h2>
+                            Bill #{{ bill.id }}
+                        </h2>
+                    </div>
+
+
+                    <span class="unpaid-badge">
+                        Unpaid
+                    </span>
+
+                </div>
+
+
+                <!-- PATIENT -->
+
+                <div class="patient-info">
+
+                    <div class="patient-avatar">
+
+                        {% if bill.appointment.patient.first_name %}
+
+                            {{ bill.appointment.patient.first_name|first|upper }}
+
+                        {% else %}
+
+                            {{ bill.appointment.patient.email|first|upper }}
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            PATIENT
+                        </span>
+
+                        <h3>
+                            {{ bill.appointment.patient.get_full_name|default:bill.appointment.patient.email }}
+                        </h3>
+
+                        <p>
+                            {{ bill.appointment.patient.email }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TESTS -->
+
+                <div class="bill-tests">
+
+                    <div class="tests-heading">
+
+                        <span>
+                            ORDERED TESTS
+                        </span>
+
+                    </div>
+
+
+                    {% for item in bill.items.all %}
+
+                        <div class="test-row">
+
+                            <div>
+
+                                <span class="test-number">
+                                    {{ forloop.counter|stringformat:"02d" }}
+                                </span>
+
+                                <strong>
+                                    {{ item.test_name }}
+                                </strong>
+
+                            </div>
+
+
+                            <span class="test-amount">
+                                ₹{{ item.amount }}
+                            </span>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- TOTAL -->
+
+                <div class="bill-total">
+
+                    <div>
+                        <span>
+                            TOTAL PAYABLE
+                        </span>
+
+                        <p>
+                            Inclusive of all test charges
+                        </p>
+                    </div>
+
+
+                    <strong>
+                        ₹{{ bill.total_amount }}
+                    </strong>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- PAYMENT METHOD -->
+
+            <section class="payment-card method-card">
+
+                <div class="card-heading">
+
+                    <div>
+                        <span>
+                            PAYMENT METHOD
+                        </span>
+
+                        <h2>
+                            Choose Payment
+                        </h2>
+                    </div>
+
+                </div>
+
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+
+                    <label class="payment-option">
+
+                        <input
+                            type="radio"
+                            name="payment_method"
+                            value="CASH"
+                            required
+                        >
+
+
+                        <span class="payment-option-icon">
+                            ₹
+                        </span>
+
+
+                        <span class="payment-option-content">
+
+                            <strong>
+                                Cash Payment
+                            </strong>
+
+                            <small>
+                                Collect cash from the patient
+                                at the reception desk.
+                            </small>
+
+                        </span>
+
+
+                        <span class="radio-mark"></span>
+
+                    </label>
+
+
+                    <div class="payment-summary">
+
+                        <span>
+                            Amount to Collect
+                        </span>
+
+                        <strong>
+                            ₹{{ bill.total_amount }}
+                        </strong>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="confirm-payment-btn"
+                    >
+                        <span>
+                            Confirm Cash Payment
+                        </span>
+
+                        <strong>
+                            ₹{{ bill.total_amount }}
+                        </strong>
+                    </button>
+
+
+                    <a
+                        href="{% url 'reception:dashboard' %}"
+                        class="cancel-payment-btn"
+                    >
+                        Cancel Payment
+                    </a>
+
+                </form>
+
+            </section>
+
+        </div>
+
+    </div>
+
+</main>
+
+{% endblock %}

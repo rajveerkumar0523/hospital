@@ -1,0 +1,85 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {% block title %}MediCore{% endblock %}
+    </title>
+
+    <!-- MAIN CSS -->
+    <link
+        rel="stylesheet"
+        href="{% static 'hospital/CSS/home.css' %}?v=25"
+    >
+
+    <!-- PAGE SPECIFIC CSS -->
+    {% block extra_css %}
+    {% endblock %}
+
+</head>
+
+<body>
+
+    {% block navbar %}
+    {% include "components/navbar.html" %}
+{% endblock %}
+
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+
+    <!-- USER DROPDOWN JAVASCRIPT -->
+    <script>
+        function toggleUserMenu() {
+
+            const dropdown =
+                document.getElementById("userDropdown");
+
+            if (dropdown) {
+                dropdown.classList.toggle("show");
+            }
+        }
+
+
+        document.addEventListener(
+            "click",
+            function (event) {
+
+                const userMenu =
+                    document.querySelector(".user-menu");
+
+                const dropdown =
+                    document.getElementById("userDropdown");
+
+                if (
+                    userMenu &&
+                    dropdown &&
+                    !userMenu.contains(event.target)
+                ) {
+                    dropdown.classList.remove("show");
+                }
+            }
+        );
+    </script>
+
+    {% block footer %}
+    {% endblock %}
+
+    {% block extra_js %}
+    {% endblock %}
+
+</body>
+
+</html>

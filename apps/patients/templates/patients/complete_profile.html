@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Complete Patient Profile | MediCore
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'patients/css/complete_profile.css' %}"
+>
+{% endblock %}
+
+{% block content %}
+
+<section class="profile-form-page">
+
+    <div class="profile-form-container">
+
+        <div class="profile-form-header">
+            <h1>Complete Your Profile</h1>
+
+            <p>
+                Add your medical and emergency information
+                to continue.
+            </p>
+        </div>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="form-error">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="{{ form.date_of_birth.id_for_label }}">
+                    Date of Birth
+                </label>
+
+                {{ form.date_of_birth }}
+
+                {{ form.date_of_birth.errors }}
+            </div>
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label for="{{ form.gender.id_for_label }}">
+                        Gender
+                    </label>
+
+                    {{ form.gender }}
+
+                    {{ form.gender.errors }}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.blood_group.id_for_label }}">
+                        Blood Group
+                    </label>
+
+                    {{ form.blood_group }}
+
+                    {{ form.blood_group.errors }}
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.address.id_for_label }}">
+                    Address
+                </label>
+
+                {{ form.address }}
+
+                {{ form.address.errors }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.emergency_contact.id_for_label }}">
+                    Emergency Contact
+                </label>
+
+                {{ form.emergency_contact }}
+
+                {{ form.emergency_contact.errors }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.allergies.id_for_label }}">
+                    Allergies
+                </label>
+
+                {{ form.allergies }}
+
+                {{ form.allergies.errors }}
+            </div>
+
+            <button type="submit">
+                Save Profile
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+{% endblock %}

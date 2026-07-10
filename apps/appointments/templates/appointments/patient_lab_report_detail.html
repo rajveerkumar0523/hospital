@@ -1,0 +1,419 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+{{ test.test_name }} Report | MediCore
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'appointments/css/patient_lab_report_detail.css' %}?v=1"
+>
+{% endblock %}
+
+
+{% block content %}
+
+<section class="lab-report-page">
+
+    <div class="lab-report-wrapper">
+
+
+        <!-- PAGE HEADER -->
+
+        <header class="report-page-header">
+
+            <div>
+
+                <span class="page-label">
+                    MEDICAL RECORD
+                </span>
+
+                <h1>Laboratory Report</h1>
+
+                <p>
+                    View your completed diagnostic test result.
+                </p>
+
+            </div>
+
+
+            <a
+                href="{% url 'appointments:patient_lab_tests' %}"
+                class="back-tests-btn"
+            >
+                ← My Lab Tests
+            </a>
+
+        </header>
+
+
+
+        <!-- REPORT CARD -->
+
+        <article class="report-card">
+
+
+            <!-- REPORT HEADER -->
+
+            <div class="report-header">
+
+                <div class="hospital-details">
+
+                    <div class="hospital-logo">
+                        +
+                    </div>
+
+                    <div>
+
+                        <h2>MediCore Hospital</h2>
+
+                        <p>
+                            Hazaribagh, Jharkhand
+                        </p>
+
+                        <span>
+                            Diagnostic Laboratory Department
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- <div class="report-status-area">
+
+                    <span class="report-type">
+                        LABORATORY REPORT
+                    </span>
+
+                    <strong class="
+                        result-status-badge
+                        result-{{ test.lab_result.result_status|lower }}
+                    ">
+                        {{ test.lab_result.get_result_status_display }}
+                    </strong>
+
+                </div> -->
+
+            </div>
+
+
+
+            <!-- TEST ID STRIP -->
+
+            <div class="report-id-strip">
+
+                <div>
+
+                    <span>TEST ID</span>
+
+                    <strong>
+                        {% if test.test_id %}
+                            {{ test.test_id }}
+                        {% else %}
+                            TEST-{{ test.id }}
+                        {% endif %}
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>TEST NAME</span>
+
+                    <strong>
+                        {{ test.test_name }}
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>COMPLETED ON</span>
+
+                    <strong>
+                        {{ test.lab_result.completed_at|date:"d M Y, h:i A" }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- PATIENT + DOCTOR -->
+
+            <div class="details-grid">
+
+
+                <section class="details-panel">
+
+                    <div class="panel-heading">
+
+                        <span class="panel-icon">
+                            👤
+                        </span>
+
+                        <div>
+                            <span>PATIENT INFORMATION</span>
+                            <h3>Patient Details</h3>
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-list">
+
+                        <div>
+                            <span>Patient Name</span>
+
+                            <strong>
+                                {{ test.appointment.patient.get_full_name }}
+                            </strong>
+                        </div>
+
+
+                        <div>
+                            <span>Patient ID</span>
+
+                            <strong>
+                                {{ test.appointment.patient.patient_profile.patient_id }}
+                            </strong>
+                        </div>
+
+
+                        <div>
+                            <span>Email</span>
+
+                            <strong>
+                                {{ test.appointment.patient.email }}
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <section class="details-panel">
+
+                    <div class="panel-heading">
+
+                        <span class="panel-icon">
+                            🩺
+                        </span>
+
+                        <div>
+                            <span>ORDERED BY</span>
+                            <h3>Doctor Details</h3>
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-list">
+
+                        <div>
+                            <span>Doctor</span>
+
+                            <strong>
+                                Dr. {{ test.appointment.doctor.user.get_full_name }}
+                            </strong>
+                        </div>
+
+
+                        <div>
+                            <span>Department</span>
+
+                            <strong>
+                                {{ test.appointment.doctor.department.name }}
+                            </strong>
+                        </div>
+
+
+                        <div>
+                            <span>Ordered On</span>
+
+                            <strong>
+                                {{ test.ordered_at|date:"d M Y" }}
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+
+            <!-- RESULT SECTION -->
+
+            <section class="result-section">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span>DIAGNOSTIC FINDINGS</span>
+
+                        <h2>Test Result</h2>
+
+                    </div>
+
+
+                    <strong class="
+                        result-status-badge
+                        result-{{ test.lab_result.result_status|lower }}
+                    ">
+                        {{ test.lab_result.get_result_status_display }}
+                    </strong>
+
+                </div>
+
+
+
+                <div class="result-values-grid">
+
+
+                    <div class="result-value-card">
+
+                        <span>RESULT VALUE</span>
+
+                        <strong>
+                            {{ test.lab_result.result_value|default:"—" }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="result-value-card">
+
+                        <span>UNIT</span>
+
+                        <strong>
+                            {{ test.lab_result.unit|default:"—" }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="result-value-card">
+
+                        <span>REFERENCE RANGE</span>
+
+                        <strong>
+                            {{ test.lab_result.reference_range|default:"—" }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="result-value-card">
+
+                        <span>TESTED BY</span>
+
+                        <strong>
+                            {{ test.lab_result.tested_by.get_full_name|default:"Lab Technician" }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- FINDINGS -->
+
+                <div class="report-text-block">
+
+                    <span>FINDINGS</span>
+
+                    <p>
+                        {{ test.lab_result.findings }}
+                    </p>
+
+                </div>
+
+
+
+                {% if test.lab_result.description %}
+
+                    <div class="report-text-block">
+
+                        <span>
+                            DESCRIPTION / INTERPRETATION
+                        </span>
+
+                        <p>
+                            {{ test.lab_result.description }}
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+
+
+                {% if test.lab_result.remarks %}
+
+                    <div class="report-text-block">
+
+                        <span>
+                            LABORATORY REMARKS
+                        </span>
+
+                        <p>
+                            {{ test.lab_result.remarks }}
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </section>
+
+
+
+            <!-- FOOTER -->
+
+            <footer class="report-footer">
+
+                <div>
+
+                    <span>
+                        REPORT STATUS
+                    </span>
+
+                    <strong>
+                        ✓ Verified Laboratory Result
+                    </strong>
+
+                </div>
+                   <a
+    href="{% url 'dashboard:lab_report_pdf' test.id %}"
+    class="download-pdf-btn"
+    target="_blank"
+>
+    📄 View PDF Report
+</a>
+
+                <p>
+                    This report is part of your MediCore
+                    digital medical record.
+                </p>
+
+            </footer>
+
+        </article>
+
+    </div>
+
+</section>
+
+{% endblock %}

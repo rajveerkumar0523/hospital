@@ -1,0 +1,373 @@
+/* ==================================
+   PATIENT PROFILE PAGE
+================================== */
+
+.patient-profile-page {
+    min-height: calc(100vh - 80px);
+    padding: 50px 5%;
+    background: #f5f8fd;
+}
+
+.profile-wrapper {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+
+/* ==================================
+   PROFILE HEADER
+================================== */
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+
+    padding: 30px 35px;
+    margin-bottom: 28px;
+
+    background: #ffffff;
+
+    border: 1px solid #e7edf5;
+    border-radius: 20px;
+
+    box-shadow:
+        0 12px 35px
+        rgba(24, 67, 130, 0.08);
+}
+
+.profile-avatar {
+    width: 82px;
+    height: 82px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0758d6,
+            #1684ee
+        );
+
+    color: #ffffff;
+
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.profile-header-info {
+    flex: 1;
+}
+
+.patient-badge {
+    display: inline-block;
+
+    padding: 5px 11px;
+    margin-bottom: 8px;
+
+    background: #eaf3ff;
+    color: #1265e8;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.profile-header-info h1 {
+    margin: 0;
+
+    color: #0b1f44;
+
+    font-size: 29px;
+    font-weight: 700;
+}
+
+.profile-header-info p {
+    margin: 6px 0 0;
+
+    color: #7b8495;
+
+    font-size: 14px;
+}
+
+
+/* EDIT BUTTON */
+
+.edit-profile-btn {
+    padding: 12px 20px;
+
+    background: #1265e8;
+    color: #ffffff;
+
+    border-radius: 9px;
+
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition:
+        background 0.25s ease,
+        transform 0.25s ease;
+}
+
+.edit-profile-btn:hover {
+    background: #0753c8;
+    transform: translateY(-1px);
+}
+
+
+/* ==================================
+   PROFILE GRID
+================================== */
+
+.profile-grid {
+    display: grid;
+
+    grid-template-columns: 1.25fr 0.75fr;
+
+    gap: 25px;
+}
+
+
+/* ==================================
+   CARDS
+================================== */
+
+.profile-card {
+    padding: 30px;
+
+    background: #ffffff;
+
+    border: 1px solid #e7edf5;
+    border-radius: 18px;
+
+    box-shadow:
+        0 10px 30px
+        rgba(24, 67, 130, 0.06);
+}
+
+.card-heading {
+    padding-bottom: 20px;
+    margin-bottom: 25px;
+
+    border-bottom: 1px solid #edf1f6;
+}
+
+.card-heading h2 {
+    margin: 0;
+
+    color: #0b1f44;
+
+    font-size: 20px;
+}
+
+.card-heading p {
+    margin: 6px 0 0;
+
+    color: #8a94a6;
+
+    font-size: 13px;
+}
+
+
+/* ==================================
+   PERSONAL INFORMATION
+================================== */
+
+.info-list {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 25px 30px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+.info-item.full-width {
+    grid-column: 1 / -1;
+}
+
+.info-label {
+    color: #8a94a6;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.info-value {
+    color: #263550;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    line-height: 1.5;
+}
+
+
+/* ==================================
+   MEDICAL INFORMATION
+================================== */
+
+.medical-highlight {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 14px;
+
+    margin-bottom: 25px;
+}
+
+.medical-box {
+    padding: 20px;
+
+    background: #f5f9ff;
+
+    border: 1px solid #e2edfb;
+    border-radius: 12px;
+}
+
+.medical-box span {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #7c8799;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.medical-box strong {
+    color: #1265e8;
+
+    font-size: 24px;
+}
+
+.medical-box .patient-id {
+    font-size: 14px;
+}
+
+
+/* MEDICAL DETAILS */
+
+.medical-details {
+    display: flex;
+    flex-direction: column;
+
+    gap: 15px;
+}
+
+.medical-detail-item {
+    padding: 17px 18px;
+
+    background: #fafbfd;
+
+    border: 1px solid #edf1f6;
+    border-radius: 10px;
+}
+
+.medical-detail-item span {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #8a94a6;
+
+    font-size: 12px;
+}
+
+.medical-detail-item strong {
+    color: #263550;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    line-height: 1.5;
+}
+
+
+/* ==================================
+   RESPONSIVE
+================================== */
+
+@media (max-width: 900px) {
+
+    .profile-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .patient-profile-page {
+        padding: 30px 16px;
+    }
+
+    .profile-header {
+        flex-direction: column;
+        align-items: flex-start;
+
+        padding: 25px;
+    }
+
+    .edit-profile-btn {
+        width: 100%;
+
+        text-align: center;
+    }
+
+    .profile-card {
+        padding: 24px 20px;
+    }
+
+    .info-list {
+        grid-template-columns: 1fr;
+    }
+
+    .info-item.full-width {
+        grid-column: auto;
+    }
+
+    .medical-highlight {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 420px) {
+
+    .profile-header-info h1 {
+        font-size: 24px;
+    }
+
+    .profile-avatar {
+        width: 68px;
+        height: 68px;
+
+        font-size: 27px;
+    }
+
+}

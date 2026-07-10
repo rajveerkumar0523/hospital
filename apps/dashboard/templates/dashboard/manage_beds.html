@@ -1,0 +1,490 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Manage Beds | MediCore
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'dashboard/css/manage_beds.css' %}?v=2"
+>
+{% endblock %}
+
+{% block content %}
+
+<section class="manage-beds-page">
+
+    <div class="manage-beds-wrapper">
+
+        <!-- HEADER -->
+
+        <div class="manage-beds-header">
+
+            <div>
+                <span class="page-label">
+                    HOSPITAL ADMINISTRATION
+                </span>
+
+                <h1>Manage Beds</h1>
+
+                <p>
+                    Add hospital beds and monitor current availability.
+                </p>
+            </div>
+
+            <a
+                href="{% url 'dashboard:admin' %}"
+                class="back-dashboard-btn"
+            >
+                ← Dashboard
+            </a>
+
+        </div>
+
+
+        <!-- MESSAGES -->
+
+        {% if messages %}
+
+            {% for message in messages %}
+
+                <div class="
+                    bed-message
+                    {% if message.tags %}
+                        {{ message.tags }}
+                    {% endif %}
+                ">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+
+        <!-- STATISTICS -->
+
+        <div class="manage-bed-stats">
+
+            <article class="manage-bed-stat-card">
+
+                <div class="stat-icon total-icon">
+                    🛏️
+                </div>
+
+                <div>
+                    <span>Total Beds</span>
+                    <strong>{{ total_beds }}</strong>
+                </div>
+
+            </article>
+
+
+            <article class="manage-bed-stat-card">
+
+                <div class="stat-icon available-icon">
+                    ✓
+                </div>
+
+                <div>
+                    <span>Available</span>
+                    <strong>{{ available_beds }}</strong>
+                </div>
+
+            </article>
+
+
+            <article class="manage-bed-stat-card">
+
+                <div class="stat-icon occupied-icon">
+                    👤
+                </div>
+
+                <div>
+                    <span>Occupied</span>
+                    <strong>{{ occupied_beds }}</strong>
+                </div>
+
+            </article>
+
+
+            <article class="manage-bed-stat-card">
+
+                <div class="stat-icon maintenance-icon">
+                    ⚙️
+                </div>
+
+                <div>
+                    <span>Maintenance</span>
+                    <strong>{{ maintenance_beds }}</strong>
+                </div>
+
+            </article>
+
+        </div>
+
+
+        <!-- MAIN LAYOUT -->
+
+        <div class="manage-bed-layout">
+
+
+            <!-- ADD BED -->
+
+            <aside class="add-bed-card">
+
+                <div class="card-heading">
+
+                    <span>
+                        NEW HOSPITAL BED
+                    </span>
+
+                    <h2>
+                        Add Bed
+                    </h2>
+
+                    <p>
+                        Register a new bed in the hospital system.
+                    </p>
+
+                </div>
+
+
+                <form
+                    method="POST"
+                    action="{% url 'dashboard:add_bed' %}"
+                >
+
+                    {% csrf_token %}
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Bed Number *
+                        </label>
+
+                        <input
+                            type="text"
+                            name="bed_number"
+                            placeholder="e.g. ICU-101"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Department *
+                        </label>
+
+                        <select
+                            name="department"
+                            required
+                        >
+
+                            <option value="">
+                                Select Department
+                            </option>
+
+                            {% for department in departments %}
+
+                                <option
+                                    value="{{ department.id }}"
+                                >
+                                    {{ department.name }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Bed Type *
+                        </label>
+
+                        <select
+                            name="bed_type"
+                            required
+                        >
+
+                            <option value="">
+                                Select Bed Type
+                            </option>
+
+                            {% for value, label in bed_types %}
+
+                                <option value="{{ value }}">
+                                    {{ label }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="add-bed-btn"
+                    >
+                        + Add Bed
+                    </button>
+
+                </form>
+
+            </aside>
+
+
+            <!-- BED LIST -->
+
+            <main class="manage-bed-list-card">
+
+                <div class="bed-list-heading">
+
+                    <div>
+                        <span>
+                            HOSPITAL CAPACITY
+                        </span>
+
+                        <h2>
+                            All Beds
+                        </h2>
+                    </div>
+
+                    <strong>
+                        {{ total_beds }}
+                    </strong>
+
+                </div>
+
+
+                {% if beds %}
+
+                    <div class="admin-bed-list">
+
+                        {% for bed in beds %}
+
+                            <article class="admin-bed-item">
+
+                                <div class="admin-bed-icon">
+                                    🛏️
+                                </div>
+
+
+                                <div class="admin-bed-info">
+
+                                    <span>
+                                        BED NUMBER
+                                    </span>
+
+                                    <h3>
+                                        {{ bed.bed_number }}
+                                    </h3>
+
+                                    <p>
+                                        {{ bed.department.name }}
+                                    </p>
+
+                                </div>
+
+
+                                <div class="admin-bed-type">
+
+                                    <span>
+                                        TYPE
+                                    </span>
+
+                                    <strong>
+                                        {{ bed.get_bed_type_display }}
+                                    </strong>
+
+                                </div>
+
+
+                                <span class="
+                                    admin-bed-status
+                                    status-{{ bed.status|lower }}
+                                ">
+                                    {{ bed.get_status_display }}
+                                </span>
+
+                            </article>
+
+                        {% endfor %}
+
+                        <!-- PAGINATION -->
+
+{% if page_obj.has_other_pages %}
+
+    <nav class="bed-pagination">
+
+        {% if page_obj.has_previous %}
+
+            <a href="?page={{ page_obj.previous_page_number }}">
+                ← Previous
+            </a>
+
+        {% endif %}
+
+
+        {% for page_number in page_obj.paginator.page_range %}
+
+            <a
+                href="?page={{ page_number }}"
+                class="
+                    pagination-number
+                    {% if page_obj.number == page_number %}
+                        active
+                    {% endif %}
+                "
+            >
+                {{ page_number }}
+            </a>
+
+        {% endfor %}
+
+
+        {% if page_obj.has_next %}
+
+            <a href="?page={{ page_obj.next_page_number }}">
+                Next →
+            </a>
+
+        {% endif %}
+
+    </nav>
+
+{% endif %}
+
+                    </div>
+
+
+                {% else %}
+
+                    <div class="empty-admin-beds">
+
+                        <div class="empty-bed-icon">
+                            🛏️
+                        </div>
+
+                        <h3>
+                            No beds added yet
+                        </h3>
+
+                        <p>
+                            Add the first hospital bed using the form.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </main>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= ASSIGN PATIENT MODAL ================= -->
+
+<div
+    class="assign-modal"
+    id="assignPatientModal"
+>
+
+    <div class="assign-modal-overlay"></div>
+
+    <div class="assign-modal-card">
+
+        <div class="assign-modal-header">
+
+            <div>
+                <span>BED ASSIGNMENT</span>
+                <h2>Assign Patient</h2>
+            </div>
+
+            <button
+                type="button"
+                class="assign-modal-close"
+                id="closeAssignModal"
+            >
+                &times;
+            </button>
+
+        </div>
+
+
+        <p class="assign-bed-info">
+            Assigning patient to
+            <strong id="selectedBedNumber"></strong>
+        </p>
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <input
+                type="hidden"
+                name="bed_id"
+                id="selectedBedId"
+            >
+
+
+            <div class="form-group">
+
+                <label>
+                    Select Patient *
+                </label>
+
+                <select
+                    name="patient_id"
+                    required
+                >
+
+                    <option value="">
+                        Choose Patient
+                    </option>
+
+                    {% for patient in patients %}
+
+                        <option value="{{ patient.id }}">
+                            {{ patient.get_full_name|default:patient.email }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="confirm-assign-btn"
+            >
+                Assign Patient
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+{% endblock %}

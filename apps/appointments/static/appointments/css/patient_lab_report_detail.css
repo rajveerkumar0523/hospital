@@ -1,0 +1,548 @@
+/* =========================================
+   PATIENT LAB REPORT PAGE
+========================================= */
+
+.lab-report-page {
+    min-height: 100vh;
+    padding: 42px 24px 70px;
+    background: #f4f7fb;
+}
+
+.lab-report-wrapper {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+
+/* =========================================
+   PAGE HEADER
+========================================= */
+
+.report-page-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 26px;
+}
+
+.page-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #1769e8;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+}
+
+.report-page-header h1 {
+    margin: 0;
+    color: #12294b;
+    font-size: 34px;
+    line-height: 1.2;
+}
+
+.report-page-header p {
+    margin: 8px 0 0;
+    color: #71819a;
+    font-size: 14px;
+}
+
+.back-tests-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 18px;
+    border: 1px solid #d7e1ee;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #294463;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.back-tests-btn:hover {
+    border-color: #1769e8;
+    color: #1769e8;
+}
+
+
+/* =========================================
+   MAIN REPORT CARD
+========================================= */
+
+.report-card {
+    overflow: hidden;
+    border: 1px solid #dfe7f1;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 14px 40px rgba(29, 54, 88, 0.07);
+}
+
+
+/* =========================================
+   REPORT HEADER
+========================================= */
+
+.report-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 28px 32px;
+    border-bottom: 1px solid #e4eaf2;
+}
+
+.hospital-details {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.hospital-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 54px;
+    height: 54px;
+    flex-shrink: 0;
+    border-radius: 14px;
+    background: #1769e8;
+    color: #ffffff;
+    font-size: 32px;
+    font-weight: 400;
+}
+
+.hospital-details h2 {
+    margin: 0;
+    color: #132c50;
+    font-size: 21px;
+}
+
+.hospital-details p {
+    margin: 5px 0 2px;
+    color: #667a97;
+    font-size: 13px;
+}
+
+.hospital-details span {
+    color: #8a99ad;
+    font-size: 12px;
+}
+
+.report-status-area {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 9px;
+}
+
+.report-type {
+    color: #8493a8;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.3px;
+}
+
+
+/* =========================================
+   STATUS BADGES
+========================================= */
+
+.result-status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 32px;
+    padding: 0 13px;
+    border-radius: 999px;
+    background: #edf2f7;
+    color: #536783;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.result-normal,
+.result-negative {
+    background: #e8f8ef;
+    color: #16834c;
+}
+
+.result-abnormal,
+.result-positive {
+    background: #fff0f0;
+    color: #c94747;
+}
+
+.result-inconclusive {
+    background: #fff6df;
+    color: #a36d00;
+}
+
+
+/* =========================================
+   REPORT ID STRIP
+========================================= */
+
+.report-id-strip {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-bottom: 1px solid #e5ebf3;
+    background: #f8fafd;
+}
+
+.report-id-strip > div {
+    padding: 17px 28px;
+    border-right: 1px solid #e3e9f1;
+}
+
+.report-id-strip > div:last-child {
+    border-right: none;
+}
+
+.report-id-strip span {
+    display: block;
+    margin-bottom: 6px;
+    color: #8a99ae;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.9px;
+}
+
+.report-id-strip strong {
+    color: #1b3558;
+    font-size: 14px;
+}
+
+
+/* =========================================
+   PATIENT AND DOCTOR DETAILS
+========================================= */
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    padding: 28px 32px;
+    border-bottom: 1px solid #e5ebf3;
+}
+
+.details-panel {
+    padding: 20px;
+    border: 1px solid #e0e7f0;
+    border-radius: 13px;
+    background: #fbfcfe;
+}
+
+.panel-heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e6ebf2;
+}
+
+.panel-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: #eaf3ff;
+    font-size: 18px;
+}
+
+.panel-heading span:not(.panel-icon) {
+    display: block;
+    margin-bottom: 3px;
+    color: #1769e8;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.panel-heading h3 {
+    margin: 0;
+    color: #1b3457;
+    font-size: 16px;
+}
+
+.info-list {
+    margin-top: 8px;
+}
+
+.info-list > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 11px 0;
+    border-bottom: 1px solid #edf1f6;
+}
+
+.info-list > div:last-child {
+    border-bottom: none;
+}
+
+.info-list span {
+    color: #7a8ba3;
+    font-size: 12px;
+}
+
+.info-list strong {
+    color: #253f62;
+    font-size: 13px;
+    text-align: right;
+}
+
+
+/* =========================================
+   RESULT SECTION
+========================================= */
+
+.result-section {
+    padding: 30px 32px;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 22px;
+}
+
+.section-heading span {
+    display: block;
+    margin-bottom: 5px;
+    color: #1769e8;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.1px;
+}
+
+.section-heading h2 {
+    margin: 0;
+    color: #142e51;
+    font-size: 22px;
+}
+
+
+/* =========================================
+   RESULT VALUES
+========================================= */
+
+.result-values-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 22px;
+}
+
+.result-value-card {
+    padding: 16px;
+    border: 1px solid #e0e7f0;
+    border-radius: 11px;
+    background: #f9fbfd;
+}
+
+.result-value-card span {
+    display: block;
+    margin-bottom: 8px;
+    color: #8594a9;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+}
+
+.result-value-card strong {
+    color: #1b3559;
+    font-size: 15px;
+}
+
+
+/* =========================================
+   FINDINGS
+========================================= */
+
+.report-text-block {
+    margin-top: 15px;
+    padding: 18px 20px;
+    border: 1px solid #e1e8f1;
+    border-radius: 11px;
+    background: #fbfcfe;
+}
+
+.report-text-block span {
+    display: block;
+    margin-bottom: 9px;
+    color: #1769e8;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.9px;
+}
+
+.report-text-block p {
+    margin: 0;
+    color: #405675;
+    font-size: 14px;
+    line-height: 1.7;
+    white-space: pre-line;
+}
+
+
+/* =========================================
+   REPORT FOOTER
+========================================= */
+
+.report-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px 32px;
+    border-top: 1px solid #e2e9f2;
+    background: #f7fafc;
+}
+
+.report-footer span {
+    display: block;
+    margin-bottom: 4px;
+    color: #8b9aaf;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+}
+
+.report-footer strong {
+    color: #16834c;
+    font-size: 13px;
+}
+
+.report-footer p {
+    margin: 0;
+    color: #8290a4;
+    font-size: 12px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 850px) {
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .result-values-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .report-id-strip {
+        grid-template-columns: 1fr;
+    }
+
+    .report-id-strip > div {
+        border-right: none;
+        border-bottom: 1px solid #e3e9f1;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .lab-report-page {
+        padding: 24px 14px 50px;
+    }
+
+    .report-page-header,
+    .report-header,
+    .section-heading,
+    .report-footer {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .back-tests-btn {
+        width: 100%;
+    }
+
+    .report-status-area {
+        align-items: flex-start;
+    }
+
+    .details-grid,
+    .result-section {
+        padding: 20px;
+    }
+
+    .result-values-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .report-page-header h1 {
+        font-size: 28px;
+    }
+}
+
+
+/* ================================
+   PDF REPORT BUTTON
+================================ */
+
+.download-pdf-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    min-height: 42px;
+    padding: 10px 18px;
+
+    background: #1565d8;
+    color: #ffffff;
+
+    border: 1px solid #1565d8;
+    border-radius: 10px;
+
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.download-pdf-btn:hover {
+    background: #0f54ba;
+    border-color: #0f54ba;
+    color: #ffffff;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 6px 16px rgba(21, 101, 216, 0.2);
+}
+
+.download-pdf-btn:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.download-pdf-btn:focus-visible {
+    outline: 3px solid rgba(21, 101, 216, 0.22);
+    outline-offset: 3px;
+}

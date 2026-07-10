@@ -1,0 +1,457 @@
+/* =========================================
+   STAFF PORTAL PAGE
+========================================= */
+
+/* =========================================
+   LOGIN MESSAGES
+========================================= */
+
+.portal-messages {
+    margin-bottom: 22px;
+}
+
+.portal-message {
+    padding: 13px 15px;
+
+    border-radius: 8px;
+
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+
+/* ERROR MESSAGE */
+
+.portal-message.error {
+    background: #fff1f0;
+    color: #c93c32;
+
+    border: 1px solid #ffd2ce;
+}
+
+
+/* SUCCESS MESSAGE */
+
+.portal-message.success {
+    background: #edf9f2;
+    color: #247a4a;
+
+    border: 1px solid #ccebd9;
+}
+
+
+/* INFO MESSAGE */
+
+.portal-message.info {
+    background: #eef7fa;
+    color: #0d718c;
+
+    border: 1px solid #cce7ee;
+}
+
+
+/* MULTIPLE MESSAGES */
+
+.portal-message + .portal-message {
+    margin-top: 10px;
+}
+
+.portal-message {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.message-close {
+    flex-shrink: 0;
+
+    padding: 0;
+
+    background: transparent;
+    border: none;
+
+    color: currentColor;
+
+    font-size: 22px;
+    line-height: 1;
+
+    cursor: pointer;
+    opacity: 0.65;
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+}
+
+.message-close:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+
+/* =========================================
+   STAFF PORTAL NAVBAR
+========================================= */
+
+.staff-navbar {
+    width: 100%;
+    height: 76px;
+
+    display: flex;
+    align-items: center;
+
+    background: #ffffff;
+    border-bottom: 1px solid #e8edef;
+}
+
+.staff-navbar-container {
+    width: min(1180px, 90%);
+    margin: 0 auto;
+}
+
+.staff-navbar-brand {
+    color: #0d718c;
+
+    font-size: 28px;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: -1px;
+}
+
+
+.staff-portal-page {
+    min-height: calc(100vh - 80px);
+    padding: 80px 5%;
+
+    display: flex;
+    align-items: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f4fbfd 0%,
+            #ffffff 50%,
+            #eef8fb 100%
+        );
+}
+
+.staff-portal-container {
+    width: min(1180px, 100%);
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: 1fr 480px;
+    align-items: center;
+    gap: 100px;
+}
+
+
+/* =========================================
+   LEFT INFORMATION SECTION
+========================================= */
+
+.portal-label {
+    display: inline-block;
+    margin-bottom: 18px;
+
+    color: #0d718c;
+
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+}
+
+.staff-portal-info h1 {
+    max-width: 570px;
+    margin: 0;
+
+    color: #17242d;
+
+    font-size: clamp(42px, 5vw, 66px);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -2px;
+}
+
+.staff-portal-info h1 span {
+    display: block;
+    color: #0d718c;
+}
+
+.staff-portal-info > p {
+    max-width: 520px;
+    margin: 25px 0 35px;
+
+    color: #64717b;
+
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+
+/* =========================================
+   PORTAL FEATURES
+========================================= */
+
+.portal-features {
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+}
+
+.portal-feature {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.portal-feature span {
+    width: 28px;
+    height: 28px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #e0f3f7;
+    color: #0d718c;
+
+    border-radius: 50%;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.portal-feature p {
+    margin: 0;
+
+    color: #46545e;
+
+    font-size: 15px;
+}
+
+
+/* =========================================
+   LOGIN CARD
+========================================= */
+
+.staff-login-card {
+    padding: 42px;
+
+    background: #ffffff;
+
+    border: 1px solid #e6ecef;
+    border-radius: 18px;
+
+    box-shadow:
+        0 24px 60px rgba(20, 57, 70, 0.12);
+}
+
+.login-card-header {
+    margin-bottom: 30px;
+}
+
+.login-card-header h2 {
+    margin: 0 0 10px;
+
+    color: #17242d;
+
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.login-card-header p {
+    margin: 0;
+
+    color: #74808a;
+
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+
+/* =========================================
+   FORM
+========================================= */
+
+.form-group {
+    margin-bottom: 21px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 9px;
+
+    color: #35434d;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.form-group input {
+    width: 100%;
+    height: 52px;
+    box-sizing: border-box;
+
+    padding: 0 16px;
+
+    background: #f9fbfc;
+
+    border: 1px solid #dce4e8;
+    border-radius: 9px;
+
+    color: #24323b;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.form-group input::placeholder {
+    color: #9ca7ae;
+}
+
+.form-group input:focus {
+    background: #ffffff;
+    border-color: #0d718c;
+
+    box-shadow:
+        0 0 0 4px rgba(13, 113, 140, 0.1);
+}
+
+
+/* =========================================
+   LOGIN BUTTON
+========================================= */
+
+.staff-login-btn {
+    width: 100%;
+    height: 54px;
+
+    margin-top: 5px;
+    padding: 0 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: #0d718c;
+    color: #ffffff;
+
+    border: none;
+    border-radius: 9px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.staff-login-btn:hover {
+    background: #095f77;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 25px rgba(13, 113, 140, 0.22);
+}
+
+.staff-login-btn span {
+    font-size: 20px;
+}
+
+
+/* =========================================
+   SECURITY NOTE
+========================================= */
+
+.staff-login-note {
+    margin-top: 24px;
+    padding-top: 22px;
+
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+
+    border-top: 1px solid #edf0f2;
+}
+
+.staff-login-note span {
+    font-size: 14px;
+}
+
+.staff-login-note p {
+    margin: 0;
+
+    color: #89939b;
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 950px) {
+    .staff-portal-container {
+        grid-template-columns: 1fr;
+        gap: 55px;
+    }
+
+    .staff-portal-info {
+        text-align: center;
+    }
+
+    .staff-portal-info h1,
+    .staff-portal-info > p {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .portal-features {
+        width: fit-content;
+        margin: 0 auto;
+        text-align: left;
+    }
+
+    .staff-login-card {
+        width: min(480px, 100%);
+        margin: 0 auto;
+        box-sizing: border-box;
+    }
+}
+
+
+@media (max-width: 550px) {
+    .staff-portal-page {
+        padding: 55px 20px;
+    }
+
+    .staff-portal-info h1 {
+        font-size: 42px;
+        letter-spacing: -1px;
+    }
+
+    .staff-login-card {
+        padding: 28px 22px;
+        border-radius: 14px;
+    }
+}

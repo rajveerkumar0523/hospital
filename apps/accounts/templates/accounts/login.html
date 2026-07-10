@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Login | MediCore
+{% endblock %}
+
+
+{% block extra_css %}
+<link rel="stylesheet"
+      href="{% static 'accounts/css/login.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+<section class="login-page">
+
+    <div class="login-container">
+
+        <!-- LEFT SIDE -->
+
+        <div class="login-info">
+
+            <div class="info-content">
+
+                <span class="info-badge">
+                    Smart Healthcare
+                </span>
+
+                <h1>
+                    Welcome Back to
+                    <span>MediCore</span>
+                </h1>
+
+                <p>
+                    Access appointments, medical records,
+                    emergency services, and hospital management
+                    from one secure platform.
+                </p>
+
+                <div class="info-features">
+
+                    <div class="info-feature">
+                        <span>✓</span>
+                        Secure Role-Based Access
+                    </div>
+
+                    <div class="info-feature">
+                        <span>✓</span>
+                        Digital Medical Records
+                    </div>
+
+                    <div class="info-feature">
+                        <span>✓</span>
+                        24/7 Emergency Support
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT SIDE -->
+
+        <div class="login-form-section">
+
+            <div class="login-form-box">
+
+                <div class="form-heading">
+                    <h2>Login to your account</h2>
+                    <p>Enter your credentials to continue</p>
+                </div>
+
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <div class="password-label">
+
+                            <label for="password">
+                                Password
+                            </label>
+
+                            <a href="#">
+                                Forgot Password?
+                            </a>
+
+                        </div>
+
+                        <!-- <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            required
+                        > -->
+
+                            <input
+                            type="password"
+                            name="password"
+                        >
+
+                    </div>
+
+
+                    <div class="remember-me">
+
+                        <input
+                            type="checkbox"
+                            id="remember"
+                            name="remember"
+                        >
+
+                        <label for="remember">
+                            Remember me
+                        </label>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="login-submit-btn"
+                    >
+                        Login
+                    </button>
+
+                </form>
+                    {% if messages %}
+
+    {% for message in messages %}
+
+        <div class="form-alert">
+            {{ message }}
+        </div>
+
+    {% endfor %}
+
+{% endif %}
+
+                <div class="register-link">
+
+                    <p>
+                        Don't have an account?
+
+                        <a href="{% url 'accounts:signup' %}">
+                          Create Account
+                        </a>
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

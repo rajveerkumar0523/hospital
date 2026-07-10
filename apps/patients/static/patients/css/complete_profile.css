@@ -1,0 +1,276 @@
+/* ================================
+   COMPLETE PATIENT PROFILE
+================================ */
+
+.profile-form-page {
+    min-height: calc(100vh - 80px);
+    padding: 50px 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f5f8fd;
+}
+
+
+/* ================================
+   FORM CARD
+================================ */
+
+.profile-form-container {
+    width: 100%;
+    max-width: 760px;
+
+    padding: 45px 50px;
+
+    background: #ffffff;
+
+    border: 1px solid #e7edf5;
+    border-radius: 22px;
+
+    box-shadow:
+        0 20px 55px
+        rgba(24, 67, 130, 0.10);
+}
+
+
+/* ================================
+   HEADER
+================================ */
+
+.profile-form-header {
+    margin-bottom: 35px;
+    text-align: center;
+}
+
+.profile-form-header h1 {
+    margin: 0;
+
+    color: #0b1f44;
+
+    font-size: 34px;
+    font-weight: 700;
+}
+
+.profile-form-header p {
+    max-width: 500px;
+
+    margin: 10px auto 0;
+
+    color: #748096;
+
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+
+/* ================================
+   FORM LAYOUT
+================================ */
+
+.profile-form-container form {
+    width: 100%;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 18px;
+}
+
+.form-group {
+    margin-bottom: 21px;
+}
+
+
+/* ================================
+   LABELS
+================================ */
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #263550;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+/* ================================
+   INPUTS
+================================ */
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+
+    padding: 14px 15px;
+
+    background: #ffffff;
+
+    border: 1px solid #d9e1ec;
+    border-radius: 9px;
+
+    color: #263550;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+/* SELECT */
+
+.form-group select {
+    height: 49px;
+    cursor: pointer;
+}
+
+
+/* TEXTAREA */
+
+.form-group textarea {
+    min-height: 95px;
+    resize: vertical;
+}
+
+
+/* FOCUS */
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #1265e8;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(18, 101, 232, 0.10);
+}
+
+
+/* ================================
+   ERRORS
+================================ */
+
+.form-group .errorlist {
+    margin: 7px 0 0;
+    padding: 0;
+
+    list-style: none;
+
+    color: #d92d20;
+
+    font-size: 12px;
+}
+
+.form-error {
+    margin-bottom: 22px;
+    padding: 12px 15px;
+
+    background: #fff2f0;
+
+    border: 1px solid #ffc9c2;
+    border-radius: 8px;
+
+    color: #b42318;
+
+    font-size: 13px;
+}
+
+
+/* ================================
+   SUBMIT BUTTON
+================================ */
+
+.profile-form-container button {
+    width: 100%;
+
+    margin-top: 5px;
+    padding: 15px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #1265e8;
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.profile-form-container button:hover {
+    background: #0753c8;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(18, 101, 232, 0.20);
+}
+
+.profile-form-container button:active {
+    transform: translateY(0);
+}
+
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 700px) {
+
+    .profile-form-page {
+        padding: 30px 16px;
+    }
+
+    .profile-form-container {
+        padding: 35px 25px;
+
+        border-radius: 16px;
+    }
+
+    .profile-form-header h1 {
+        font-size: 28px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+
+        gap: 0;
+    }
+}
+
+
+@media (max-width: 450px) {
+
+    .profile-form-container {
+        padding: 30px 20px;
+    }
+
+    .profile-form-header h1 {
+        font-size: 25px;
+    }
+
+    .profile-form-header p {
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,259 @@
+<header class="navbar">
+
+    <!-- ==============================
+         LOGO
+    =============================== -->
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            ♥
+        </div>
+
+        <div>
+            <h2>
+                MediCore<span>+</span>
+            </h2>
+
+            <p>Smart Hospital</p>
+        </div>
+
+    </div>
+
+
+    <!-- ==============================
+         NAVIGATION LINKS
+    =============================== -->
+
+    {% if user.is_authenticated and user.role == "LAB_TECHNICIAN" %}
+
+        <!-- LAB TECHNICIAN NAV -->
+
+        <nav class="nav-links">
+
+            <a
+                href="{% url 'laboratory:dashboard' %}"
+                class="active"
+            >
+                Dashboard
+            </a>
+
+        </nav>
+
+
+    {% elif user.is_authenticated and user.is_staff %}
+
+    {% elif user.is_authenticated and user.role == "RECEPTIONIST" %}
+
+    <nav class="nav-links">
+        <a
+            href="{% url 'reception:dashboard' %}"
+            class="active"
+        >
+            Dashboard
+        </a>
+    </nav>
+
+        <!-- ADMIN NAV -->
+
+        <nav class="nav-links admin-nav-links">
+
+            <a
+                href="{% url 'dashboard:admin' %}"
+                class="active"
+            >
+                Dashboard
+            </a>
+
+        </nav>
+
+
+    {% else %}
+
+        <!-- NORMAL NAV -->
+
+        <nav class="nav-links">
+
+            <a
+                href="{% url 'home' %}"
+                class="active"
+            >
+                Home
+            </a>
+
+            <a href="#">
+                About Us
+            </a>
+
+            <a href="#">
+                Services
+            </a>
+
+            <a href="#">
+                Departments
+            </a>
+
+            <a href="{% url 'doctors:list' %}">
+                Doctors
+            </a>
+
+            <a href="#">
+                Contact
+            </a>
+
+        </nav>
+
+    {% endif %}
+
+
+    <!-- ==============================
+         USER AREA
+    =============================== -->
+
+    {% if user.is_authenticated %}
+
+        <div class="user-menu">
+
+            <button
+                type="button"
+                class="user-menu-btn"
+                onclick="toggleUserMenu()"
+            >
+
+                <span class="user-avatar">
+
+                    {% if user.first_name %}
+
+                        {{ user.first_name|first|upper }}
+
+                    {% else %}
+
+                        {{ user.email|first|upper }}
+
+                    {% endif %}
+
+                </span>
+
+
+                <span>
+
+                    {% if user.first_name %}
+
+                        Hi, {{ user.first_name }}
+
+                    {% else %}
+
+                        Hi, User
+
+                    {% endif %}
+
+                </span>
+
+
+                <span class="menu-arrow">
+                    ▼
+                </span>
+
+            </button>
+
+
+            <!-- ==============================
+                 DROPDOWN
+            =============================== -->
+
+            <div
+                class="user-dropdown"
+                id="userDropdown"
+            >
+
+
+                <!-- PATIENT -->
+
+                {% if user.role == "PATIENT" %}
+
+                    <a href="{% url 'dashboard:patient' %}">
+                        📊 My Dashboard
+                    </a>
+
+                    <a href="{% url 'patients:profile' %}">
+                        👤 My Profile
+                    </a>
+
+
+                <!-- DOCTOR -->
+
+                {% elif user.role == "DOCTOR" %}
+
+                    <a href="{% url 'dashboard:doctor' %}">
+                        📊 My Dashboard
+                    </a>
+
+                    <a href="{% url 'doctors:schedule' %}">
+                        📅 My Schedule
+                    </a>
+
+
+                <!-- LAB TECHNICIAN -->
+
+                {% elif user.role == "LAB_TECHNICIAN" %}
+
+                    <a href="{% url 'laboratory:dashboard' %}">
+                        🧪 Laboratory Dashboard
+                    </a>
+
+
+                <!-- RECEPTIONIST -->
+
+                {% elif user.role == "RECEPTIONIST" %}
+
+    <a href="{% url 'reception:dashboard' %}">
+        📊 Reception Dashboard
+    </a>
+
+
+                <!-- ADMIN -->
+
+                {% elif user.is_staff %}
+
+                    <a href="{% url 'dashboard:admin' %}">
+                        📊 Dashboard
+                    </a>
+
+                    <a href="/admin/">
+                        ⚙️ Admin Panel
+                    </a>
+
+                {% endif %}
+
+
+                <div class="dropdown-divider"></div>
+
+
+                <!-- LOGOUT -->
+
+                <a
+                    href="{% url 'accounts:logout' %}"
+                    class="dropdown-logout"
+                >
+                    ↪ Logout
+                </a>
+
+            </div>
+
+        </div>
+
+
+    {% else %}
+
+        <!-- LOGIN BUTTON -->
+
+        <a
+            href="{% url 'accounts:login' %}"
+            class="login-btn"
+        >
+            Login
+        </a>
+
+    {% endif %}
+
+</header>
