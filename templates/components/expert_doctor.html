@@ -1,0 +1,456 @@
+{% load static %}
+<link
+    rel="stylesheet"
+    href="{% static 'hospital/CSS/expert_doctor.css' %}?v=2"
+>
+
+<section class="expert-doctors-section">
+
+    <div class="expert-wrapper">
+
+        <!-- ==========================================
+             LEFT STICKY PANEL
+        =========================================== -->
+
+        <aside class="doctor-sidebar">
+
+            <span class="section-tag">
+                OUR SPECIALISTS
+            </span>
+
+            <h2>
+
+                Meet Our
+                <br>
+                Expert Doctors
+
+            </h2>
+
+            <p>
+
+                Find experienced specialists across multiple
+                departments and book your consultation with ease.
+
+            </p>
+
+
+
+            <!-- SEARCH -->
+
+            <div class="sidebar-group">
+
+                <label>
+
+                    Search Doctor
+
+                </label>
+
+                <input
+                    type="text"
+                    id="doctorSearch"
+                    placeholder="Search by doctor name..."
+                >
+
+            </div>
+
+
+
+            <!-- DEPARTMENT -->
+
+            <div class="sidebar-group">
+
+                <label>
+
+                    Department
+
+                </label>
+
+                <select id="departmentFilter">
+
+                    <option value="">
+
+                        All Departments
+
+                    </option>
+
+                    {% for department in departments %}
+
+                    <option
+                        value="{{ department.name|lower }}"
+                    >
+
+                        {{ department.name }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+
+            <!-- EXPERIENCE -->
+
+            <div class="sidebar-group">
+
+                <label>
+
+                    Experience
+
+                </label>
+
+                <select id="experienceFilter">
+
+                    <option value="">
+
+                        Any Experience
+
+                    </option>
+
+                    <option value="5">
+
+                        5+ Years
+
+                    </option>
+
+                    <option value="10">
+
+                        10+ Years
+
+                    </option>
+
+                    <option value="15">
+
+                        15+ Years
+
+                    </option>
+
+                    <option value="20">
+
+                        20+ Years
+
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <!-- BUTTON -->
+
+            <a
+                href="{% url 'doctors:list' %}"
+                class="all-doctors-btn"
+            >
+
+                View All Doctors →
+
+            </a>
+
+
+
+            <!-- HELP -->
+
+            <div class="doctor-help-box">
+
+                <h4>
+
+                    Need Help Choosing?
+
+                </h4>
+
+                <p>
+
+                    Our medical advisors will help you choose
+                    the right specialist.
+
+                </p>
+
+                <a
+                    href="#"
+                    class="advisor-btn"
+                >
+
+                    Talk To Advisor
+
+                </a>
+
+            </div>
+
+        </aside>
+
+
+
+
+
+        <!-- ==========================================
+             RIGHT DOCTOR GRID
+        =========================================== -->
+
+        <div class="doctor-scroll-area">
+<div class="doctor-grid">
+
+{% for doctor in doctors %}
+
+<div
+    class="doctor-card"
+
+    data-name="{{ doctor.user.get_full_name|lower }}"
+
+    data-department="{{ doctor.department.name|lower }}"
+
+    data-exp="{{ doctor.experience }}"
+>
+
+    <!-- Image -->
+
+    <div class="doctor-image">
+
+        {% if doctor.profile_picture %}
+
+            <img
+                src="{{ doctor.profile_picture.url }}"
+                alt="{{ doctor.user.get_full_name }}"
+            >
+
+        {% else %}
+
+            <img
+                src="{% static 'hospital/images/default-doctor.png' %}"
+                alt="Doctor"
+            >
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- Content -->
+
+    <div class="doctor-content">
+
+        <span class="doctor-department">
+
+            {{ doctor.department.name }}
+
+        </span>
+
+        <h3>
+
+            Dr. {{ doctor.user.get_full_name }}
+
+        </h3>
+
+        <p class="doctor-specialization">
+
+            {{ doctor.specialization }}
+
+        </p>
+
+
+        <div class="doctor-info">
+
+            <div>
+
+                <small>Experience</small>
+
+                <strong>
+
+                    {{ doctor.experience }} Years
+
+                </strong>
+
+            </div>
+
+            <div>
+
+                <small>Slot Duration</small>
+
+                <strong>
+
+                    {{ doctor.consultation_duration }} Min
+
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="doctor-footer">
+
+            <div class="doctor-fee">
+
+                ₹{{ doctor.consultation_fee }}
+
+            </div>
+
+        </div>
+
+
+        <div class="doctor-buttons">
+
+            <a
+                href="#"
+                class="profile-btn"
+            >
+                View Profile
+            </a>
+
+            <a
+                href="#"
+                class="book-btn"
+            >
+                Book Now
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% empty %}
+
+<div class="no-doctors">
+
+    <h3>
+
+        No Doctors Available
+
+    </h3>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+    const search = document.getElementById("doctorSearch");
+
+    const department = document.getElementById("departmentFilter");
+
+    const experience = document.getElementById("experienceFilter");
+
+    const cards = document.querySelectorAll(".doctor-card");
+
+
+
+    function filterDoctors() {
+
+        const searchText = search.value.toLowerCase().trim();
+
+        const departmentValue = department.value.toLowerCase();
+
+        const experienceValue = experience.value;
+
+
+
+        cards.forEach(card => {
+
+            const doctorName =
+                card.dataset.name;
+
+            const doctorDepartment =
+                card.dataset.department;
+
+            const doctorExperience =
+                parseInt(card.dataset.exp);
+
+
+
+            let show = true;
+
+
+
+            // Search
+
+            if (
+                searchText &&
+                !doctorName.includes(searchText)
+            ) {
+
+                show = false;
+
+            }
+
+
+
+            // Department
+
+            if (
+                departmentValue &&
+                doctorDepartment !== departmentValue
+            ) {
+
+                show = false;
+
+            }
+
+
+
+            // Experience
+
+            if (
+                experienceValue &&
+                doctorExperience <
+                parseInt(experienceValue)
+            ) {
+
+                show = false;
+
+            }
+
+
+
+            if (show) {
+
+                card.style.display = "block";
+
+                card.style.animation =
+                    "fadeIn .45s ease";
+
+            }
+
+            else {
+
+                card.style.display = "none";
+
+            }
+
+        });
+
+    }
+
+
+
+    search.addEventListener(
+        "keyup",
+        filterDoctors
+    );
+
+    department.addEventListener(
+        "change",
+        filterDoctors
+    );
+
+    experience.addEventListener(
+        "change",
+        filterDoctors
+    );
+
+});
+</script>

@@ -1,0 +1,55 @@
+/* ============================================================
+   MEDICORE — PAGINATION COMPONENT
+   File: pagination.css
+   ============================================================ */
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    padding: var(--space-xl) 0;
+}
+
+.page-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 var(--space-md);
+
+    border: 1.5px solid var(--clr-border);
+    border-radius: var(--radius-md);
+
+    background: var(--clr-surface);
+    color: var(--clr-ink-500);
+
+    font-size: 13.5px;
+    font-weight: 500;
+    text-decoration: none;
+
+    transition:
+        background var(--ease-default),
+        color var(--ease-default),
+        border-color var(--ease-default),
+        transform var(--ease-bounce);
+}
+
+.page-btn:hover {
+    background: var(--clr-primary-light);
+    color: var(--clr-primary);
+    border-color: var(--clr-primary-muted);
+    transform: translateY(-1px);
+}
+
+.page-btn.active {
+    background: var(--clr-primary);
+    color: #fff;
+    border-color: var(--clr-primary);
+    font-weight: 700;
+    box-shadow: 0 4px 14px rgba(26, 110, 245, 0.3);
+    cursor: default;
+    pointer-events: none;
+}

@@ -1,0 +1,841 @@
+/* ==========================================
+            MEDICORE AI CENTER
+                PART - 1
+========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+.ai-home{
+
+    min-height:100vh;
+
+    background:#f5f8fc;
+
+    padding-bottom:70px;
+
+}
+
+
+/* ==========================================
+                HERO
+========================================== */
+
+.ai-header{
+
+    background:linear-gradient(
+        135deg,
+        #0f5ef7,
+        #2f7cff
+    );
+
+    color:#fff;
+
+    text-align:center;
+
+    padding:90px 20px;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+
+.ai-header::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:420px;
+
+    height:420px;
+
+    background:rgba(255,255,255,.08);
+
+    border-radius:50%;
+
+    top:-150px;
+
+    left:-120px;
+
+}
+
+
+.ai-header::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:350px;
+
+    height:350px;
+
+    background:rgba(255,255,255,.05);
+
+    border-radius:50%;
+
+    bottom:-140px;
+
+    right:-100px;
+
+}
+
+
+.ai-header>*{
+
+    position:relative;
+
+    z-index:2;
+
+}
+
+
+.badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:10px 22px;
+
+    border-radius:50px;
+
+    background:rgba(255,255,255,.18);
+
+    backdrop-filter:blur(10px);
+
+    font-weight:600;
+
+    font-size:15px;
+
+}
+
+
+.ai-header h1{
+
+    margin-top:25px;
+
+    font-size:52px;
+
+    font-weight:700;
+
+    letter-spacing:.5px;
+
+}
+
+
+.ai-header p{
+
+    max-width:720px;
+
+    margin:20px auto 0;
+
+    line-height:1.8;
+
+    font-size:18px;
+
+    opacity:.95;
+
+}
+
+
+/* ==========================================
+            AI GRID
+========================================== */
+
+.ai-grid{
+
+    max-width:1350px;
+
+    margin:-70px auto 0;
+
+    padding:0 25px;
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:30px;
+
+}
+
+
+/* ==========================================
+                CARD
+========================================== */
+
+.ai-card{
+
+    background:#fff;
+
+    border-radius:24px;
+
+    padding:35px;
+
+    text-decoration:none;
+
+    color:#1f2b45;
+
+    transition:.35s;
+
+    position:relative;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 18px 40px
+        rgba(0,0,0,.08);
+
+}
+
+
+.ai-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:5px;
+
+    background:linear-gradient(
+        90deg,
+        #2563eb,
+        #60a5fa
+    );
+
+}
+
+
+.ai-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:
+        0 30px 55px
+        rgba(37,99,235,.18);
+
+}
+
+
+.ai-card .icon{
+
+    width:80px;
+
+    height:80px;
+
+    border-radius:18px;
+
+    background:#edf4ff;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:42px;
+
+    margin-bottom:28px;
+
+}
+
+
+.ai-card h2{
+
+    font-size:28px;
+
+    margin-bottom:16px;
+
+    color:#183153;
+
+}
+
+
+.ai-card p{
+
+    line-height:1.8;
+
+    color:#6d788d;
+
+    font-size:16px;
+
+}
+
+
+/* ==========================================
+            CARD FOOTER
+========================================== */
+
+.ai-card::after{
+
+    content:"→";
+
+    position:absolute;
+
+    right:35px;
+
+    bottom:30px;
+
+    font-size:32px;
+
+    color:#2563eb;
+
+    transition:.3s;
+
+}
+
+
+.ai-card:hover::after{
+
+    transform:translateX(8px);
+
+}
+
+
+/* ==========================================
+            MEDICORE AI CENTER
+                PART - 2
+========================================== */
+
+
+/* ================================
+        ICON COLORS
+================================ */
+
+.ai-card:nth-child(1) .icon{
+
+    background:#eef4ff;
+
+    color:#2563eb;
+
+}
+
+.ai-card:nth-child(2) .icon{
+
+    background:#edfdf5;
+
+    color:#16a34a;
+
+}
+
+.ai-card:nth-child(3) .icon{
+
+    background:#fff8eb;
+
+    color:#f59e0b;
+
+}
+
+.ai-card:nth-child(4) .icon{
+
+    background:#f4f3ff;
+
+    color:#7c3aed;
+
+}
+
+
+/* ================================
+        CARD ANIMATION
+================================ */
+
+.ai-card{
+
+    animation:fadeUp .7s ease forwards;
+
+    opacity:0;
+
+}
+
+.ai-card:nth-child(1){
+
+    animation-delay:.1s;
+
+}
+
+.ai-card:nth-child(2){
+
+    animation-delay:.25s;
+
+}
+
+.ai-card:nth-child(3){
+
+    animation-delay:.4s;
+
+}
+
+.ai-card:nth-child(4){
+
+    animation-delay:.55s;
+
+}
+
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+
+/* ================================
+        CARD GLOW
+================================ */
+
+.ai-card:hover{
+
+    border:1px solid rgba(37,99,235,.15);
+
+}
+
+.ai-card:hover .icon{
+
+    transform:rotate(-8deg) scale(1.08);
+
+    transition:.35s;
+
+}
+
+
+/* ================================
+        HEADER ANIMATION
+================================ */
+
+.badge{
+
+    animation:pulseBadge 2.5s infinite;
+
+}
+
+@keyframes pulseBadge{
+
+    0%{
+
+        transform:scale(1);
+
+    }
+
+    50%{
+
+        transform:scale(1.05);
+
+    }
+
+    100%{
+
+        transform:scale(1);
+
+    }
+
+}
+
+
+/* ================================
+        HERO FLOATING CIRCLES
+================================ */
+
+.ai-header::before{
+
+    animation:floatOne 10s ease-in-out infinite;
+
+}
+
+.ai-header::after{
+
+    animation:floatTwo 12s ease-in-out infinite;
+
+}
+
+@keyframes floatOne{
+
+    0%{
+
+        transform:translateY(0);
+
+    }
+
+    50%{
+
+        transform:translateY(25px);
+
+    }
+
+    100%{
+
+        transform:translateY(0);
+
+    }
+
+}
+
+@keyframes floatTwo{
+
+    0%{
+
+        transform:translateY(0);
+
+    }
+
+    50%{
+
+        transform:translateY(-20px);
+
+    }
+
+    100%{
+
+        transform:translateY(0);
+
+    }
+
+}
+
+
+/* ================================
+        CARD TEXT
+================================ */
+
+.ai-card h2{
+
+    transition:.3s;
+
+}
+
+.ai-card:hover h2{
+
+    color:#2563eb;
+
+}
+
+.ai-card p{
+
+    transition:.3s;
+
+}
+
+.ai-card:hover p{
+
+    color:#475569;
+
+}
+
+
+/* ================================
+        RESPONSIVE
+================================ */
+
+@media(max-width:1100px){
+
+    .ai-grid{
+
+        grid-template-columns:1fr;
+
+        margin-top:-50px;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .ai-header{
+
+        padding:70px 20px;
+
+    }
+
+    .ai-header h1{
+
+        font-size:36px;
+
+    }
+
+    .ai-header p{
+
+        font-size:16px;
+
+    }
+
+    .badge{
+
+        font-size:14px;
+
+    }
+
+    .ai-card{
+
+        padding:28px;
+
+    }
+
+    .ai-card h2{
+
+        font-size:24px;
+
+    }
+
+}
+
+@media(max-width:480px){
+
+    .ai-grid{
+
+        padding:0 15px;
+
+        gap:20px;
+
+    }
+
+    .ai-card{
+
+        border-radius:18px;
+
+        padding:22px;
+
+    }
+
+    .ai-card .icon{
+
+        width:65px;
+
+        height:65px;
+
+        font-size:34px;
+
+    }
+
+    .ai-header h1{
+
+        font-size:30px;
+
+    }
+
+}
+
+
+/* ================================
+        SCROLLBAR
+================================ */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#2563eb;
+
+    border-radius:50px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#edf4ff;
+
+}
+
+/* ==========================================
+            AI STATS
+========================================== */
+
+.ai-stats{
+
+    max-width:1300px;
+
+    margin:70px auto;
+
+    padding:0 25px;
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:25px;
+
+}
+
+.stat-card{
+
+    background:#fff;
+
+    padding:35px;
+
+    border-radius:22px;
+
+    text-align:center;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+
+    transition:.3s;
+
+}
+
+.stat-card:hover{
+
+    transform:translateY(-6px);
+
+}
+
+.stat-card h2{
+
+    font-size:42px;
+
+    color:#2563eb;
+
+    margin-bottom:10px;
+
+}
+
+.stat-card p{
+
+    color:#6b7280;
+
+}
+
+
+/* ==========================================
+            HOW AI WORKS
+========================================== */
+
+.how-ai-works{
+
+    max-width:1300px;
+
+    margin:80px auto;
+
+    padding:0 25px;
+
+    text-align:center;
+
+}
+
+.how-ai-works h2{
+
+    font-size:40px;
+
+    color:#1e293b;
+
+    margin-bottom:15px;
+
+}
+
+.how-ai-works>p{
+
+    color:#64748b;
+
+    margin-bottom:50px;
+
+}
+
+.steps{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:25px;
+
+}
+
+.step{
+
+    background:#fff;
+
+    padding:35px;
+
+    border-radius:22px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+
+    transition:.3s;
+
+}
+
+.step:hover{
+
+    transform:translateY(-6px);
+
+}
+
+.step-icon{
+
+    font-size:50px;
+
+    margin-bottom:20px;
+
+}
+
+.step h3{
+
+    color:#2563eb;
+
+    margin-bottom:15px;
+
+}
+
+.step p{
+
+    color:#64748b;
+
+    line-height:1.7;
+
+}
+
+
+/* Responsive */
+
+@media(max-width:900px){
+
+    .ai-stats,
+    .steps{
+
+        grid-template-columns:1fr 1fr;
+
+    }
+
+}
+
+@media(max-width:600px){
+
+    .ai-stats,
+    .steps{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+

@@ -1,0 +1,281 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'ai/css/home.css' %}">
+{% endblock %}
+
+{% block title %}
+AI Center | MediCore
+{% endblock %}
+
+{% block content %}
+
+<section class="ai-home">
+
+    <div class="ai-header">
+
+        <span class="badge">
+            🤖 AI Powered
+        </span>
+
+        <h1>
+            MediCore AI Center
+        </h1>
+
+        <p>
+
+            Intelligent healthcare tools designed to assist patients
+            and healthcare professionals.
+
+        </p>
+
+    </div>
+
+
+    <div class="ai-grid">
+
+        <a href="{% url 'ai:symptom_checker' %}" class="ai-card">
+
+            <div class="icon">
+                🩺
+            </div>
+
+            <h2>
+                AI Symptom Checker
+            </h2>
+
+            <p>
+
+                Analyze symptoms and get department recommendations.
+
+            </p>
+
+        </a>
+
+
+        <a href="{% url 'ai:appointment_recommendation' %}" class="ai-card">
+
+            <div class="icon">
+                📅
+            </div>
+
+            <h2>
+                AI Appointment Recommendation
+            </h2>
+
+            <p>
+
+                Find the right specialist using AI.
+
+            </p>
+
+        </a>
+
+
+        <a href="{% url 'ai:prescription_summary' %}" class="ai-card">
+
+            <div class="icon">
+                💊
+            </div>
+
+            <h2>
+                AI Prescription Summary
+            </h2>
+
+            <p>
+
+                Convert prescriptions into patient-friendly language.
+
+            </p>
+
+        </a>
+
+
+        <a href="{% url 'ai:report_analysis' %}" class="ai-card">
+
+            <div class="icon">
+                📊
+            </div>
+
+            <h2>
+                AI Report Analysis
+            </h2>
+
+            <p>
+
+                Understand laboratory reports with AI assistance.
+
+            </p>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ==========================================
+            AI STATS
+========================================== -->
+
+<section class="ai-stats">
+
+    <div class="stat-card">
+
+        <h2>12,500+</h2>
+
+        <p>AI Recommendations</p>
+
+    </div>
+
+    <div class="stat-card">
+
+        <h2>150+</h2>
+
+        <p>Doctors Available</p>
+
+    </div>
+
+    <div class="stat-card">
+
+        <h2>20+</h2>
+
+        <p>Hospital Departments</p>
+
+    </div>
+
+    <div class="stat-card">
+
+        <h2>96%</h2>
+
+        <p>Recommendation Accuracy</p>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================================
+            HOW IT WORKS
+========================================== -->
+
+<section class="how-ai-works">
+
+    <h2>
+
+        How MediCore AI Works
+
+    </h2>
+
+    <p>
+
+        Four simple steps to receive an AI-powered healthcare recommendation.
+
+    </p>
+
+
+    <div class="steps">
+
+        <div class="step">
+
+            <div class="step-icon">
+
+                1️⃣
+
+            </div>
+
+            <h3>
+
+                Enter Details
+
+            </h3>
+
+            <p>
+
+                Provide symptoms or upload your health information.
+
+            </p>
+
+        </div>
+
+
+
+        <div class="step">
+
+            <div class="step-icon">
+
+                2️⃣
+
+            </div>
+
+            <h3>
+
+                AI Analysis
+
+            </h3>
+
+            <p>
+
+                Gemini AI analyzes the information intelligently.
+
+            </p>
+
+        </div>
+
+
+
+        <div class="step">
+
+            <div class="step-icon">
+
+                3️⃣
+
+            </div>
+
+            <h3>
+
+                Recommendation
+
+            </h3>
+
+            <p>
+
+                Receive the most suitable department recommendation.
+
+            </p>
+
+        </div>
+
+
+
+        <div class="step">
+
+            <div class="step-icon">
+
+                4️⃣
+
+            </div>
+
+            <h3>
+
+                Book Appointment
+
+            </h3>
+
+            <p>
+
+                Schedule your appointment with an available doctor.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% include "components/footer.html" %}
+
+{% endblock %}

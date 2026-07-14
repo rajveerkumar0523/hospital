@@ -1,41 +1,45 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'hospital/CSS/pagination.css' %}?v=1">
+
 {% if page_obj.has_other_pages %}
 
-<nav class="pagination">
+<nav class="pagination" aria-label="Page navigation">
 
-    <!-- Previous -->
     {% if page_obj.has_previous %}
-        <a href="?page={{ page_obj.previous_page_number }}"
-           class="page-btn">
+        <a
+            href="?page={{ page_obj.previous_page_number }}"
+            class="page-btn"
+            aria-label="Previous page"
+        >
             ← Previous
         </a>
     {% endif %}
 
-
-    <!-- Page Numbers -->
     {% for page_number in page_obj.paginator.page_range %}
 
         {% if page_number == page_obj.number %}
-
-            <span class="page-btn active">
+            <span class="page-btn active" aria-current="page">
                 {{ page_number }}
             </span>
-
         {% else %}
-
-            <a href="?page={{ page_number }}"
-               class="page-btn">
+            <a
+                href="?page={{ page_number }}"
+                class="page-btn"
+                aria-label="Page {{ page_number }}"
+            >
                 {{ page_number }}
             </a>
-
         {% endif %}
 
     {% endfor %}
 
-
-    <!-- Next -->
     {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}"
-           class="page-btn">
+        <a
+            href="?page={{ page_obj.next_page_number }}"
+            class="page-btn"
+            aria-label="Next page"
+        >
             Next →
         </a>
     {% endif %}

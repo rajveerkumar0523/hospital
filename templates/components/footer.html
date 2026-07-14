@@ -1,87 +1,88 @@
 {% load static %}
 
-<link
-    rel="stylesheet"
-    href="{% static 'hospital/CSS/footer.css' %}?v=2"
->
+<link rel="stylesheet" href="{% static 'hospital/CSS/footer.css' %}?v=3">
 
 <footer class="site-footer">
 
-    <div class="footer-container">
+    <div class="footer__container">
 
-        <!-- PATIENT SERVICES -->
-        <!-- PATIENT SERVICES -->
-<div class="footer-column">
-    <h3>For Patients</h3>
+        <!-- BRAND COLUMN -->
+        <div class="footer__brand">
 
-    <a href="{% url 'doctors:list' %}">Find a Doctor</a>
-    <a href="{% url 'accounts:login' %}">Patient Login</a>
-    <a href="{% url 'accounts:signup' %}">Patient Signup</a>
-    <a href="{% url 'beds:list' %}">Find Beds</a>
-    <a href="#">Emergency 24×7</a>
-    <a href="#">Medical Records</a>
-</div>
+            <a href="{% url 'home' %}" class="footer__logo">
+                <div class="footer__logo-mark">♥</div>
+                <span class="footer__logo-name">MediCore<em>+</em></span>
+            </a>
+
+            <p class="footer__tagline">
+                Smart hospital management — connecting patients, doctors, and
+                hospital teams through one seamless platform.
+            </p>
+
+            <div class="footer__socials">
+                <a href="#" class="footer__social-btn" aria-label="Twitter">𝕏</a>
+                <a href="#" class="footer__social-btn" aria-label="Facebook">f</a>
+                <a href="#" class="footer__social-btn" aria-label="Instagram">📷</a>
+                <a href="#" class="footer__social-btn" aria-label="LinkedIn">in</a>
+            </div>
+
+        </div>
+
+
+        <!-- FOR PATIENTS -->
+        <div class="footer__col">
+            <h3 class="footer__col-title">For Patients</h3>
+            <a href="{% url 'doctors:list' %}"  class="footer__link">Find a Doctor</a>
+            <a href="{% url 'accounts:login' %}" class="footer__link">Patient Login</a>
+            <a href="{% url 'accounts:signup' %}" class="footer__link">Patient Signup</a>
+            <a href="{% url 'beds:list' %}"      class="footer__link">Find Beds</a>
+            <a href="#"                           class="footer__link">Emergency 24×7</a>
+            <a href="#"                           class="footer__link">Medical Records</a>
+        </div>
 
 
         <!-- SPECIALITIES -->
-        <div class="footer-column">
-            <h3>Specialities</h3>
-
-            <a href="#">Cardiac Care</a>
-            <a href="#">Neurology</a>
-            <a href="#">Orthopaedics</a>
-            <a href="#">General Medicine</a>
-            <a href="#">Emergency Medicine</a>
-            <a href="#">More +</a>
+        <div class="footer__col">
+            <h3 class="footer__col-title">Specialities</h3>
+            <a href="#" class="footer__link">Cardiac Care</a>
+            <a href="#" class="footer__link">Neurology</a>
+            <a href="#" class="footer__link">Orthopaedics</a>
+            <a href="#" class="footer__link">General Medicine</a>
+            <a href="#" class="footer__link">Emergency Medicine</a>
+            <a href="#" class="footer__link">More +</a>
         </div>
 
 
         <!-- HOSPITAL -->
-        <div class="footer-column">
-            <h3>Hospital</h3>
-
-            <a href="#">About Us</a>
-            <a href="#">Departments</a>
-            <a href="{% url 'doctors:list' %}">Our Doctors</a>
-            <a href="#">Services</a>
-            <a href="#">Contact Us</a>
-            <a href="#">Careers</a>
-        </div>
-
-
-        <!-- QUICK LINKS -->
-        <div class="footer-column">
-            <h3>Quick Links</h3>
-
-            <a href="#">Health Articles</a>
-            <a href="#">News & Events</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms & Conditions</a>
-            <a href="#">Help & Support</a>
+        <div class="footer__col">
+            <h3 class="footer__col-title">Hospital</h3>
+            <a href="#about"                    class="footer__link">About Us</a>
+            <a href="#"                          class="footer__link">Departments</a>
+            <a href="{% url 'doctors:list' %}"  class="footer__link">Our Doctors</a>
+            <a href="#services"                  class="footer__link">Services</a>
+            <a href="#contact"                   class="footer__link">Contact Us</a>
+            <a href="#"                          class="footer__link">Careers</a>
         </div>
 
 
         <!-- STAFF PORTAL -->
-        <div class="footer-column footer-staff">
+        <div class="footer__col">
+            <h3 class="footer__col-title">For Medical Staff</h3>
 
-            <h3>For Medical Staff</h3>
-
-            <p>
-                Secure access for doctors, nurses
-                and authorized hospital staff.
+            <p class="footer__staff-desc">
+                Secure access for doctors, nurses, and authorized hospital staff.
             </p>
 
-            <a href="{% url 'accounts:staff_portal' %}" class="staff-portal-btn">
+            <a href="{% url 'accounts:staff_portal' %}" class="footer__portal-btn">
                 Staff Portal
-                <span>→</span>
+                <span class="footer__portal-arrow">→</span>
             </a>
 
-            <div class="emergency-card">
-                <span class="emergency-icon">✚</span>
-
+            <div class="footer__emergency">
+                <span class="footer__emergency-icon">✚</span>
                 <div>
-                    <small>24×7 Emergency</small>
-                    <strong>Immediate Support</strong>
+                    <div class="footer__emergency-label">24×7 Emergency</div>
+                    <div class="footer__emergency-value">Immediate Support</div>
                 </div>
             </div>
 
@@ -90,16 +91,17 @@
     </div>
 
 
-    <div class="footer-bottom">
+    <div class="footer__bottom">
 
-        <div class="footer-brand">
-            <strong>MediCore</strong>
-            <span>Smart Hospital & Emergency Management</span>
-        </div>
-
-        <p>
+        <p class="footer__copyright">
             © {% now "Y" %} MediCore. All rights reserved.
         </p>
+
+        <div class="footer__bottom-links">
+            <a href="#" class="footer__bottom-link">Privacy Policy</a>
+            <a href="#" class="footer__bottom-link">Terms of Service</a>
+            <a href="#" class="footer__bottom-link">Help</a>
+        </div>
 
     </div>
 

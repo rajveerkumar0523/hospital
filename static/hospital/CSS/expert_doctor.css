@@ -1,0 +1,673 @@
+/* ==========================================
+   EXPERT DOCTORS SECTION
+========================================== */
+
+.expert-doctors-section{
+
+    padding:100px 0;
+
+    background:#f6fbff;
+
+}
+
+.expert-wrapper{
+
+    width:min(1400px,92%);
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:340px 1fr;
+
+    gap:55px;
+
+    align-items:start;
+
+}
+
+
+/* ==========================================
+   LEFT SIDEBAR
+========================================== */
+
+.doctor-sidebar{
+
+    position:sticky;
+
+    top:110px;
+
+    background:#ffffff;
+
+    padding:35px;
+
+    border-radius:26px;
+
+    box-shadow:
+    0 15px 45px rgba(18,74,136,.08);
+
+}
+
+.section-tag{
+
+    display:inline-block;
+
+    padding:8px 18px;
+
+    background:#eaf4ff;
+
+    color:#1565d8;
+
+    border-radius:999px;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    letter-spacing:1px;
+
+}
+
+.doctor-sidebar h2{
+
+    margin:22px 0 18px;
+
+    font-size:44px;
+
+    line-height:1.15;
+
+    color:#16385f;
+
+}
+
+.doctor-sidebar p{
+
+    color:#66798e;
+
+    line-height:1.8;
+
+    margin-bottom:30px;
+
+}
+
+
+/* ==========================================
+   FILTERS
+========================================== */
+
+.sidebar-group{
+
+    margin-bottom:22px;
+
+}
+
+.sidebar-group label{
+
+    display:block;
+
+    margin-bottom:10px;
+
+    font-weight:700;
+
+    color:#16385f;
+
+}
+
+.sidebar-group input,
+.sidebar-group select{
+
+    width:100%;
+
+    height:54px;
+
+    border:1px solid #d8e8f8;
+
+    border-radius:12px;
+
+    padding:0 16px;
+
+    font-size:15px;
+
+    outline:none;
+
+    transition:.3s;
+
+}
+
+.sidebar-group input:focus,
+.sidebar-group select:focus{
+
+    border-color:#1565d8;
+
+    box-shadow:0 0 0 4px rgba(21,101,216,.12);
+
+}
+
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+.all-doctors-btn{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin-top:20px;
+
+    height:56px;
+
+    border-radius:14px;
+
+    text-decoration:none;
+
+    background:#1565d8;
+
+    color:#fff;
+
+    font-weight:700;
+
+    transition:.3s;
+
+}
+
+.all-doctors-btn:hover{
+
+    background:#0e58c1;
+
+}
+
+
+/* ==========================================
+   HELP BOX
+========================================== */
+
+.doctor-help-box{
+
+    margin-top:35px;
+
+    padding:24px;
+
+    border-radius:18px;
+
+    background:#edf6ff;
+
+}
+
+.doctor-help-box h4{
+
+    color:#16385f;
+
+    margin-bottom:10px;
+
+}
+
+.doctor-help-box p{
+
+    margin-bottom:18px;
+
+}
+
+.advisor-btn{
+
+    display:inline-flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    width:100%;
+
+    height:48px;
+
+    text-decoration:none;
+
+    border-radius:12px;
+
+    background:#16385f;
+
+    color:#fff;
+
+    font-weight:700;
+
+}
+
+
+/* ==========================================
+   RIGHT SIDE
+========================================== */
+
+.doctor-scroll-area{
+
+    min-height:100vh;
+
+}
+
+.doctor-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:30px;
+
+}
+
+/* ==========================================
+   DOCTOR CARD
+========================================== */
+
+.doctor-card{
+
+    background:#ffffff;
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    border:1px solid #e8eef6;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.06);
+
+    transition:.35s ease;
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.doctor-card:hover{
+
+    transform:translateY(-10px);
+
+    box-shadow:
+        0 25px 60px rgba(21,101,216,.15);
+
+}
+
+
+/* ==========================================
+   IMAGE
+========================================== */
+
+.doctor-image{
+
+    position:relative;
+
+    height:290px;
+
+    overflow:hidden;
+
+}
+
+.doctor-image img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    transition:.45s;
+
+}
+
+.doctor-card:hover .doctor-image img{
+
+    transform:scale(1.08);
+
+}
+
+.doctor-image::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:linear-gradient(
+        transparent 55%,
+        rgba(0,0,0,.35)
+    );
+
+}
+
+
+/* ==========================================
+   CONTENT
+========================================== */
+
+.doctor-content{
+
+    padding:28px;
+
+}
+
+.doctor-department{
+
+    display:inline-block;
+
+    padding:7px 16px;
+
+    border-radius:999px;
+
+    background:#edf6ff;
+
+    color:#1565d8;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    letter-spacing:.5px;
+
+}
+
+.doctor-content h3{
+
+    margin:18px 0 10px;
+
+    font-size:28px;
+
+    color:#16385f;
+
+}
+
+.doctor-specialization{
+
+    color:#5c738d;
+
+    line-height:1.7;
+
+    margin-bottom:25px;
+
+}
+
+
+/* ==========================================
+   INFO ROW
+========================================== */
+
+.doctor-info{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:18px;
+
+    margin-bottom:24px;
+
+}
+
+.doctor-info div{
+
+    background:#f7fbff;
+
+    border:1px solid #e4eef8;
+
+    border-radius:14px;
+
+    padding:16px;
+
+}
+
+.doctor-info small{
+
+    display:block;
+
+    color:#7d90a5;
+
+    margin-bottom:8px;
+
+}
+
+.doctor-info strong{
+
+    color:#16385f;
+
+    font-size:17px;
+
+}
+
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+.doctor-footer{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+}
+
+.doctor-fee{
+
+    font-size:28px;
+
+    font-weight:700;
+
+    color:#1565d8;
+
+}
+
+.doctor-rating{
+
+    color:#ff9800;
+
+    font-weight:700;
+
+}
+
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+.doctor-buttons{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:14px;
+
+}
+
+.profile-btn{
+
+    height:52px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:12px;
+
+    text-decoration:none;
+
+    background:#eef5ff;
+
+    color:#1565d8;
+
+    font-weight:700;
+
+    transition:.3s;
+
+}
+
+.profile-btn:hover{
+
+    background:#1565d8;
+
+    color:#fff;
+
+}
+
+.book-btn{
+
+    height:52px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:12px;
+
+    text-decoration:none;
+
+    background:#1565d8;
+
+    color:#fff;
+
+    font-weight:700;
+
+    transition:.3s;
+
+}
+
+.book-btn:hover{
+
+    background:#0e58c1;
+
+}
+
+
+/* ==========================================
+   EMPTY
+========================================== */
+
+.no-doctors{
+
+    grid-column:1/-1;
+
+    background:#fff;
+
+    border-radius:24px;
+
+    padding:80px;
+
+    text-align:center;
+
+}
+
+.no-doctors h3{
+
+    color:#16385f;
+
+}
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:1200px){
+
+    .expert-wrapper{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .doctor-sidebar{
+
+        position:relative;
+
+        top:0;
+
+    }
+
+}
+
+@media(max-width:900px){
+
+    .doctor-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+@media(max-width:600px){
+
+    .doctor-sidebar{
+
+        padding:25px;
+
+    }
+
+    .doctor-sidebar h2{
+
+        font-size:34px;
+
+    }
+
+    .doctor-image{
+
+        height:240px;
+
+    }
+
+    .doctor-content{
+
+        padding:22px;
+
+    }
+
+    .doctor-content h3{
+
+        font-size:24px;
+
+    }
+
+    .doctor-buttons{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .doctor-info{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}

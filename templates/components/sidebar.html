@@ -1,0 +1,164 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'hospital/CSS/sidebar.css' %}?v=3">
+
+<aside class="staff-sidebar" aria-label="Dashboard navigation">
+
+    <!-- USER BLOCK -->
+    <div class="staff-sidebar__user">
+        <span class="staff-sidebar__avatar" aria-hidden="true">
+            {% if user.first_name %}
+                {{ user.first_name|first|upper }}
+            {% else %}
+                {{ user.email|first|upper }}
+            {% endif %}
+        </span>
+        <div class="staff-sidebar__user-info">
+            <div class="staff-sidebar__user-name">
+                {% if user.first_name %}{{ user.get_full_name|default:user.first_name }}{% else %}Staff Member{% endif %}
+            </div>
+            <div class="staff-sidebar__user-role">
+                {% if user.role %}{{ user.role|cut:"_"|title }}{% else %}Admin{% endif %}
+            </div>
+        </div>
+        <!-- Online indicator -->
+        <span class="staff-sidebar__online-dot" title="Online" aria-hidden="true"></span>
+    </div>
+
+
+    <!-- OVERVIEW NAV -->
+    <p class="staff-sidebar__label">Overview</p>
+
+    <nav class="staff-sidebar__nav" aria-label="Overview">
+
+        {% if user.role == "DOCTOR" %}
+
+            <a
+                href="{% url 'dashboard:doctor' %}"
+                class="staff-sidebar__link {% if request.resolver_match.url_name == 'doctor' %}staff-sidebar__link--active{% endif %}"
+                aria-current="{% if request.resolver_match.url_name == 'doctor' %}page{% endif %}"
+            >
+                <span class="staff-sidebar__icon" aria-hidden="true">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                </span>
+                Dashboard
+            </a>
+
+            <a
+                href="{% url 'doctors:schedule' %}"
+                class="staff-sidebar__link {% if request.resolver_match.url_name == 'schedule' %}staff-sidebar__link--active{% endif %}"
+                aria-current="{% if request.resolver_match.url_name == 'schedule' %}page{% endif %}"
+            >
+                <span class="staff-sidebar__icon" aria-hidden="true">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                </span>
+                My Schedule
+            </a>
+
+        {% elif user.role == "LAB_TECHNICIAN" %}
+
+            <a
+                href="{% url 'laboratory:dashboard' %}"
+                class="staff-sidebar__link {% if request.resolver_match.url_name == 'dashboard' %}staff-sidebar__link--active{% endif %}"
+                aria-current="{% if request.resolver_match.url_name == 'dashboard' %}page{% endif %}"
+            >
+                <span class="staff-sidebar__icon" aria-hidden="true">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v11m0 0H5a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-4m-6 0H9"/></svg>
+                </span>
+                Lab Dashboard
+            </a>
+
+        {% elif user.role == "RECEPTIONIST" %}
+
+            <a
+                href="{% url 'reception:dashboard' %}"
+                class="staff-sidebar__link {% if request.resolver_match.url_name == 'dashboard' %}staff-sidebar__link--active{% endif %}"
+                aria-current="{% if request.resolver_match.url_name == 'dashboard' %}page{% endif %}"
+            >
+                <span class="staff-sidebar__icon" aria-hidden="true">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                </span>
+                Reception Dashboard
+            </a>
+
+        {% else %}
+
+            <a
+                href="{% url 'dashboard:admin' %}"
+                class="staff-sidebar__link {% if request.resolver_match.url_name == 'admin' %}staff-sidebar__link--active{% endif %}"
+                aria-current="{% if request.resolver_match.url_name == 'admin' %}page{% endif %}"
+            >
+                <span class="staff-sidebar__icon" aria-hidden="true">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                </span>
+                Dashboard
+            </a>
+
+        {% endif %}
+
+        <a
+            href="{% url 'doctors:list' %}"
+            class="staff-sidebar__link {% if request.resolver_match.url_name == 'list' and request.resolver_match.app_name == 'doctors' %}staff-sidebar__link--active{% endif %}"
+            aria-current="{% if request.resolver_match.url_name == 'list' and request.resolver_match.app_name == 'doctors' %}page{% endif %}"
+        >
+            <span class="staff-sidebar__icon" aria-hidden="true">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </span>
+            Doctors
+        </a>
+
+        <a
+            href="{% url 'beds:list' %}"
+            class="staff-sidebar__link {% if request.resolver_match.url_name == 'list' and request.resolver_match.app_name == 'beds' %}staff-sidebar__link--active{% endif %}"
+            aria-current="{% if request.resolver_match.url_name == 'list' and request.resolver_match.app_name == 'beds' %}page{% endif %}"
+        >
+            <span class="staff-sidebar__icon" aria-hidden="true">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>
+            </span>
+            Beds
+        </a>
+
+        <a href="{% url 'emergency:request' %}" class="staff-sidebar__link staff-sidebar__link--emergency">
+            <span class="staff-sidebar__icon" aria-hidden="true">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </span>
+            Emergency
+            <span class="staff-sidebar__badge staff-sidebar__badge--red" aria-label="Active">24/7</span>
+        </a>
+
+    </nav>
+
+
+    <!-- ACCOUNT NAV -->
+    <p class="staff-sidebar__label">Account</p>
+
+    <nav class="staff-sidebar__nav" aria-label="Account">
+
+        {% if user.role == "PATIENT" %}
+            <a href="{% url 'patients:profile' %}" class="staff-sidebar__link">
+                <span class="staff-sidebar__icon" aria-hidden="true">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                My Profile
+            </a>
+        {% elif user.is_staff %}
+            <a href="/admin/" class="staff-sidebar__link">
+                <span class="staff-sidebar__icon" aria-hidden="true">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M5.34 5.34L3.93 3.93M21 12h-2M5 12H3M19.07 19.07l-1.41-1.41M5.34 18.66l-1.41 1.41M12 19v2M12 3V1"/></svg>
+                </span>
+                Admin Panel
+            </a>
+        {% endif %}
+
+        <div class="staff-sidebar__divider"></div>
+
+        <a href="{% url 'accounts:logout' %}" class="staff-sidebar__link staff-sidebar__link--logout">
+            <span class="staff-sidebar__icon" aria-hidden="true">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            </span>
+            Logout
+        </a>
+
+    </nav>
+
+</aside>

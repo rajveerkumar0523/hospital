@@ -2,109 +2,108 @@
 {% load static %}
 
 
-{% block title %}
-MediCore | Smart Hospital
+{% block title %}MediCore | Smart Hospital{% endblock %}
+
+{% block meta_description %}
+MediCore — book appointments, find specialist doctors, check real-time bed availability, and get 24/7 emergency support all in one place.
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'hospital/CSS/home.css' %}?v=4">
 {% endblock %}
 
 
 {% block content %}
 
-<!-- ================= HERO SECTION ================= -->
+<!-- ================================================
+     HERO SECTION
+     ================================================ -->
 
 <section class="hero">
 
-    <!-- LEFT CONTENT -->
+    <!-- Ambient secondary orb -->
+    <div class="bg-orb--hero-secondary" aria-hidden="true"></div>
 
-    <div class="hero-content">
+    <!-- LEFT: CONTENT -->
+    <div class="hero__content">
 
-        <h1>
+        <span class="hero__eyebrow">
+            <span class="hero__eyebrow-dot"></span>
+            Trusted by 5,000+ Patients
+        </span>
+
+        <h1 class="hero__title">
             Smart Hospital
-            <span>Better Care for</span>
+            <span class="hero__title-highlight">Better Care for</span>
             Better Life
         </h1>
 
-
-        <p class="hero-description">
-            Advanced technology and caring professionals
-            working together for your better health.
+        <p class="hero__description">
+            Advanced technology and caring professionals working together
+            for your better health — from appointment to discharge.
         </p>
 
+        <div class="hero__cta">
 
-        <div class="hero-buttons">
+            {% if not user.is_authenticated %}
 
-           {% if not user.is_authenticated %}
+                <a href="{% url 'accounts:login' %}" class="btn btn--primary btn--lg">
+                    Book Appointment
+                </a>
 
-    <a
-        href="{% url 'accounts:login' %}"
-        class="primary-btn"
-    >
-        Book Appointment
-    </a>
+            {% elif user.role == "PATIENT" %}
 
-{% elif user.role == "PATIENT" %}
+                <a href="{% url 'doctors:list' %}" class="btn btn--primary btn--lg">
+                    Book Appointment
+                </a>
 
-    <a
-        href="{% url 'doctors:list' %}"
-        class="primary-btn"
-    >
-        Book Appointment
-    </a>
+            {% elif user.role == "DOCTOR" %}
 
-{% elif user.role == "DOCTOR" %}
+                <a href="{% url 'dashboard:doctor' %}" class="btn btn--primary btn--lg">
+                    Go to Dashboard
+                </a>
 
-    <a
-        href="{% url 'dashboard:doctor' %}"
-        class="primary-btn"
-    >
-        Go to Dashboard
-    </a>
+            {% elif user.is_staff %}
 
-{% elif user.is_staff %}
+                <a href="/admin/" class="btn btn--primary btn--lg">
+                    Admin Panel
+                </a>
 
-    <a
-        href="/admin/"
-        class="primary-btn"
-    >
-        Admin Panel
-    </a>
+            {% endif %}
 
-{% endif %}
-
-            <a href="#" class="secondary-btn">
+            <a href="#services" class="btn btn--outline btn--lg">
                 Our Services
             </a>
 
         </div>
 
-
         <!-- STATS -->
+        <div class="hero__stats reveal">
 
-        <div class="stats">
-
-            <div class="stat">
-                <h3>120+</h3>
-                <p>Doctors</p>
+            <div class="hero__stat">
+                <div class="hero__stat-number count-up" data-count="120" data-suffix="+">120+</div>
+                <div class="hero__stat-label">Specialist Doctors</div>
             </div>
 
-            <div class="divider"></div>
+            <div class="hero__stat-divider"></div>
 
-            <div class="stat">
-                <h3>5000+</h3>
-                <p>Patients</p>
+            <div class="hero__stat">
+                <div class="hero__stat-number count-up" data-count="5000" data-suffix="+">5,000+</div>
+                <div class="hero__stat-label">Patients Served</div>
             </div>
 
-            <div class="divider"></div>
+            <div class="hero__stat-divider"></div>
 
-            <div class="stat">
-                <h3>24/7</h3>
-                <p>Emergency</p>
+            <div class="hero__stat">
+                <div class="hero__stat-number">24/7</div>
+                <div class="hero__stat-label">Emergency Care</div>
             </div>
 
-            <div class="divider"></div>
+            <div class="hero__stat-divider"></div>
 
-            <div class="stat">
-                <h3>50+</h3>
-                <p>Departments</p>
+            <div class="hero__stat">
+                <div class="hero__stat-number count-up" data-count="50" data-suffix="+">50+</div>
+                <div class="hero__stat-label">Departments</div>
             </div>
 
         </div>
@@ -112,104 +111,496 @@ MediCore | Smart Hospital
     </div>
 
 
-    <!-- RIGHT IMAGE -->
+    <!-- RIGHT: IMAGE -->
+    <div class="hero__image-wrap">
 
-    <div class="hero-image">
+        <div class="hero__image-inner">
+            <div class="hero__image-bg"></div>
 
-        <img
-            src="{% static 'hospital/images/hospital.jpg' %}"
-            alt="MediCore Hospital"
-        >
+            <img
+                class="hero__image"
+                src="{% static 'hospital/images/hospital.jpg' %}"
+                alt="MediCore Hospital — modern healthcare facility"
+            >
+
+            <div class="hero__image-overlay"></div>
+        </div>
+
+        <!-- FLOATING CARDS -->
+        <div class="hero__floating-card hero__floating-card--emergency">
+            <div class="hero__floating-icon hero__floating-icon--red">🚑</div>
+            <div>
+                <div class="hero__floating-card-label">Emergency</div>
+                <div class="hero__floating-card-value">24/7 Ready</div>
+            </div>
+        </div>
+
+        <div class="hero__floating-card hero__floating-card--patients">
+            <div class="hero__floating-icon hero__floating-icon--blue">👨‍⚕️</div>
+            <div>
+                <div class="hero__floating-card-label">Available Now</div>
+                <div class="hero__floating-card-value">12 Doctors</div>
+            </div>
+        </div>
 
     </div>
 
 </section>
 
 
+<!-- ================================================
+     TRUST STRIP
+     ================================================ -->
 
-<!-- ================= SERVICES ================= -->
+<section class="trust-section">
+    <div class="trust-inner">
 
-<section class="services">
+        <div class="trust-item reveal reveal-delay-1">
+            <div class="trust-item__icon">🏆</div>
+            <div>
+                <div class="trust-item__label">Accredited</div>
+                <div class="trust-item__value">NABH Certified</div>
+            </div>
+        </div>
 
-    <div class="service-card">
+        <div class="trust-item reveal reveal-delay-2">
+            <div class="trust-item__icon">🛡️</div>
+            <div>
+                <div class="trust-item__label">Data Security</div>
+                <div class="trust-item__value">HIPAA Compliant</div>
+            </div>
+        </div>
 
-        <div class="service-icon">🩺</div>
+        <div class="trust-item reveal reveal-delay-3">
+            <div class="trust-item__icon">⭐</div>
+            <div>
+                <div class="trust-item__label">Patient Rating</div>
+                <div class="trust-item__value">4.9 / 5.0</div>
+            </div>
+        </div>
 
-        <h3>Find Doctors</h3>
+        <div class="trust-item reveal reveal-delay-4">
+            <div class="trust-item__icon">📅</div>
+            <div>
+                <div class="trust-item__label">Est.</div>
+                <div class="trust-item__value">Since 2010</div>
+            </div>
+        </div>
 
+    </div>
+</section>
+
+
+<!-- ================================================
+     ABOUT SECTION
+     ================================================ -->
+
+<section class="about-section" id="about">
+
+    <div class="section-heading">
+        <span class="section-tag">About MediCore</span>
+        <h2>Modern care for patients, doctors, and hospital teams</h2>
         <p>
-            Book appointments
-            with specialists
+            We combine specialist support, digital workflows, and 24/7 hospital
+            operations so patients get faster, safer, and more coordinated care.
         </p>
+    </div>
 
-    
-        <a href="{% url 'doctors:list' %}">
-   →
-</a>
+    <div class="about-grid">
+
+        <article class="about-card reveal reveal-delay-1">
+            <div class="about-card__icon">🏥</div>
+            <h3>Patient-first experience</h3>
+            <p>
+                Fast appointments, easier access to records, and a simple journey
+                from reception to discharge — all designed around you.
+            </p>
+        </article>
+
+        <article class="about-card reveal reveal-delay-2">
+            <div class="about-card__icon">🔗</div>
+            <h3>Connected hospital operations</h3>
+            <p>
+                Doctors, lab staff, emergency teams, and reception all work from
+                one coordinated system in real time.
+            </p>
+        </article>
+
+        <article class="about-card reveal reveal-delay-3">
+            <div class="about-card__icon">📱</div>
+            <h3>Built for every device</h3>
+            <p>
+                Responsive layouts and clear navigation keep the experience smooth
+                on phones, tablets, and desktops alike.
+            </p>
+        </article>
 
     </div>
 
+</section>
 
-    <div class="service-card">
 
-        <div class="service-icon">🛏️</div>
+<!-- ================================================
+     SERVICES SECTION
+     ================================================ -->
 
-        <h3>Find Beds</h3>
+<section class="services-section" id="services">
 
+    <div class="section-heading">
+        <span class="section-tag">Our Services</span>
+        <h2>Everything your hospital needs in one place</h2>
         <p>
-            Real-time bed
-            availability
+            From appointment booking to emergency support, MediCore keeps the
+            most important hospital services easy to reach.
         </p>
+    </div>
 
-        <a href="{% url 'beds:list' %}">→</a>
+    <div class="services-grid">
+
+        <div class="service-card reveal reveal-delay-1">
+            <div class="service-card__icon">🩺</div>
+            <h3 class="service-card__title">Find Doctors</h3>
+            <p class="service-card__desc">Book appointments with top specialists across all departments.</p>
+            <a href="{% url 'doctors:list' %}" class="service-card__arrow" aria-label="Find Doctors">→</a>
+        </div>
+
+        <div class="service-card reveal reveal-delay-2">
+            <div class="service-card__icon">🛏️</div>
+            <h3 class="service-card__title">Find Beds</h3>
+            <p class="service-card__desc">Check real-time bed availability across all wards.</p>
+            <a href="{% url 'beds:list' %}" class="service-card__arrow" aria-label="Find Beds">→</a>
+        </div>
+
+        <div class="service-card reveal reveal-delay-3">
+            <div class="service-card__icon">🚑</div>
+            <h3 class="service-card__title">Emergency</h3>
+            <p class="service-card__desc">24/7 emergency medical support, response, and coordination.</p>
+            <a href="{% url 'emergency:request' %}" class="service-card__arrow" aria-label="Emergency">→</a>
+        </div>
+
+        <div class="service-card reveal reveal-delay-4">
+            <div class="service-card__icon">📋</div>
+            <h3 class="service-card__title">Medical Records</h3>
+            <p class="service-card__desc">Access your complete digital health records securely.</p>
+            <a href="{% url 'dashboard:patient' %}" class="service-card__arrow" aria-label="Medical Records">→</a>
+        </div>
+
+        <div class="service-card reveal reveal-delay-5">
+            <div class="service-card__icon">🧪</div>
+            <h3 class="service-card__title">Lab Tests</h3>
+            <p class="service-card__desc">Accurate diagnostics reports and quick turnaround results.</p>
+            <a href="{% url 'dashboard:patient' %}" class="service-card__arrow" aria-label="Lab Tests">→</a>
+        </div>
 
     </div>
 
+</section>
 
-    <div class="service-card">
 
-        <div class="service-icon">🚑</div>
+<!-- ================================================
+     FEATURED DOCTORS SECTION
+     ================================================ -->
 
-        <h3>Emergency</h3>
+<section class="featured-doctors-section" id="featured-doctors">
 
+    <div class="section-heading reveal">
+        <span class="section-tag">Our Specialists</span>
+        <h2>Meet Our Top Doctors</h2>
         <p>
-            24/7 emergency
-            medical support
+            Experienced specialists ready to provide expert care
+            across every department.
         </p>
+    </div>
 
-        <a href="{% url 'emergency:request' %}">→</a>
+    {% if featured_doctors %}
+
+        <div class="featured-doctors-grid">
+
+            {% for doctor in featured_doctors %}
+
+                <article class="featured-doctor-card reveal reveal-delay-{{ forloop.counter }}">
+
+                    <div class="featured-doctor-card__top">
+                        <div class="featured-doctor-card__avatar">
+                            {{ doctor.user.first_name|first|upper }}{{ doctor.user.last_name|first|upper }}
+                        </div>
+                        <span class="featured-doctor-card__status">
+                            <span class="featured-doctor-card__status-dot"></span>
+                            Available
+                        </span>
+                    </div>
+
+                    <div class="featured-doctor-card__body">
+                        <span class="featured-doctor-card__dept">{{ doctor.department.name }}</span>
+                        <h3 class="featured-doctor-card__name">Dr. {{ doctor.user.get_full_name }}</h3>
+                        <p class="featured-doctor-card__spec">{{ doctor.specialization }}</p>
+
+                        <div class="featured-doctor-card__meta">
+                            <div class="featured-doctor-card__meta-item">
+                                <strong>{{ doctor.experience_years }}+</strong>
+                                <span>Yrs Exp</span>
+                            </div>
+                            <div class="featured-doctor-card__meta-divider"></div>
+                            <div class="featured-doctor-card__meta-item">
+                                <strong>₹{{ doctor.consultation_fee }}</strong>
+                                <span>Fee</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="featured-doctor-card__actions">
+                        <a href="{% url 'doctors:detail' doctor.id %}" class="btn btn--ghost btn--sm">
+                            View Profile
+                        </a>
+                        <a href="{% url 'appointments:book' doctor.id %}" class="btn btn--primary btn--sm">
+                            Book Now
+                        </a>
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+    <div class="featured-doctors-footer reveal">
+        <a href="{% url 'doctors:list' %}" class="btn btn--outline">
+            View All Doctors →
+        </a>
+    </div>
+
+</section>
+
+
+<!-- ================================================
+     TESTIMONIALS SECTION
+     ================================================ -->
+
+<section class="testimonials-section">
+
+    <div class="section-heading reveal">
+        <span class="section-tag">Patient Stories</span>
+        <h2>What our patients say</h2>
+        <p>
+            Real experiences from the people we care for every day.
+        </p>
+    </div>
+
+    <div class="testimonials-grid">
+
+        <article class="testimonial-card reveal reveal-delay-1">
+            <div class="testimonial-card__quote" aria-hidden="true">"</div>
+            <div class="testimonial-card__stars" aria-label="5 out of 5 stars">★★★★★</div>
+            <p class="testimonial-card__text">
+                "The team at MediCore was incredibly professional. From booking
+                my appointment online to getting my lab results, everything was
+                seamless and fast. I felt genuinely cared for."
+            </p>
+            <div class="testimonial-card__author">
+                <div class="testimonial-card__avatar">R</div>
+                <div>
+                    <div class="testimonial-card__name">Rahul Mehta</div>
+                    <div class="testimonial-card__role">Cardiology Patient</div>
+                </div>
+            </div>
+        </article>
+
+        <article class="testimonial-card reveal reveal-delay-2">
+            <div class="testimonial-card__quote" aria-hidden="true">"</div>
+            <div class="testimonial-card__stars" aria-label="5 out of 5 stars">★★★★★</div>
+            <p class="testimonial-card__text">
+                "I was worried about my emergency situation at midnight, but
+                MediCore's 24/7 support was there immediately. The ambulance
+                response was incredibly quick and the staff was outstanding."
+            </p>
+            <div class="testimonial-card__author">
+                <div class="testimonial-card__avatar">P</div>
+                <div>
+                    <div class="testimonial-card__name">Priya Sharma</div>
+                    <div class="testimonial-card__role">Emergency Care Patient</div>
+                </div>
+            </div>
+        </article>
+
+        <article class="testimonial-card reveal reveal-delay-3">
+            <div class="testimonial-card__quote" aria-hidden="true">"</div>
+            <div class="testimonial-card__stars" aria-label="5 out of 5 stars">★★★★★</div>
+            <p class="testimonial-card__text">
+                "Managing my father's ongoing treatment through MediCore's
+                patient dashboard is incredibly easy. All his records, reports,
+                and prescriptions are in one organised place."
+            </p>
+            <div class="testimonial-card__author">
+                <div class="testimonial-card__avatar">A</div>
+                <div>
+                    <div class="testimonial-card__name">Amit Verma</div>
+                    <div class="testimonial-card__role">Patient's Family Member</div>
+                </div>
+            </div>
+        </article>
 
     </div>
 
+</section>
 
-    <div class="service-card">
 
-        <div class="service-icon">📋</div>
+<!-- ================================================
+     FAQ SECTION
+     ================================================ -->
 
-        <h3>Medical Records</h3>
+<section class="faq-section">
 
+    <div class="section-heading reveal">
+        <span class="section-tag">FAQ</span>
+        <h2>Frequently asked questions</h2>
         <p>
-            Access your digital
-            health records
+            Everything you need to know about using MediCore.
         </p>
+    </div>
 
-        <a href="#">→</a>
+    <div class="faq-grid reveal">
+
+        <details class="faq-item">
+            <summary class="faq-item__question">
+                How do I book an appointment?
+                <span class="faq-item__icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="faq-item__answer">
+                <p>
+                    Log in to your patient account, go to <strong>Find Doctors</strong>,
+                    select your preferred specialist, and choose an available time slot.
+                    You will receive a confirmation on your dashboard immediately.
+                </p>
+            </div>
+        </details>
+
+        <details class="faq-item">
+            <summary class="faq-item__question">
+                Can I cancel or reschedule an appointment?
+                <span class="faq-item__icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="faq-item__answer">
+                <p>
+                    Yes. Go to your Patient Dashboard and find the appointment
+                    under <strong>Your Appointments</strong>. You can cancel any
+                    pending or confirmed appointment before the scheduled time.
+                </p>
+            </div>
+        </details>
+
+        <details class="faq-item">
+            <summary class="faq-item__question">
+                How do I access my lab test results?
+                <span class="faq-item__icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="faq-item__answer">
+                <p>
+                    Lab results are available in your Patient Dashboard under
+                    <strong>Lab Reports</strong> as soon as the laboratory
+                    technician uploads them. You will see the full report with
+                    result values and status.
+                </p>
+            </div>
+        </details>
+
+        <details class="faq-item">
+            <summary class="faq-item__question">
+                What should I do in a medical emergency?
+                <span class="faq-item__icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="faq-item__answer">
+                <p>
+                    Use the <strong>Emergency</strong> button on the home page or
+                    from your dashboard at any time. Our emergency team is available
+                    24/7 and will coordinate immediate response and ambulance dispatch.
+                </p>
+            </div>
+        </details>
+
+        <details class="faq-item">
+            <summary class="faq-item__question">
+                Is my medical data secure and private?
+                <span class="faq-item__icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="faq-item__answer">
+                <p>
+                    Yes. MediCore is HIPAA compliant and uses encrypted connections
+                    for all data. Your records are only accessible to you and your
+                    assigned medical team.
+                </p>
+            </div>
+        </details>
+
+        <details class="faq-item">
+            <summary class="faq-item__question">
+                How do I view my prescriptions?
+                <span class="faq-item__icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="faq-item__answer">
+                <p>
+                    All prescriptions issued by your doctor are available in
+                    your Patient Dashboard under <strong>Prescriptions</strong>.
+                    You can view diagnosis, medicines, dosage, and follow-up dates.
+                </p>
+            </div>
+        </details>
 
     </div>
 
+</section>
 
-    <div class="service-card">
 
-        <div class="service-icon">🧪</div>
+<!-- ================================================
+     CONTACT SECTION
+     ================================================ -->
 
-        <h3>Lab Tests</h3>
+<section class="contact-section" id="contact">
 
-        <p>
-            Accurate reports
-            and quick results
-        </p>
+    <div class="contact-panel">
 
-        <a href="#">→</a>
+        <div class="contact-intro">
+            <span class="section-tag">Contact Us</span>
+            <h2 class="contact-panel__title">Need help, directions, or an appointment?</h2>
+            <p class="contact-panel__desc">
+                Reach out to the MediCore team for patient support, hospital
+                guidance, or emergency coordination — we're here 24/7.
+            </p>
+        </div>
+
+        <div class="contact-cards">
+
+            <article class="contact-card">
+                <div class="contact-card__icon contact-card__icon--red">🚨</div>
+                <div class="contact-card__body">
+                    <div class="contact-card__title">Emergency</div>
+                    <p class="contact-card__desc">24/7 response and urgent care coordination</p>
+                    <a href="{% url 'emergency:request' %}" class="contact-card__link">Call support →</a>
+                </div>
+            </article>
+
+            <article class="contact-card">
+                <div class="contact-card__icon contact-card__icon--blue">📞</div>
+                <div class="contact-card__body">
+                    <div class="contact-card__title">Reception</div>
+                    <p class="contact-card__desc">Appointments, directions, and patient assistance</p>
+                    <a href="#" class="contact-card__link">Talk to reception →</a>
+                </div>
+            </article>
+
+            <article class="contact-card">
+                <div class="contact-card__icon contact-card__icon--teal">✉️</div>
+                <div class="contact-card__body">
+                    <div class="contact-card__title">Email</div>
+                    <p class="contact-card__desc">General questions and hospital information</p>
+                    <a href="mailto:support@medicore.example" class="contact-card__link">
+                        support@medicore.example →
+                    </a>
+                </div>
+            </article>
+
+        </div>
 
     </div>
 
@@ -217,6 +608,7 @@ MediCore | Smart Hospital
 
 
 {% endblock %}
+
 
 {% block footer %}
     {% include "components/footer.html" %}

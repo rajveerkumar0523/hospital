@@ -1,0 +1,274 @@
+/* ============================================================
+   MEDICORE — SIDEBAR COMPONENT  (v3 — SVG icons + polish)
+   ============================================================ */
+
+.staff-sidebar {
+    width: 260px;
+    min-height: calc(100vh - var(--navbar-h));
+    background: var(--clr-surface);
+    border-right: 1px solid var(--clr-border);
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-lg) var(--space-md);
+    gap: var(--space-xs);
+    position: sticky;
+    top: var(--navbar-h);
+    height: calc(100vh - var(--navbar-h));
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--clr-border) transparent;
+}
+
+.staff-sidebar::-webkit-scrollbar {
+    width: 4px;
+}
+.staff-sidebar::-webkit-scrollbar-thumb {
+    background: var(--clr-border);
+    border-radius: var(--radius-full);
+}
+
+
+/* ---- User block ---- */
+
+.staff-sidebar__user {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    background: var(--clr-surface-2);
+    border: 1px solid var(--clr-border);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-lg);
+    position: relative;
+    overflow: hidden;
+}
+
+.staff-sidebar__user::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--clr-primary), #38bdf8);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.staff-sidebar__avatar {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--clr-primary), #5b9bf8);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 17px;
+    font-weight: 700;
+    flex-shrink: 0;
+    box-shadow: 0 3px 12px rgba(26, 110, 245, 0.3);
+    letter-spacing: 0;
+}
+
+.staff-sidebar__user-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.staff-sidebar__user-name {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--clr-ink-900);
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.staff-sidebar__user-role {
+    font-size: 11.5px;
+    color: var(--clr-ink-300);
+    margin-top: 2px;
+}
+
+/* Online indicator */
+.staff-sidebar__online-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--clr-success);
+    flex-shrink: 0;
+    box-shadow: 0 0 0 2px var(--clr-surface-2);
+    animation: onlinePulse 3s ease infinite;
+}
+
+@keyframes onlinePulse {
+    0%, 100% { box-shadow: 0 0 0 2px var(--clr-surface-2); }
+    50%       { box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.2); }
+}
+
+
+/* ---- Section Label ---- */
+
+.staff-sidebar__label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--clr-ink-100);
+    padding: var(--space-md) var(--space-sm) var(--space-xs);
+}
+
+
+/* ---- Nav Links ---- */
+
+.staff-sidebar__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: var(--space-md);
+}
+
+.staff-sidebar__link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 10px var(--space-md);
+    border-radius: var(--radius-md);
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--clr-ink-500);
+    text-decoration: none;
+    position: relative;
+    transition:
+        background var(--ease-default),
+        color var(--ease-default),
+        border-color var(--ease-default),
+        transform var(--ease-default);
+    /* Left accent bar placeholder */
+    border-left: 3px solid transparent;
+}
+
+.staff-sidebar__link:hover {
+    background: var(--clr-surface-2);
+    color: var(--clr-ink-900);
+    transform: translateX(2px);
+}
+
+/* Active state — left border accent + tinted bg */
+.staff-sidebar__link--active {
+    background: var(--clr-primary-light);
+    color: var(--clr-primary);
+    font-weight: 600;
+    border-left-color: var(--clr-primary);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.staff-sidebar__link--active:hover {
+    background: var(--clr-primary-muted);
+    color: var(--clr-primary);
+    transform: none;
+}
+
+/* Emergency link — accent red */
+.staff-sidebar__link--emergency {
+    color: var(--clr-accent);
+}
+
+.staff-sidebar__link--emergency:hover {
+    background: var(--clr-accent-light);
+    color: var(--clr-accent);
+}
+
+/* Logout link */
+.staff-sidebar__link--logout {
+    color: var(--clr-accent);
+}
+
+.staff-sidebar__link--logout:hover {
+    background: var(--clr-accent-light);
+    color: var(--clr-accent);
+    transform: translateX(2px);
+}
+
+
+/* ---- Icon wrapper ---- */
+
+.staff-sidebar__icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    background: var(--clr-surface-3);
+    flex-shrink: 0;
+    transition:
+        background var(--ease-default),
+        color var(--ease-default),
+        transform var(--ease-bounce);
+    color: var(--clr-ink-300);
+}
+
+.staff-sidebar__link:hover .staff-sidebar__icon {
+    color: var(--clr-ink-700);
+    transform: scale(1.08);
+}
+
+.staff-sidebar__link--active .staff-sidebar__icon {
+    background: var(--clr-primary-muted);
+    color: var(--clr-primary);
+}
+
+.staff-sidebar__link--logout .staff-sidebar__icon,
+.staff-sidebar__link--emergency .staff-sidebar__icon {
+    background: var(--clr-accent-light);
+    color: var(--clr-accent);
+}
+
+
+/* ---- Inline badge (e.g. "24/7") ---- */
+
+.staff-sidebar__badge {
+    margin-left: auto;
+    padding: 2px 7px;
+    border-radius: var(--radius-full);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+}
+
+.staff-sidebar__badge--red {
+    background: var(--clr-accent-light);
+    color: var(--clr-accent);
+}
+
+.staff-sidebar__badge--blue {
+    background: var(--clr-primary-light);
+    color: var(--clr-primary);
+}
+
+
+/* ---- Divider ---- */
+
+.staff-sidebar__divider {
+    height: 1px;
+    background: var(--clr-border);
+    margin: var(--space-sm) 0;
+    border-radius: var(--radius-full);
+}
+
+
+/* ---- Responsive — collapse sidebar on tablet ---- */
+
+@media (max-width: 900px) {
+    .app-shell--dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .staff-sidebar {
+        display: none;
+    }
+}

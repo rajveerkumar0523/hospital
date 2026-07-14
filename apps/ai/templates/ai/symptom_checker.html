@@ -1,0 +1,223 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+AI Symptom Checker | MediCore
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'ai/css/symptom_checker.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="symptom-page">
+
+    <div class="page-header">
+
+        <h1>🩺 AI Symptom Checker</h1>
+
+        <p>
+            Describe your symptoms and let MediCore AI recommend the most appropriate department.
+            This tool is for informational purposes only and is not a medical diagnosis.
+        </p>
+
+    </div>
+
+
+    <div class="symptom-wrapper">
+
+        <!-- ================= FORM ================= -->
+
+        <div class="symptom-card">
+
+            <form id="symptomForm">
+
+                {% csrf_token %}
+
+                <label>Symptoms</label>
+
+                <textarea
+                    id="symptoms"
+                    name="symptoms"
+                    rows="5"
+                    placeholder="Example: Fever, headache, sore throat..."
+                    required
+                ></textarea>
+
+
+                <div class="symptom-grid">
+
+                    <button type="button" class="symptom-chip">🤒 Fever</button>
+                    <button type="button" class="symptom-chip">🤧 Cold</button>
+                    <button type="button" class="symptom-chip">😷 Cough</button>
+                    <button type="button" class="symptom-chip">🤕 Headache</button>
+                    <button type="button" class="symptom-chip">❤️ Chest Pain</button>
+                    <button type="button" class="symptom-chip">🤢 Vomiting</button>
+                    <button type="button" class="symptom-chip">🫁 Breathing Problem</button>
+                    <button type="button" class="symptom-chip">🤰 Stomach Pain</button>
+
+                </div>
+
+
+                <label>Duration</label>
+
+                <select name="duration">
+
+                    <option>1 Day</option>
+                    <option>2-3 Days</option>
+                    <option>1 Week</option>
+                    <option>More than 1 Week</option>
+
+                </select>
+
+
+                <label>Severity</label>
+
+                <select name="severity">
+
+                    <option>Mild</option>
+                    <option>Moderate</option>
+                    <option>Severe</option>
+
+                </select>
+
+
+                <button
+                    type="submit"
+                    class="analyze-btn"
+                >
+
+                    🤖 Analyze Symptoms
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+
+        <!-- ================= RESULT ================= -->
+
+        <div class="result-card">
+
+            <div id="emptyState">
+
+                <h2>🤖 AI Analysis</h2>
+
+                <p>
+
+                    Enter your symptoms and click
+                    <strong>Analyze Symptoms</strong>.
+
+                </p>
+
+            </div>
+
+
+            <div
+                id="loadingState"
+                style="display:none;"
+            >
+
+                <h2>Analyzing...</h2>
+
+            </div>
+
+
+            <div
+                id="resultState"
+                style="display:none;"
+            >
+
+                <h2 id="departmentName">
+
+                    General Medicine
+
+                </h2>
+
+                <p>
+
+                    Priority:
+                    <span id="priorityBadge">
+
+                        Medium
+
+                    </span>
+
+                </p>
+
+
+                <h3>
+
+                    Possible Conditions
+
+                </h3>
+
+                <ul id="conditionList">
+
+                </ul>
+
+
+                <h3>
+
+                    Home Care
+
+                </h3>
+
+                <ul id="careList">
+
+                </ul>
+
+
+                <h3>
+
+                    Emergency Warning
+
+                </h3>
+
+                <ul id="warningList">
+
+                </ul>
+
+
+                <div class="disclaimer">
+
+                    <strong>
+
+                        Disclaimer:
+
+                    </strong>
+
+                    <span id="disclaimer">
+
+                    </span>
+
+                </div>
+
+
+               <a
+    href="{% url 'ai:appointment_recommendation' %}"
+    class="book-btn"
+    id="continueBtn"
+    style="display:none;"
+>
+    📅 Continue to AI Appointment Recommendation
+</a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script src="{% static 'ai/js/symptom_checker.js' %}"></script>
+
+{% endblock %}

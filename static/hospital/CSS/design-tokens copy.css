@@ -1,0 +1,190 @@
+/* ============================================================
+   MEDICORE — GLOBAL DESIGN TOKENS
+   Imported first in base.html so every component can use them
+   ============================================================ */
+
+:root {
+
+    /* ---- Brand Palette ---- */
+    --clr-primary:        #1a6ef5;
+    --clr-primary-dark:   #0d4fc4;
+    --clr-primary-light:  #e8f0ff;
+    --clr-primary-muted:  #d6e4ff;
+
+    --clr-accent:         #e53935;
+    --clr-accent-light:   #fff1f0;
+
+    --clr-teal:           #0e7490;
+    --clr-teal-light:     #e0f7fa;
+
+    --clr-success:        #16a34a;
+    --clr-success-light:  #f0fdf4;
+
+    --clr-warning:        #d97706;
+    --clr-warning-light:  #fffbeb;
+
+    /* ---- Neutrals (light mode) ---- */
+    --clr-surface:        #ffffff;
+    --clr-surface-2:      #f7faff;
+    --clr-surface-3:      #f0f4fc;
+
+    --clr-border:         #e2e9f5;
+    --clr-border-strong:  #c9d4e8;
+
+    --clr-ink-900:        #0b1a38;
+    --clr-ink-700:        #1f3260;
+    --clr-ink-500:        #4a5568;
+    --clr-ink-300:        #718096;
+    --clr-ink-100:        #a0aec0;
+
+    /* ---- Page background ---- */
+    --clr-page-bg:        #f7faff;
+
+    /* ---- Typography ---- */
+    --font-sans:          'Inter', 'Outfit', sans-serif;
+    --font-display:       'Outfit', 'Inter', sans-serif;
+
+    /* ---- Spacing Scale ---- */
+    --space-xs:   4px;
+    --space-sm:   8px;
+    --space-md:   16px;
+    --space-lg:   24px;
+    --space-xl:   40px;
+    --space-2xl:  64px;
+    --space-3xl:  96px;
+
+    /* ---- Border Radius ---- */
+    --radius-sm:  8px;
+    --radius-md:  12px;
+    --radius-lg:  18px;
+    --radius-xl:  24px;
+    --radius-2xl: 32px;
+    --radius-full: 9999px;
+
+    /* ---- Shadows ---- */
+    --shadow-sm:  0 2px 8px  rgba(10, 30, 80, 0.06);
+    --shadow-md:  0 8px 28px rgba(10, 30, 80, 0.10);
+    --shadow-lg:  0 18px 50px rgba(10, 30, 80, 0.14);
+    --shadow-xl:  0 32px 80px rgba(10, 30, 80, 0.18);
+
+    /* ---- Transitions ---- */
+    --ease-default: 0.22s ease;
+    --ease-bounce:  0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    /* ---- Navbar Height ---- */
+    --navbar-h: 68px;
+}
+
+
+/* ============================================================
+   DARK MODE TOKEN OVERRIDES
+   Applied when <html data-theme="dark"> is set
+   ============================================================ */
+
+[data-theme="dark"] {
+
+    /* Surfaces */
+    --clr-surface:        #111827;
+    --clr-surface-2:      #0d1117;
+    --clr-surface-3:      #1c2333;
+
+    /* Borders */
+    --clr-border:         #1e2d45;
+    --clr-border-strong:  #2d3f5e;
+
+    /* Ink / Text */
+    --clr-ink-900:        #f0f6ff;
+    --clr-ink-700:        #c9d8f0;
+    --clr-ink-500:        #8fa3c0;
+    --clr-ink-300:        #607394;
+    --clr-ink-100:        #3d5070;
+
+    /* Brand tints — darkened for dark bg */
+    --clr-primary-light:  #0f2448;
+    --clr-primary-muted:  #0a1c38;
+
+    --clr-accent-light:   #2d0d0d;
+    --clr-teal-light:     #042430;
+    --clr-success-light:  #061a0e;
+    --clr-warning-light:  #1a1200;
+
+    /* Page background */
+    --clr-page-bg:        #0d1117;
+
+    /* Shadows — more visible on dark */
+    --shadow-sm:  0 2px 8px  rgba(0, 0, 0, 0.30);
+    --shadow-md:  0 8px 28px rgba(0, 0, 0, 0.40);
+    --shadow-lg:  0 18px 50px rgba(0, 0, 0, 0.50);
+    --shadow-xl:  0 32px 80px rgba(0, 0, 0, 0.60);
+}
+
+
+/* ============================================================
+   GLOBAL DARK MODE OVERRIDES
+   Handle cases where hard-coded colors are used in components
+   ============================================================ */
+
+[data-theme="dark"] body {
+    background: var(--clr-page-bg);
+    color: var(--clr-ink-700);
+}
+
+/* Navbar dark adaptation */
+[data-theme="dark"] .navbar {
+    background: rgba(17, 24, 39, 0.95);
+    border-bottom-color: var(--clr-border);
+}
+
+/* Sidebar dark adaptation */
+[data-theme="dark"] .staff-sidebar {
+    background: var(--clr-surface);
+    border-right-color: var(--clr-border);
+}
+
+/* Hero white bg override */
+[data-theme="dark"] .hero {
+    background: var(--clr-surface);
+}
+
+/* Trust section dark override */
+[data-theme="dark"] .trust-section {
+    background: linear-gradient(135deg, #0a1628 0%, #0a0f1e 100%);
+}
+
+/* Footer dark override */
+[data-theme="dark"] .site-footer {
+    background: #080d16;
+}
+
+/* Card whites */
+[data-theme="dark"] .form-card,
+[data-theme="dark"] .about-card,
+[data-theme="dark"] .service-card,
+[data-theme="dark"] .contact-card,
+[data-theme="dark"] .dash-stat-card,
+[data-theme="dark"] .dash-action-card,
+[data-theme="dark"] .dash-panel,
+[data-theme="dark"] .card {
+    background: var(--clr-surface);
+    border-color: var(--clr-border);
+}
+
+/* Input fields */
+[data-theme="dark"] .form-input,
+[data-theme="dark"] .form-select,
+[data-theme="dark"] .form-textarea {
+    background: var(--clr-surface-3);
+    border-color: var(--clr-border);
+    color: var(--clr-ink-900);
+}
+
+/* Smooth theme transition */
+html {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+*, *::before, *::after {
+    transition-property: background-color, border-color, color;
+    transition-duration: 0.25s;
+    transition-timing-function: ease;
+}

@@ -1,0 +1,767 @@
+/* ==========================================
+   AI APPOINTMENT RECOMMENDATION
+   P2A
+========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+.ai-page{
+
+    min-height:100vh;
+
+    background:#f5f8fc;
+
+    padding-bottom:70px;
+
+}
+
+
+/* ==========================================
+                HERO
+========================================== */
+
+.ai-hero{
+
+    background:linear-gradient(
+        135deg,
+        #0f5ef7,
+        #3578ff
+    );
+
+    color:#fff;
+
+    padding:70px 20px;
+
+}
+
+.ai-hero-content{
+
+    max-width:900px;
+
+    margin:auto;
+
+    text-align:center;
+
+}
+
+.ai-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    background:rgba(255,255,255,.18);
+
+    padding:10px 18px;
+
+    border-radius:50px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    backdrop-filter:blur(12px);
+
+}
+
+.ai-hero h1{
+
+    margin-top:22px;
+
+    font-size:48px;
+
+    font-weight:700;
+
+    line-height:1.2;
+
+}
+
+.ai-hero p{
+
+    margin-top:20px;
+
+    font-size:18px;
+
+    line-height:1.8;
+
+    opacity:.95;
+
+}
+
+
+/* ==========================================
+            MAIN CONTAINER
+========================================== */
+
+.ai-container{
+
+    max-width:1400px;
+
+    margin:50px auto;
+
+    display:grid;
+
+    grid-template-columns:1.1fr .9fr;
+
+    gap:35px;
+
+    padding:0 25px;
+
+}
+
+
+/* ==========================================
+                FORM CARD
+========================================== */
+
+.ai-form-card{
+
+    background:#fff;
+
+    border-radius:22px;
+
+    padding:35px;
+
+    box-shadow:
+        0 20px 45px
+        rgba(0,0,0,.08);
+
+}
+
+.card-heading{
+
+    margin-bottom:30px;
+
+}
+
+.card-heading h2{
+
+    font-size:30px;
+
+    color:#1d2b45;
+
+}
+
+.card-heading p{
+
+    margin-top:8px;
+
+    color:#707d92;
+
+}
+
+
+/* ==========================================
+                FORM
+========================================== */
+
+.form-group{
+
+    margin-bottom:24px;
+
+}
+
+.form-group label{
+
+    display:block;
+
+    margin-bottom:10px;
+
+    font-weight:600;
+
+    color:#2f405d;
+
+}
+
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+
+    width:100%;
+
+    border:1px solid #dce5f0;
+
+    border-radius:14px;
+
+    padding:15px 18px;
+
+    outline:none;
+
+    font-size:15px;
+
+    transition:.25s;
+
+    background:#fff;
+
+}
+
+
+.form-group textarea{
+
+    resize:none;
+
+}
+
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+
+    border-color:#2563eb;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(37,99,235,.12);
+
+}
+
+
+/* ==========================================
+            SYMPTOM GRID
+========================================== */
+
+.symptom-grid{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:12px;
+
+}
+
+
+/* Chips style
+   Animation next part */
+
+.symptom-chip{
+
+    border:none;
+
+    background:#eef4ff;
+
+    color:#2353d7;
+
+    padding:11px 18px;
+
+    border-radius:50px;
+
+    cursor:pointer;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    transition:.25s;
+
+}
+
+
+/* ==========================================
+                BUTTON
+========================================== */
+
+.ai-btn{
+
+    width:100%;
+
+    margin-top:15px;
+
+    border:none;
+
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #3b82f6
+    );
+
+    color:#fff;
+
+    padding:18px;
+
+    border-radius:15px;
+
+    font-size:17px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    box-shadow:
+        0 15px 35px
+        rgba(37,99,235,.25);
+
+}
+
+.ai-btn:hover{
+
+    transform:translateY(-3px);
+
+}
+
+
+/* ==========================================
+        RIGHT CARD
+========================================== */
+
+.recommendation-card{
+
+    background:#fff;
+
+    border-radius:22px;
+
+    padding:35px;
+
+    box-shadow:
+        0 20px 45px
+        rgba(0,0,0,.08);
+
+    min-height:650px;
+
+}
+
+
+/* ==========================================
+            EMPTY STATE
+========================================== */
+
+.empty-state{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    height:100%;
+
+    text-align:center;
+
+}
+
+.empty-icon{
+
+    width:120px;
+
+    height:120px;
+
+    border-radius:50%;
+
+    background:#edf4ff;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:60px;
+
+    margin-bottom:25px;
+
+}
+
+.empty-state h2{
+
+    font-size:32px;
+
+    color:#22304a;
+
+}
+
+.empty-state p{
+
+    margin-top:15px;
+
+    max-width:360px;
+
+    line-height:1.8;
+
+    color:#6d788d;
+
+}
+
+
+/* ==========================================
+        LOADING STATE
+========================================== */
+
+.loading-state{
+
+    height:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+}
+
+.loader{
+
+    width:75px;
+
+    height:75px;
+
+    border:7px solid #e8eefb;
+
+    border-top:7px solid #2563eb;
+
+    border-radius:50%;
+
+    animation:spin 1s linear infinite;
+
+    margin-bottom:25px;
+
+}
+
+.loading-state h3{
+
+    color:#1f2b45;
+
+    margin-bottom:10px;
+
+}
+
+.loading-state p{
+
+    color:#6d788d;
+
+}
+
+@keyframes spin{
+
+    100%{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+
+/* ==========================================
+            RESULT CARD
+========================================== */
+
+.result-state{
+
+    animation:fadeUp .5s ease;
+
+}
+
+.result-header{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    margin-bottom:35px;
+
+}
+
+.result-header span{
+
+    background:#edf4ff;
+
+    color:#2563eb;
+
+    padding:10px 22px;
+
+    border-radius:50px;
+
+    font-weight:600;
+
+}
+
+.result-item{
+
+    margin-bottom:28px;
+
+    padding:20px;
+
+    border:1px solid #edf2fb;
+
+    border-radius:16px;
+
+    transition:.3s;
+
+}
+
+.result-item:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 12px 30px rgba(0,0,0,.06);
+
+}
+
+.result-item h4{
+
+    color:#7a8598;
+
+    margin-bottom:10px;
+
+    font-size:14px;
+
+}
+
+.result-item h3{
+
+    color:#1d2d47;
+
+    font-size:24px;
+
+}
+
+.result-item p{
+
+    color:#667085;
+
+    line-height:1.8;
+
+}
+
+
+/* ==========================================
+        PRIORITY BADGE
+========================================== */
+
+#priorityBadge{
+
+    display:inline-block;
+
+    padding:10px 22px;
+
+    border-radius:50px;
+
+    background:#fff4d8;
+
+    color:#b77900;
+
+    font-weight:700;
+
+}
+
+
+/* Future Classes */
+
+.priority-low{
+
+    background:#e8f8ee !important;
+
+    color:#14834d !important;
+
+}
+
+.priority-medium{
+
+    background:#fff4d8 !important;
+
+    color:#b77900 !important;
+
+}
+
+.priority-high{
+
+    background:#ffe3e3 !important;
+
+    color:#d92d20 !important;
+
+}
+
+
+/* ==========================================
+            BOOK BUTTON
+========================================== */
+
+.book-btn{
+
+    width:100%;
+
+    margin-top:20px;
+
+    border:none;
+
+    border-radius:15px;
+
+    padding:18px;
+
+    background:#16a34a;
+
+    color:#fff;
+
+    font-size:17px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.book-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 15px 35px rgba(22,163,74,.25);
+
+}
+
+
+/* ==========================================
+        SYMPTOM CHIPS
+========================================== */
+
+.symptom-chip:hover{
+
+    background:#2563eb;
+
+    color:#fff;
+
+}
+
+.symptom-chip.active{
+
+    background:#2563eb;
+
+    color:#fff;
+
+    transform:scale(1.05);
+
+    box-shadow:0 10px 25px rgba(37,99,235,.25);
+
+}
+
+
+/* ==========================================
+            ANIMATION
+========================================== */
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+
+/* ==========================================
+            RESPONSIVE
+========================================== */
+
+@media(max-width:1100px){
+
+    .ai-container{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .ai-hero{
+
+        padding:55px 20px;
+
+    }
+
+    .ai-hero h1{
+
+        font-size:34px;
+
+    }
+
+    .ai-hero p{
+
+        font-size:16px;
+
+    }
+
+    .ai-form-card,
+    .recommendation-card{
+
+        padding:25px;
+
+    }
+
+    .symptom-grid{
+
+        gap:10px;
+
+    }
+
+    .symptom-chip{
+
+        width:100%;
+
+        text-align:center;
+
+    }
+
+}
+
+@media(max-width:480px){
+
+    .ai-container{
+
+        padding:0 15px;
+
+    }
+
+    .ai-form-card,
+    .recommendation-card{
+
+        border-radius:18px;
+
+        padding:20px;
+
+    }
+
+    .card-heading h2{
+
+        font-size:24px;
+
+    }
+
+    .empty-state h2{
+
+        font-size:24px;
+
+    }
+
+}

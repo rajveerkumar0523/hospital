@@ -1,84 +1,88 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
+        name="description"
+        content="{% block meta_description %}MediCore — smart hospital and emergency management. Book appointments, find doctors, check bed availability, and get 24/7 emergency support.{% endblock %}"
     >
+    <meta name="theme-color" content="#1a6ef5">
 
-    <title>
-        {% block title %}MediCore{% endblock %}
-    </title>
+    <title>{% block title %}MediCore{% endblock %}</title>
 
-    <!-- MAIN CSS -->
+    <link rel="icon" type="image/svg+xml" href="{% static 'hospital/images/favicon.svg' %}">
+{% block chatbot_css %}
+<link
+rel="stylesheet"
+href="{% static 'ai/css/chatbot.css' %}">
+{% endblock %}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;1,14..32,400&family=Outfit:wght@400;500;600;700;800&display=swap"
         rel="stylesheet"
-        href="{% static 'hospital/CSS/home.css' %}?v=25"
     >
 
-    <!-- PAGE SPECIFIC CSS -->
+    <link rel="stylesheet" href="{% static 'hospital/CSS/design-tokens.css' %}?v=4">
+    <link rel="stylesheet" href="{% static 'hospital/CSS/base.css' %}?v=4">
+    <link rel="stylesheet" href="{% static 'hospital/CSS/dashboard-common.css' %}?v=3">
+    <link rel="stylesheet" href="{% static 'hospital/CSS/navbar.css' %}?v=4">
+    <link rel="stylesheet" href="{% static 'hospital/CSS/animations.css' %}?v=4">
+    <link rel="stylesheet" href="{% static 'hospital/CSS/pagination.css' %}?v=4">
+
+    <!-- Apply saved theme before first paint to prevent flash -->
+    <script>
+        (function() {
+            try {
+                var t = localStorage.getItem('medicore-theme');
+                if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+            } catch(e) {}
+        })();
+    </script>
+
     {% block extra_css %}
     {% endblock %}
 
 </head>
 
-<body>
+<body class="page-fade-in">
+
+    <!-- Scroll progress indicator -->
+    <div class="scroll-progress" id="scrollProgressBar" aria-hidden="true"></div>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
     {% block navbar %}
     {% include "components/navbar.html" %}
-{% endblock %}
+    {% endblock %}
 
+    <div class="app-shell{% block shell_modifier %}{% endblock %}">
 
-    <main>
-        {% block content %}
+        {% block sidebar %}
         {% endblock %}
-    </main>
 
+        <main id="main-content">
+            {% include "components/messages.html" %}
+            {% block content %}
+            {% endblock %}
+        </main>
 
-    <!-- USER DROPDOWN JAVASCRIPT -->
-    <script>
-        function toggleUserMenu() {
-
-            const dropdown =
-                document.getElementById("userDropdown");
-
-            if (dropdown) {
-                dropdown.classList.toggle("show");
-            }
-        }
-
-
-        document.addEventListener(
-            "click",
-            function (event) {
-
-                const userMenu =
-                    document.querySelector(".user-menu");
-
-                const dropdown =
-                    document.getElementById("userDropdown");
-
-                if (
-                    userMenu &&
-                    dropdown &&
-                    !userMenu.contains(event.target)
-                ) {
-                    dropdown.classList.remove("show");
-                }
-            }
-        );
-    </script>
+    </div>
 
     {% block footer %}
     {% endblock %}
 
+    <script src="{% static 'hospital/JS/main.js' %}?v=3"></script>
+
     {% block extra_js %}
     {% endblock %}
+
+{% include "ai/components/ai_widget.html" %}
+<script src="{% static 'ai/js/chatbot.js' %}"></script>
 
 </body>
 

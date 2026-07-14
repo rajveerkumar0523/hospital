@@ -29,51 +29,15 @@ def home_view(request):
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-
-    path(
-        "",
-        home_view,
-        name="home",
-    ),
-
-    path(
-        "accounts/",
-        include("apps.accounts.urls"),
-    ),
-
-    path(
-        "patients/",
-        include("apps.patients.urls"),
-    ),
-
-    path(
-        "dashboard/",
-        include("apps.dashboard.urls"),
-    ),
-
-    path(
-        "doctors/",
-        include("apps.doctors.urls"),
-    ),
-
-    path(
-        "appointments/",
-        include("apps.appointments.urls"),
-    ),
-    path(
-    "beds/",
-    include("apps.beds.urls"),
-),
-  path(
-    "emergency/",
-    include("apps.emergency.urls"),
-),
-path(
-    "laboratory/",
-    include("apps.laboratory.urls"),
-),
-path(
-    "reception/",
-    include("apps.reception.urls"),
-),
+    path("", home_view,name="home",),
+    path("accounts/",include("apps.accounts.urls"),),
+    path("patients/",include("apps.patients.urls"),),
+    path("dashboard/",include("apps.dashboard.urls"),),
+    path("doctors/",include("apps.doctors.urls"),),
+    path("appointments/",include("apps.appointments.urls"),),
+    path("beds/",include("apps.beds.urls"),),
+    path("emergency/",include("apps.emergency.urls"),),
+    path("laboratory/",include("apps.laboratory.urls"),),
+    path("reception/",include("apps.reception.urls"),),
+    path("ai/", include("apps.ai.urls")),
 ]
