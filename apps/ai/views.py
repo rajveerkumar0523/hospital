@@ -187,6 +187,7 @@ def appointment_recommendation_api(request):
             doctor.specialization
 
         )
+        result["doctor_id"] = doctor.id
 
     else:
 
@@ -197,6 +198,7 @@ def appointment_recommendation_api(request):
         )
 
         result["specialization"] = "-"
+        result["doctor_id"] = None
 
     return JsonResponse(
 

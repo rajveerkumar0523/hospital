@@ -27,6 +27,37 @@ class Department(models.Model):
         return self.name
 
 
+class HospitalBranch(models.Model):
+
+    name = models.CharField(
+        max_length=100,
+    )
+
+    city = models.CharField(
+        max_length=100,
+    )
+
+    address = models.TextField()
+
+    phone = models.CharField(
+        max_length=15,
+        blank=True,
+    )
+
+    is_active = models.BooleanField(
+        default=True,
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    class Meta:
+        ordering = ["city", "name"]
+
+    def __str__(self):
+        return f"{self.name} ({self.city})"
+
 class DoctorProfile(models.Model):
 
     class Status(models.TextChoices):
@@ -44,6 +75,14 @@ class DoctorProfile(models.Model):
         Department,
         on_delete=models.PROTECT,
         related_name="doctors",
+    )
+
+    branch = models.ForeignKey(
+        HospitalBranch,
+        on_delete=models.PROTECT,
+        related_name="doctors",
+        null=True,
+        blank=True,
     )
 
     doctor_id = models.CharField(
@@ -91,6 +130,17 @@ class DoctorProfile(models.Model):
     updated_at = models.DateTimeField(
         auto_now=True,
     )
+
+    class Gender(models.TextChoices):
+        MALE = "Male", "Male"
+        FEMALE = "Female", "Female"
+
+    gender = models.CharField(
+        max_length=10,
+        choices=Gender.choices,
+        default=Gender.MALE,
+    )
+
 
     def save(self, *args, **kwargs):
         if not self.doctor_id:

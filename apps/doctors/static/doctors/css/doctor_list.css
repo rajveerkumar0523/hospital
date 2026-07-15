@@ -521,3 +521,16 @@
         width: 100%;
     }
 }
+
+/*filter city*/
+.doctor-city{
+
+    margin-top:8px;
+
+    font-size:14px;
+
+    color:#64748b;
+
+    font-weight:500;
+
+}

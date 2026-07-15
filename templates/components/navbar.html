@@ -57,15 +57,16 @@ All icons: 18×18 viewBox, stroke-based, aria-hidden on the wrapper.
 
         <nav class="navbar__nav" id="navLinks" aria-label="Main navigation">
 
-            <a href="{% url 'home' %}" class="navbar__nav-link navbar__nav-link--active">
+       <a href="{% url 'home' %}"
+   class="navbar__nav-link {% if request.path == '/' %}navbar__nav-link--active{% endif %}">
                 <svg class="navbar__nav-icon" aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                 Home
             </a>
 
-            <a
+    <a
     href="{% url 'ai:home' %}"
     id="openAIChat"
-    class="navbar__nav-link"
+    class="navbar__nav-link {% if request.resolver_match.namespace == 'ai' %}navbar__nav-link--active{% endif %}"
 >
      AI Assistant
 </a>
@@ -80,7 +81,8 @@ All icons: 18×18 viewBox, stroke-based, aria-hidden on the wrapper.
                 Services
             </a>
 
-            <a href="{% url 'doctors:list' %}" class="navbar__nav-link">
+            <a href="{% url 'doctors:list' %}"
+   class="navbar__nav-link {% if request.resolver_match.namespace == 'doctors' %}navbar__nav-link--active{% endif %}">
                 <svg class="navbar__nav-icon" aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                 Doctors
             </a>

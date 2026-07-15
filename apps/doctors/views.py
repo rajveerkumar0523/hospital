@@ -9,6 +9,7 @@ from .models import (
     Department,
     DoctorAvailability,
     DoctorProfile,
+    HospitalBranch
 )
 
 
@@ -16,6 +17,11 @@ def doctor_list(request):
     departments = Department.objects.filter(
         is_active=True
     )
+    branches = HospitalBranch.objects.filter(
+        is_active=True
+    ).order_by("city")
+
+
 
     doctors = (
         DoctorProfile.objects
@@ -25,14 +31,21 @@ def doctor_list(request):
         .select_related(
             "user",
             "department",
+            "branch",
         )
     )
 
     department_id = request.GET.get("department")
+    branch_id = request.GET.get("branch")
 
     if department_id:
         doctors = doctors.filter(
             department_id=department_id
+        )
+
+    if branch_id:
+        doctors = doctors.filter(
+            branch_id=branch_id
         )
 
     return render(
@@ -41,8 +54,11 @@ def doctor_list(request):
         {
             "doctors": doctors,
             "departments": departments,
+            "branches": branches,
             "selected_department": department_id,
-        },
+            "selected_branch": branch_id,
+
+        }
     )
 
 
@@ -240,3 +256,22 @@ def delete_schedule(request, schedule_id):
     )
 
     return redirect("doctors:schedule")
+
+
+
+from .models import DoctorProfile
+def doctor_profile(request, id):
+    doctor = get_object_or_404(DoctorProfile, id=id)
+
+    availability = doctor.availabilities.filter(
+        is_active=True
+    )
+
+    return render(
+        request,
+        "doctors/profile.html",
+        {
+            "doctor": doctor,
+            "availability": availability,
+        },
+    )

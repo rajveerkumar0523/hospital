@@ -72,13 +72,15 @@ def login_view(request):
             "",
         )
 
+
+        #check username and password
         # user = authenticate(
         #     request,
         #     email=email,
         #     password=password,
         # )
 
-
+        # check username only
         if settings.DEBUG:
             user = (
                 CustomUser.objects

@@ -149,6 +149,8 @@ function showResult(result) {
     ).innerText =
         result.doctor || "No Doctor Available";
 
+    bookBtn.dataset.doctorId = result.doctor_id;
+
     document.getElementById(
         "aiReason"
     ).innerText =
@@ -206,6 +208,13 @@ const bookBtn = document.querySelector(".book-btn");
 
 bookBtn.addEventListener("click", () => {
 
-    window.location.href = "/appointments/";
+    const doctorId = bookBtn.dataset.doctorId;
+
+    if (!doctorId) {
+        alert("No doctor available.");
+        return;
+    }
+
+    window.location.href = `/appointments/book/${doctorId}/`;
 
 });

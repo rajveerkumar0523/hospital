@@ -64,7 +64,40 @@ Find a Doctor | MediCore
                         {% endfor %}
                     </select>
                 </div>
+                <div class="filter-field">
 
+    <label for="branch">
+        Filter by City
+    </label>
+
+    <select
+        name="branch"
+        id="branch"
+    >
+
+        <option value="">
+            All Cities
+        </option>
+
+        {% for branch in branches %}
+
+            <option
+                value="{{ branch.id }}"
+
+                {% if selected_branch == branch.id|stringformat:"s" %}
+                    selected
+                {% endif %}
+            >
+
+                {{ branch.city }}
+
+            </option>
+
+        {% endfor %}
+
+    </select>
+
+</div>
 
                 <button
                     type="submit"
@@ -74,7 +107,7 @@ Find a Doctor | MediCore
                 </button>
 
 
-                {% if selected_department %}
+               {% if selected_department or selected_branch %}
                     <a
                         href="{% url 'doctors:list' %}"
                         class="clear-filter"
@@ -138,9 +171,16 @@ Find a Doctor | MediCore
                                 {{ doctor.department.name }}
                             </span>
 
+
                             <h3>
                                 Dr. {{ doctor.user.get_full_name }}
                             </h3>
+
+                            <p class="doctor-city">
+
+    City : {{ doctor.branch.city }}
+
+</p>
 
                             <p class="specialization">
                                 {{ doctor.specialization }}
@@ -193,7 +233,7 @@ Find a Doctor | MediCore
                         <div class="doctor-actions">
 
                             <a
-                                href="#"
+                                href="{% url 'doctors:doctor_profile' doctor.id %}"
                                 class="profile-button"
                             >
                                 View Profile
@@ -223,8 +263,8 @@ Find a Doctor | MediCore
                 <h3>No doctors found</h3>
 
                 <p>
-                    No available doctors match the selected
-                    department.
+                   No available doctors match your selected
+department or city.
                 </p>
 
                 <a href="{% url 'doctors:list' %}">

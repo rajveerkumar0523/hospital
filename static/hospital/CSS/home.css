@@ -1294,6 +1294,13 @@
 }
 
 .featured-doctor-card__actions .btn {
+    margin-top:20px;
+
+padding:14px 30px;
+
+border:1px solid white;
+
+border-radius:30px;
     flex: 1;
     justify-content: center;
 }
@@ -1556,4 +1563,275 @@
     .faq-item__answer {
         padding: 0 var(--space-lg) var(--space-md);
     }
+}
+
+
+/*center*/
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+
+background:linear-gradient(135deg,#2d5f96,#6ea7c7,#dce8ea);
+
+}
+
+.centre-section{
+
+     background:
+        radial-gradient(circle at top right,
+            rgba(255,255,255,.35) 0%,
+            rgba(255,255,255,.08) 20%,
+            transparent 45%),
+       linear-gradient(
+135deg,
+#2c6aa4 0%,
+#5d9fc7 45%,
+#8bbfd7 75%,
+#d8e4df 100%);
+
+    min-height: 100vh;
+
+width:100%;
+
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+padding:80px 8%;
+
+
+color:white;
+
+}
+
+.left{
+
+width:45%;
+
+}
+
+.right{
+
+width:55%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+position:relative;
+
+}
+
+.left h1{
+
+font-size:60px;
+font-weight:500;
+margin-bottom:20px;
+
+}
+
+.left p{
+
+opacity:.9;
+margin-bottom:30px;
+
+}
+
+.accordion{
+
+margin-top:30px;
+
+}
+
+.item{
+
+border-bottom:1px solid rgba(255,255,255,.4);
+
+padding:20px 0;
+
+}
+
+.title{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+cursor:pointer;
+
+}
+
+.title span{
+
+font-size:22px;
+
+}
+
+.toggle{
+
+background:none;
+border:none;
+color:white;
+font-size:30px;
+cursor:pointer;
+
+}
+
+.content{
+
+display:none;
+
+padding-top:20px;
+
+animation:fade .3s;
+
+}
+
+.item.active .content{
+
+display:block;
+
+}
+
+.btnn{
+
+display:inline-block;
+
+margin-top:20px;
+
+padding:14px 30px;
+
+border:1px solid white;
+
+border-radius:30px;
+
+color:black;
+
+text-decoration:none;
+
+transition:.3s;
+
+}
+
+.btnn:hover{
+
+background:white;
+color:#2d5f96;
+
+}
+
+.map{
+
+ width:720px;
+    max-width:none;
+    filter: brightness(2.2);
+    position: relative;
+    left: 80px;
+
+
+}
+
+.marker{
+
+position:absolute;
+
+background:white;
+
+color:#2d5f96;
+
+padding:5px 12px;
+
+border-radius:20px;
+
+font-size:14px;
+
+font-weight:600;
+
+box-shadow:0 10px 20px rgba(0,0,0,.15);
+
+}
+
+.ranchi{
+
+top:57%;
+left:42%;
+
+}
+
+.hazaribagh{
+
+top:12%;
+left:47%;
+
+}
+
+.dhanbad{
+
+top:41%;
+right:3%;
+
+}
+
+.jamshedpur{
+
+bottom:30%;
+right:0%;
+
+}
+
+@keyframes fade{
+
+from{
+
+opacity:0;
+transform:translateY(-10px);
+
+}
+
+to{
+
+opacity:1;
+transform:translateY(0);
+
+}
+
+}
+
+@media(max-width:992px){
+
+.centre-section{
+    margin-bottom: 0;
+    padding-bottom: 0;
+
+flex-direction:column;
+
+}
+
+.left,
+.right{
+    /*display: flex;*/
+    /*justify-content: flex-end;*/
+    /*align-items: center;*/
+    /*padding-left: 0px;*/
+
+width:100%;
+
+}
+
+.left{
+
+margin-bottom:50px;
+
+}
+
+.left h1{
+
+font-size:45px;
+
+}
+
 }

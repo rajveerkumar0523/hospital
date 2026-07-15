@@ -30,4 +30,9 @@ urlpatterns = [
         views.delete_schedule,
         name="delete_schedule",
     ),
+    path(
+        "doctor/<int:id>/",
+        views.doctor_profile,
+        name="doctor_profile",
+    )
 ]

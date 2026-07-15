@@ -1,0 +1,420 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'doctors/css/profile.css' %}?v=2"
+>
+{% endblock %}
+
+
+
+{% block title %}
+Dr. {{ doctor.user.get_full_name }} | Medicare
+{% endblock %}
+
+{% block content %}
+
+<section class="doctor-profile-section">
+
+    <div class="container">
+
+        <div class="profile-card">
+
+            <!-- Left -->
+            <div class="doctor-image">
+
+  {% if doctor.gender == "Female" %}
+    <img src="{% static 'doctors/images/female.png' %}"
+         alt="Doctor">
+{% else %}
+    <img src="{% static 'doctors/images/male.png' %}"
+         alt="Doctor">
+{% endif %}
+
+                {% if doctor.status == "AVAILABLE" %}
+                    <span class="status available">
+                        ● Available Today
+                    </span>
+                {% elif doctor.status == "ON_LEAVE" %}
+                    <span class="status leave">
+                        ● On Leave
+                    </span>
+                {% else %}
+                    <span class="status inactive">
+                        ● Inactive
+                    </span>
+                {% endif %}
+
+            </div>
+
+            <!-- Right -->
+
+            <div class="doctor-details">
+
+                <div class="department">
+
+                    {{ doctor.department.name }}
+
+                </div>
+
+                <h1>
+
+                    Dr. {{ doctor.user.get_full_name }}
+
+                </h1>
+
+                <h4>
+
+                    {{ doctor.specialization }}
+
+                </h4>
+
+                <div class="stats">
+
+                    <div class="stat">
+
+                        <h3>{{ doctor.experience_years }}+</h3>
+
+                        <span>Years Experience</span>
+
+                    </div>
+
+                    <div class="stat">
+
+                        <h3>₹{{ doctor.consultation_fee }}</h3>
+
+                        <span>Consultation Fee</span>
+
+                    </div>
+
+                    <div class="stat">
+
+                        <h3>★★★★★</h3>
+
+                        <span>Patient Rating</span>
+
+                    </div>
+
+                </div>
+
+                <div class="info-grid">
+
+                    <div class="info">
+
+                        <span>Qualification</span>
+
+                        <p>
+
+                            {{ doctor.qualification }}
+
+                        </p>
+
+                    </div>
+
+                    <div class="info">
+
+                        <span>Hospital</span>
+
+                        <p>
+
+                            {{ doctor.branch.name }}
+
+                        </p>
+
+                    </div>
+
+                    <div class="info">
+
+                        <span>City</span>
+
+                        <p>
+
+                            {{ doctor.branch.city }}
+
+                        </p>
+
+                    </div>
+
+                    <div class="info">
+
+                        <span>Doctor ID</span>
+
+                        <p>
+
+                            {{ doctor.doctor_id }}
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="profile-buttons">
+
+                    <a href="{% url 'appointments:book' doctor.id %}"
+                       class="book-btn">
+
+                        Book Appointment
+
+                    </a>
+
+                    <a href="#availability"
+                       class="secondary-btn">
+
+                        View Availability
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- About -->
+
+        <div class="about-card">
+
+            <h2>
+
+                About Doctor
+
+            </h2>
+
+            <p>
+
+                {{ doctor.bio|default:"Experienced healthcare professional dedicated to providing compassionate, patient-centered medical care with a focus on accurate diagnosis and effective treatment." }}
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+    <!-- Professional Information -->
+
+<div class="section-card">
+
+    <div class="section-header">
+
+        <h2>Professional Information</h2>
+
+    </div>
+
+    <div class="professional-grid">
+
+        <div class="pro-item">
+
+            <span>Department</span>
+
+            <p>{{ doctor.department.name }}</p>
+
+        </div>
+
+        <div class="pro-item">
+
+            <span>Specialization</span>
+
+            <p>{{ doctor.specialization }}</p>
+
+        </div>
+
+        <div class="pro-item">
+
+            <span>Qualification</span>
+
+            <p>{{ doctor.qualification }}</p>
+
+        </div>
+
+        <div class="pro-item">
+
+            <span>Experience</span>
+
+            <p>{{ doctor.experience_years }} Years</p>
+
+        </div>
+
+        <div class="pro-item">
+
+            <span>Consultation Fee</span>
+
+            <p>₹{{ doctor.consultation_fee }}</p>
+
+        </div>
+
+        <div class="pro-item">
+
+            <span>License Number</span>
+
+            <p>{{ doctor.license_number }}</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Hospital Information -->
+
+<div class="section-card">
+
+    <div class="section-header">
+
+        <h2>Hospital Information</h2>
+
+    </div>
+
+    <div class="hospital-card">
+
+        <h3>{{ doctor.branch.name }}</h3>
+
+        <p>
+
+            📍 {{ doctor.branch.address }}
+
+        </p>
+
+        <p>
+
+            📞 {{ doctor.branch.phone }}
+
+        </p>
+
+        <p>
+
+            🌍 {{ doctor.branch.city }}
+
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- Availability -->
+
+<div
+    class="section-card"
+    id="availability"
+>
+
+    <div class="section-header">
+
+        <h2>Weekly Availability</h2>
+
+    </div>
+
+    {% if availability %}
+
+    <table class="availability-table">
+
+        <thead>
+
+            <tr>
+
+                <th>Day</th>
+
+                <th>Timing</th>
+
+                <th>Slot Duration</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for slot in availability %}
+
+            <tr>
+
+                <td>
+
+                    {{ slot.get_day_of_week_display }}
+
+                </td>
+
+                <td>
+
+                    {{ slot.start_time|time:"h:i A" }}
+                    -
+                    {{ slot.end_time|time:"h:i A" }}
+
+                </td>
+
+                <td>
+
+                    {{ slot.slot_duration }} Minutes
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    {% else %}
+
+    <div class="no-slot">
+
+        <h3>
+
+            No Availability Added
+
+        </h3>
+
+        <p>
+
+            Doctor schedule will be updated soon.
+
+        </p>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+
+<!-- Quick Booking Card -->
+
+<div class="booking-card">
+
+    <div>
+
+        <h2>
+
+            Need an Appointment?
+
+        </h2>
+
+        <p>
+
+            Book your appointment online in just a few clicks.
+
+        </p>
+
+    </div>
+
+    <a
+        href="{% url 'appointments:book' doctor.id %}"
+        class="booking-btn"
+    >
+
+        Book Appointment
+
+    </a>
+
+</div>
+
+{% endblock %}

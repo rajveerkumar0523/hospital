@@ -275,3 +275,36 @@
     });
 
 })();
+
+
+
+
+// center
+const items = document.querySelectorAll(".item");
+
+items.forEach(item => {
+
+    const title = item.querySelector(".title");
+
+    title.addEventListener("click", () => {
+
+        items.forEach(i => {
+
+            if(i !== item){
+
+                i.classList.remove("active");
+
+                i.querySelector(".toggle").innerHTML="+";
+
+            }
+
+        });
+
+        item.classList.toggle("active");
+
+        item.querySelector(".toggle").innerHTML =
+            item.classList.contains("active") ? "−" : "+";
+
+    });
+
+});

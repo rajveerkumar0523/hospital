@@ -3,7 +3,7 @@ from apps.doctors.models import DoctorProfile, Department
 
 def home(request):
 
-    doctors = (
+    featured_doctors = (
         DoctorProfile.objects
         .select_related(
             "user",
@@ -14,18 +14,16 @@ def home(request):
         )
         .order_by(
             "user__first_name",
-        )
+        )[:6]
     )
-    print(doctors.count())
+
+    print(featured_doctors.count())
 
     departments = Department.objects.order_by("name")
 
     context = {
-
-        "doctors": doctors,
-
+        "featured_doctors": featured_doctors,
         "departments": departments,
-
     }
 
     return render(
@@ -33,3 +31,5 @@ def home(request):
         "hospital/home.html",
         context,
     )
+
+
